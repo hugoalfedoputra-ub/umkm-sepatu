@@ -3,8 +3,8 @@
       Produk
    </x-slot>
 
-   <section class="products py-8">
-      <div class="container mx-auto px-4 md:px-8 lg:px-16 py-8">
+   <section class="products py-8 lg:px-16">
+      <div class="container mx-auto">
          <h2 class="text-2xl font-bold mb-4">Produk</h2>
          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @foreach ($products as $product)

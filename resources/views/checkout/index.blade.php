@@ -6,9 +6,9 @@
    <section class="checkout py-8">
       <div class="container mx-auto">
          <h2 class="text-2xl text-white font-bold mb-4">Checkout</h2>
-         <div class="bg-white p-4 rounded-lg shadow-md">
+         <div class="bg-white p-4 text-black rounded-lg shadow-md">
             <h3 class="text-xl text-black font-bold mb-4">Rincian Pesanan</h3>
-            <table class="w-full mb-4 text-black">
+            <table class="w-full mb-4">
                <thead>
                   <tr>
                      <th class="text-left">Produk</th>

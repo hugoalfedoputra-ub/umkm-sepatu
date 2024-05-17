@@ -1,13 +1,13 @@
 <x-app-layout>
-   <x-slot name="title" >Keranjang Belanja</x-slot>
+   <x-slot name="title">Keranjang Belanja</x-slot>
 
-   <section class="cart py-8 ">
-      <div class="container mx-auto py-8 px-4 md:px-8 lg:px-16 py-8">
+   <section class="cart py-8">
+      <div class="container mx-auto py-8">
          <h2 class="text-2xl font-bold mb-4">Keranjang Belanja</h2>
          @if ($cart && $cart->items->isNotEmpty())
             <div class="bg-white text-black p-4 rounded-lg shadow-md">
 
-               <table class="table-auto w-full">
+               <table class="table-auto w-full table-border" cellpadding="10" cellspacing="10">
                   <thead>
                      <tr>
                         <th class="px-4 py-2">Pilih</th>
@@ -22,7 +22,7 @@
 
                      @foreach ($cart->items as $item)
                         <tr>
-                           <td class="border px-4 py-2 text-center">
+                           <td class="border px-4 py-2 text-center w-1">
                               <form action="{{ route('cart.updateS', $item->id) }}" method="POST">
                                  @csrf
                                  <input type="checkbox" name="selected" value="1"
@@ -35,7 +35,7 @@
                                     class="w-16 h-16 object-cover rounded">
                                  <span class="ml-4">{{ $item->name }}</span>
                               </div>
-                           <td class="border flex px-4 py-2 justify-center">
+                           <td class="border px-4 py-2 grid place-items-center full-height">
                               <form action="{{ route('cart.updateQ', $item->id) }}" method="POST"
                                  class="flex items-center" id="quantity-form-{{ $item->id }}">
                                  @csrf
@@ -69,10 +69,12 @@
          @endif
 
          <div class="text-right mt-4">
-            <p class="text-lg font-bold">Total Harga: {{ number_format($totalPrice, 2) }}</p>
-            <a href="{{ route('checkout.index') }}"
-               class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Lanjutkan ke
-               Pembayaran</a>
+            @if ($totalPrice != 0)
+               <p class="text-lg font-bold">Total Harga: {{ number_format($totalPrice, 2) }}</p>
+               <a href="{{ route('checkout.index') }}"
+                  class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Lanjutkan ke
+                  Pembayaran</a>
+            @endif
          </div>
       </div>
 

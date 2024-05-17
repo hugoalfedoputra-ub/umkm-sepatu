@@ -4,21 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 
 class Cart extends Model
 {
-    use HasFactory;
-
-    protected $fillable = ['user_id', 'session_token'];
+    protected $fillable = ['user_id'];
 
     public function items()
     {
         return $this->hasMany(CartItem::class);
-    }
-
-    public static function findOrCreateBySessionToken($token)
-    {
-        $cart = self::firstOrCreate(['session_token' => $token]);
-        return $cart;
     }
 }

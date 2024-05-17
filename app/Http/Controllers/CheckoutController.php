@@ -3,21 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
+use App\Models\Cart;
 use App\Models\CartItem;
 
 class CheckoutController extends Controller
 {
     public function index()
     {
-        $cartItems = CartItem::whereHas('cart', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->where('selected', true)->get();
+        $token = Cookie::get('cart_session_token');
+        $cart = Cart::where('session_token', $token)->first();
 
-        if ($cartItems->isEmpty()) {
+        if (!$cart || $cart->items->where('selected', true)->isEmpty()) {
             return redirect()->route('cart.index')->with('error', 'Tidak ada item yang dipilih untuk checkout.');
         }
 
+        $cartItems = $cart->items->where('selected', true);
         $totalPrice = $cartItems->sum(function ($item) {
             return $item->price * $item->quantity;
         });
@@ -32,13 +33,14 @@ class CheckoutController extends Controller
             'payment_method' => 'required|string'
         ]);
 
-        $cartItems = CartItem::whereHas('cart', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->where('selected', true)->get();
+        $token = Cookie::get('cart_session_token');
+        $cart = Cart::where('session_token', $token)->first();
 
-        if ($cartItems->isEmpty()) {
+        if (!$cart || $cart->items->where('selected', true)->isEmpty()) {
             return back()->withErrors('Tidak ada item yang dipilih untuk dibeli.');
         }
+
+        $cartItems = $cart->items->where('selected', true);
 
         // Simpan pesanan ke database atau lakukan proses pembayaran di sini...
 
@@ -47,6 +49,6 @@ class CheckoutController extends Controller
             $item->delete();
         }
 
-        return redirect()->route('home')->with('success', 'Pesanan Anda telah berhasil diproses!');
+        return redirect()->route('car.index')->with('success', 'Pesanan Anda telah berhasil diproses!');
     }
 }

@@ -4,43 +4,58 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use Illuminate\Support\Str;
+
 
 class CartController extends Controller
 {
     public function index()
     {
-        $token = Cookie::get('cart_session_token');
-        $cart = Cart::with('items')->where('session_token', $token)->first();
+        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
 
-        $totalPrice = $cart->items->where('selected', true)->sum(function ($item) {
+        $totalPrice = $cart ? $cart->items->where('selected', true)->sum(function ($item) {
             return $item->price * $item->quantity;
-        });
+        }) : 0;
+
 
         return view('cart.index', compact('cart', 'totalPrice'));
     }
 
     public function store(Request $request)
     {
-        $token = Cookie::get('cart_session_token');
-        $cart = Cart::findOrCreateBySessionToken($token);
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1'
+        ]);
+
+        // Get or create the cart associated with the authenticated user
+        $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
         $product = Product::findOrFail($request->product_id);
 
-        $item = CartItem::updateOrCreate([
-            'cart_id' => $cart->id,
-            'product_id' => $request->product_id,
-        ], [
-            'name' => $product->name,
-            'image' => $product->image,
-            'quantity' => $request->quantity,
-            'price' => $product->price,
-        ]);
+        $cartItem = CartItem::firstOrCreate(
+            ['cart_id' => $cart->id, 'product_id' => $product->id],
+            [
+                'name' => $product->name,
+                'image' => $product->image,
+                'price' => $product->price,
+                'quantity' => $request->quantity,
+                'selected' => true
+            ]
+        );
 
-        return back()->with('success', 'Item ditambahkan ke keranjang!');
+        if (!$cartItem->wasRecentlyCreated) {
+            $cartItem->quantity += $request->quantity;
+            $cartItem->save();
+        }
+
+        return back()->with('success', 'Produk berhasil ditambahkan ke keranjang.');
     }
+
 
     public function updateQuantity(Request $request, $id)
     {
@@ -65,7 +80,7 @@ class CartController extends Controller
         $item->selected = $request->selected ?? false;
         $item->save();
 
-        return back()->with('success', 'berhasil!!!');
+        return back();
     }
 
     public function remove($id)
