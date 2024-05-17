@@ -38,3 +38,24 @@ main {
 a {
     text-decoration: none;
 }
+
+/* Media query for responsive font sizes */
+@media (max-width: 768px) {
+    body {
+        font-size: 1rem;
+    }
+
+    main {
+        width: min(60ch, 100% -2rem);
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 0.875rem;
+    }
+
+    main {
+        width: min(55ch, 100% -1rem);
+    }
+}

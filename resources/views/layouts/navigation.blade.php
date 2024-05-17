@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
    <!-- Primary Navigation Menu -->
-   <div class=" mx-auto px-4 sm:px-6 lg:px-8">
+   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
          <div class="flex">
             <!-- Logo -->
@@ -16,11 +16,11 @@
                   <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">{{ __('Dashboard Admin') }}</x-nav-link>
                @endif
                <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-nav-link>
-               <x-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show'])">Produk</x-nav-link>
-               <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">Tentang Kami</x-nav-link>
-               <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">Kontak</x-nav-link>
+               <x-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show'])">{{ __('Product') }}</x-nav-link>
+               <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">{{ __('Tentang Kami') }}</x-nav-link>
+               <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">{{ __('Kontak') }}</x-nav-link>
                @auth
-                  <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">Keranjang</x-nav-link>
+                  <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">{{ __('Keranjang') }}</x-nav-link>
                @endauth
             </div>
          </div>

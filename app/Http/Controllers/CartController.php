@@ -21,8 +21,9 @@ class CartController extends Controller
             return $item->price * $item->quantity;
         }) : 'miaw';
 
+        $countSelect = $cart ? $cart->items->where('selected', true)->count() : 0;
 
-        return view('cart.index', compact('cart', 'totalPrice'));
+        return view('cart.index', compact('cart', 'totalPrice', 'countSelect'));
     }
 
     public function store(Request $request)
@@ -32,7 +33,6 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1'
         ]);
 
-        // Get or create the cart associated with the authenticated user
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
         $product = Product::findOrFail($request->product_id);
