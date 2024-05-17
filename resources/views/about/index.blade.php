@@ -4,7 +4,7 @@
    </x-slot>
 
    <section class="about py-8">
-      <div class="container mx-auto">
+      <div class="container mx-auto px-4 md:px-8 lg:px-16 py-8">
          <h2 class="text-2xl font-bold mb-4">Tentang Kami</h2>
          <p class="mb-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim

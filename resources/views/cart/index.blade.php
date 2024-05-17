@@ -1,8 +1,8 @@
 <x-app-layout>
-   <x-slot name="title">Keranjang Belanja</x-slot>
+   <x-slot name="title" >Keranjang Belanja</x-slot>
 
-   <section class="cart py-8">
-      <div class="container mx-auto py-8">
+   <section class="cart py-8 ">
+      <div class="container mx-auto py-8 px-4 md:px-8 lg:px-16 py-8">
          <h2 class="text-2xl font-bold mb-4">Keranjang Belanja</h2>
          @if ($cart && $cart->items->isNotEmpty())
             <div class="bg-white text-black p-4 rounded-lg shadow-md">
