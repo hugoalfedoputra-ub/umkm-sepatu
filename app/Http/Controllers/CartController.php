@@ -19,7 +19,7 @@ class CartController extends Controller
 
         $totalPrice = $cart ? $cart->items->where('selected', true)->sum(function ($item) {
             return $item->price * $item->quantity;
-        }) : 0;
+        }) : 'miaw';
 
 
         return view('cart.index', compact('cart', 'totalPrice'));
