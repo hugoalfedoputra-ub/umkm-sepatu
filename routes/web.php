@@ -35,7 +35,7 @@ Route::middleware(['auth', 'capre'])->group(function () {
     Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
 });
 
-Route::middleware(['admin', 'capre'])->group(function () {
+Route::middleware(['auth', 'admin', 'capre'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
 

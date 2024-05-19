@@ -4,7 +4,7 @@
    </x-slot>
 
    <section class="contact py-8">
-      <div class="container mx-auto px-4 md:px-8 lg:px-16 py-8">
+      <div class="md:container md:mx-auto px-4 md:px-8 lg:px-16 py-8">
          <h2 class="text-2xl font-bold mb-4">Kontak Kami</h2>
          <form>
             <div class="mb-4">

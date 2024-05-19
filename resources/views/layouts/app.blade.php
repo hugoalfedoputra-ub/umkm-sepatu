@@ -38,7 +38,7 @@
       @endif
 
       <!-- Page Content -->
-      <main class="md:container md:mx-auto">
+      <main>
          <!-- Main Content -->
 
          @if (session('error'))

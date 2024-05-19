@@ -3,7 +3,7 @@
       Produk
    </x-slot>
 
-   <section class="products py-8 lg:px-16">
+   <section class="products md:container md:mx-auto py-8 lg:px-16">
       <div class="container mx-auto">
          <h2 class="text-2xl font-bold mb-4">Produk</h2>
          <div class="grid grid-cols-1 text-black md:grid-cols-3 gap-4">

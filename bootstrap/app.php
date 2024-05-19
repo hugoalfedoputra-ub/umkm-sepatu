@@ -14,7 +14,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => App\Http\Middleware\AdminMiddleware::class,
             'capre' => App\Http\Middleware\CachePrevent::class,
-            'cartoken' => App\Http\Middleware\CartSessionToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
