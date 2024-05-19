@@ -38,7 +38,7 @@
       @endif
 
       <!-- Page Content -->
-      <main>
+      <main class="flex-grow">
          <!-- Main Content -->
 
          @if (session('error'))

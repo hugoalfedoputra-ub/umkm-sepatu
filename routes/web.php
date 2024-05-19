@@ -36,7 +36,7 @@ Route::middleware(['auth', 'capre'])->group(function () {
 });
 
 Route::middleware(['auth', 'admin', 'capre'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 });
 
 require __DIR__ . '/auth.php';
