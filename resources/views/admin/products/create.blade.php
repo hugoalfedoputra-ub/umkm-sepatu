@@ -8,26 +8,26 @@
 
       <div class="flex-1 p-4 text-white">
          <div class="container mx-auto py-8">
-            <h2 class="text-2xl font-bold mb-4">Add New Product</h2>
-            <div class="bg-white text-black p-4 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-4">Tambah Produk</h2>
+            <div class="bg-gray-800 text-black p-4 rounded-lg shadow-md">
                <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   <div class="mb-4">
-                     <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                     <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
                      <input type="text" name="name" id="name"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                   </div>
                   <div class="mb-4">
-                     <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                     <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
                      <textarea name="description" id="description" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required></textarea>
                   </div>
                   <div class="mb-4">
-                     <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                     <label for="price" class="block text-sm font-medium text-gray-300">Price</label>
                      <input type="number" name="price" id="price"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                   </div>
                   <div class="mb-4">
-                     <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+                     <label for="image" class="block text-sm font-medium text-gray-300">Image</label>
                      <input type="file" name="image" id="image"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                   </div>

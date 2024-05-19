@@ -35,12 +35,12 @@
                            <td class="border px-4 py-2">{{ $product->name }}</td>
                            <td class="border px-4 py-2">{{ $product->description }}</td>
                            <td class="border px-4 py-2">{{ $product->price }}</td>
-                           <td class="border px-4 py-2"><img src="{{ Storage::url($product->image) }}"
-                                 alt="{{ $product->name }}" class="w-16 h-16 object-cover"></td>
+                           <td class="border px-4 py-2"><img src="{{ url($product->image) }}" alt="{{ $product->name }}"
+                                 class="w-16 h-16 object-cover"></td>
                            <td class="border px-4 py-2">
                               <a href="{{ route('admin.products.edit', $product->id) }}"
                                  class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
-                              <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
+                              <form action="{{ route('admin.products.delete', $product->id) }}" method="POST"
                                  class="inline-block">
                                  @csrf
                                  @method('DELETE')
@@ -52,6 +52,9 @@
                   </tbody>
                </table>
             </div>
+         </div>
+         <div class="flex justify-center">
+            {{ $products->links() }}
          </div>
       </div>
    </section>

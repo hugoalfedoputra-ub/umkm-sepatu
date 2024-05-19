@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\Order;
+use App\Models\OrderItem;
 
 class CheckoutController extends Controller
 {
@@ -34,20 +36,44 @@ class CheckoutController extends Controller
             'payment_method' => 'required|string'
         ]);
 
-        $cart = Cart::where('user_id', Auth::id())->first();
+        $userId = Auth::id();
+        $token = Cookie::get('cart_session_token');
 
-        $cartItems = $cart->items->where('selected', true);
+        $cartItems = CartItem::whereHas('cart', function ($query) use ($userId, $token) {
+            $query->where('user_id', $userId)
+                ->orWhere('session_token', $token);
+        })->where('selected', true)->get();
 
-        if (!$cart || $cartItems->isEmpty()) {
+        if ($cartItems->isEmpty()) {
             return back()->withErrors('Tidak ada item yang dipilih untuk dibeli.');
         }
 
-        // Simpan pesanan ke database atau lakukan proses pembayaran di sini...
+        $totalPrice = $cartItems->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
 
-        foreach ($cartItems as $item) {
-            $item->delete();
+        $order = Order::create([
+            'user_id' => $userId,
+            'session_token' => $token,
+            'status' => 'pending',
+            'payment_method' => $request->payment_method,
+            'total_price' => $totalPrice,
+            'address' => $request->address
+        ]);
+
+        foreach ($cartItems as $cartItem) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $cartItem->product_id,
+                'name' => $cartItem->name,
+                'image' => $cartItem->image,
+                'price' => $cartItem->price,
+                'quantity' => $cartItem->quantity
+            ]);
+
+            $cartItem->delete();
         }
 
-        return redirect()->route('cart.index')->with('success', 'Pesanan Anda telah berhasil diproses!');
+        return redirect()->route('home')->with('success', 'Pesanan Anda telah berhasil diproses!');
     }
 }

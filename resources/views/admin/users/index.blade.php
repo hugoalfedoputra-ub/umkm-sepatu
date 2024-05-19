@@ -9,6 +9,8 @@
       <div class="flex-1 p-4 text-white">
          <div class="container mx-auto py-8">
             <h2 class="text-2xl font-bold mb-4">Manage Users</h2>
+            <a href="{{ route('admin.users.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">Add New
+               Users</a>
 
             @if (session('success'))
                <div class="bg-green-500 text-white p-2 rounded mb-4">
@@ -31,11 +33,11 @@
                         <tr>
                            <td class="border px-4 py-2">{{ $user->name }}</td>
                            <td class="border px-4 py-2">{{ $user->email }}</td>
-                           <td class="border px-4 py-2">{{ $user->role }}</td>
+                           <td class="border px-4 py-2">{{ $user->userrole }}</td>
                            <td class="border px-4 py-2">
                               <a href="{{ route('admin.users.edit', $user->id) }}"
                                  class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
-                              <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                              <form action="{{ route('admin.users.delete', $user->id) }}" method="POST"
                                  class="inline-block">
                                  @csrf
                                  @method('DELETE')
