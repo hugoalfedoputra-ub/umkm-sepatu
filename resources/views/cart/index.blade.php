@@ -29,7 +29,7 @@
                            @csrf
                            <input class="rounded" type="checkbox" name="selected" value="1"
                               {{ $item->selected ? 'checked' : '' }} onchange="this.form.submit()"
-                              style="transform: scale(1.5);">
+                              style="transform: scale(1.5); cursor: pointer">
                         </form>
                      </div>
                      <div class="flex flex-row items-center ml-4 w-full">

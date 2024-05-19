@@ -123,7 +123,7 @@
                      class="relative inline-flex items-center px-2 py-2 mx-2 -ml-px text-sm font-medium text-white bg-green-600 border border-green-600 rounded-r-md leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-green-800 transition ease-in-out duration-150 dark:bg-green-800 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
                      aria-label="{{ __('pagination.last') }}">
                      {!! __('LAST') !!}
-                     ({{ $paginator->total() }})
+                     ({{ $paginator->lastPage() }})
                   </a>
                @endif
             </span>
