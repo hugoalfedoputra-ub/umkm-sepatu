@@ -1,20 +1,23 @@
 <x-app-layout>
    <x-slot name="title">Keranjang Belanja</x-slot>
 
+   <meta name="csrf-token" content="{{ csrf_token() }}">
+
    <section class="cart py-4 lg:py-8">
       <div class="md:container md:mx-auto px-4 lg:px-8">
          <h2 class="text-2xl font-bold mb-4">Keranjang Belanja</h2>
          @if ($cart && $cart->items->isNotEmpty())
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                @foreach ($cart->items as $item)
-                  <div class="bg-white text-black p-3 lg:p-4 rounded-lg shadow-md flex flex-row relative">
+                  <div id="cart-item-{{ $item->id }}"
+                     class="bg-white text-black p-3 lg:p-4 rounded-lg shadow-md flex flex-row relative">
                      <div class="absolute top-2 right-2">
                         <form action="{{ route('cart.remove', $item->id) }}" method="POST"
                            id="remove-form-{{ $item->id }}">
                            @csrf
                            @method('DELETE')
-                           <button type="submit" form="remove-form-{{ $item->id }}"
-                              class="text-red-500 hover:text-red-700">
+                           <button type="submit" class="remove-button text-red-500 hover:text-red-700"
+                              data-item-id="{{ $item->id }}">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                  <path stroke-linecap="round" stroke-linejoin="round"
@@ -27,8 +30,8 @@
                      <div class="flex flex-row items-center justify-between">
                         <form action="{{ route('cart.updateS', $item->id) }}" method="POST" class="mb-4">
                            @csrf
-                           <input class="rounded" type="checkbox" name="selected" value="1"
-                              {{ $item->selected ? 'checked' : '' }} onchange="this.form.submit()"
+                           <input class="item-checkbox rounded" type="checkbox" name="selected" value="1"
+                              {{ $item->selected ? 'checked' : '' }} data-item-id="{{ $item->id }}"
                               style="transform: scale(1.5); cursor: pointer">
                         </form>
                      </div>
@@ -43,19 +46,15 @@
                               <p>Rp {{ number_format($item->price) }}</p>
                            </div>
                            <div class="my-1 flex items-center">
-                              <form action="{{ route('cart.updateQ', $item->id) }}" method="POST"
-                                 class="flex items-center" id="quantity-form-{{ $item->id }}">
-                                 @csrf
-                                 <div class="quantity-input-wrapper flex items-center">
-                                    <button type="button" class="quantity-button p-1"
-                                       onclick="updateQuantity({{ $item->id }}, -1)">-</button>
-                                    <input type="number" name="quantity" id="quantity-input-{{ $item->id }}"
-                                       value="{{ $item->quantity }}" min="1"
-                                       class="quantity-input mx-1 lg:mx-2 text-sm w-12">
-                                    <button type="button" class="quantity-button p-1"
-                                       onclick="updateQuantity({{ $item->id }}, 1)">+</button>
-                                 </div>
-                              </form>
+                              <div class="quantity-input-wrapper flex items-center">
+                                 <button type="button" class="quantity-button p-1" data-item-id="{{ $item->id }}"
+                                    data-delta="-1">-</button>
+                                 <input type="number" name="quantity" id="quantity-input-{{ $item->id }}"
+                                    value="{{ $item->quantity }}" min="1"
+                                    class="quantity-input mx-1 lg:mx-2 text-sm w-12">
+                                 <button type="button" class="quantity-button p-1" data-item-id="{{ $item->id }}"
+                                    data-delta="1">+</button>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -66,16 +65,17 @@
             <p>Keranjang Anda kosong.</p>
          @endif
 
-         <div class="text-right mt-2 lg:mt-4">
-            @if ($totalPrice != 'miaw')
-               @if ($totalPrice != 0)
-                  <p class="text-lg font-bold">Total: Rp {{ number_format($totalPrice) }}</p>
+         <div class="text-right mt-2 lg:mt-4" id="pricenih">
+            @if ($cart && $cart->items !== null && $cart->items->isNotEmpty())
+               @if ($totalPrice !== 'Total: Rp 0')
+                  <p id="total-price" class="text-lg font-bold">{{ $totalPrice }}</p>
                   <a href="{{ route('checkout.index') }}"
-                     class="mt-2 lg:mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">
-                     Beli ({{ $countSelect }})
+                     class="mt-2 lg:mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500"
+                     id="buy-button">
+                     {{ $buyButton }}
                   </a>
-               @else
-                  <p class="text-lg font-bold">Total: -</p>
+               @elseif ($totalPrice == 0)
+                  <p id="total-price" class="text-lg font-bold">Total: -</p>
                   <button class="mt-2 lg:mt-4 inline-block bg-gray-600 text-white py-2 px-4 rounded cursor-not-allowed"
                      disabled>
                      Beli
@@ -86,14 +86,4 @@
       </div>
    </section>
 
-   <script>
-      function updateQuantity(itemId, delta) {
-         const quantityInput = document.getElementById('quantity-input-' + itemId);
-         let currentValue = parseInt(quantityInput.value);
-         if (currentValue + delta >= 1) {
-            quantityInput.value = currentValue + delta;
-            document.getElementById('quantity-form-' + itemId).submit();
-         }
-      }
-   </script>
 </x-app-layout>

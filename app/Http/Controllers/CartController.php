@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
-use Illuminate\Support\Str;
-
 
 class CartController extends Controller
 {
@@ -19,11 +16,14 @@ class CartController extends Controller
 
         $totalPrice = $cart ? $cart->items->where('selected', true)->sum(function ($item) {
             return $item->price * $item->quantity;
-        }) : 'miaw';
+        }) : 0;
 
         $countSelect = $cart ? $cart->items->where('selected', true)->count() : 0;
+        $totalPrice = 'Total: Rp ' . number_format($totalPrice);
+        $buyButton = 'Beli (' . $countSelect . ')';
 
-        return view('cart.index', compact('cart', 'totalPrice', 'countSelect'));
+
+        return view('cart.index', compact('cart', 'totalPrice', 'buyButton'));
     }
 
     public function store(Request $request)
@@ -53,9 +53,8 @@ class CartController extends Controller
             $cartItem->save();
         }
 
-        return back()->with('success', 'Produk berhasil ditambahkan ke keranjang.');
+        return response()->json(['message' => 'Produk berhasil ditambahkan ke keranjang!']);
     }
-
 
     public function updateQuantity(Request $request, $id)
     {
@@ -67,7 +66,17 @@ class CartController extends Controller
         $item->quantity = $request->quantity;
         $item->save();
 
-        return back();
+        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
+        $totalPrice = $cart->items->where('selected', true)->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+        $countSelect = $cart->items->where('selected', true)->count();
+
+        return response()->json([
+            'success' => true,
+            'totalPrice' => 'Total: Rp ' . number_format($totalPrice),
+            'buyButton' => 'Beli (' . $countSelect . ')'
+        ]);
     }
 
     public function updateSelected(Request $request, $id)
@@ -80,7 +89,17 @@ class CartController extends Controller
         $item->selected = $request->selected ?? false;
         $item->save();
 
-        return back();
+        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
+        $totalPrice = $cart->items->where('selected', true)->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+        $countSelect = $cart->items->where('selected', true)->count();
+
+        return response()->json([
+            'success' => true,
+            'totalPrice' => 'Total: Rp ' . number_format($totalPrice),
+            'buyButton' => 'Beli (' . $countSelect . ')'
+        ]);
     }
 
     public function remove($id)
@@ -88,6 +107,16 @@ class CartController extends Controller
         $item = CartItem::findOrFail($id);
         $item->delete();
 
-        return back();
+        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
+        $totalPrice = $cart->items->where('selected', true)->sum(function ($item) {
+            return $item->price * $item->quantity;
+        });
+        $countSelect = $cart->items->where('selected', true)->count();
+
+        return response()->json([
+            'success' => true,
+            'totalPrice' => 'Total: Rp ' . number_format($totalPrice),
+            'buyButton' => 'Beli (' . $countSelect . ')'
+        ]);
     }
 }

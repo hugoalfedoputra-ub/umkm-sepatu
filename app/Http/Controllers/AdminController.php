@@ -25,27 +25,19 @@ class AdminController extends Controller
     }
 
     // Products
-    // Menampilkan daftar produk
     public function products()
     {
         $products = Product::paginate(10)->withQueryString();
         return view('admin.products.index', compact('products'));
     }
 
-    // Menampilkan form untuk membuat produk baru
-    public function createProduct()
-    {
-        return view('admin.products.create');
-    }
-
-    // Menyimpan produk baru
     public function storeProduct(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
-            'stock' => 'required|integer',
+            'image' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -58,20 +50,18 @@ class AdminController extends Controller
         $product->name = $request->name;
         $product->description = $request->description;
         $product->price = $request->price;
-        $product->stock = $request->stock;
+        $product->image = $request->image;
         $product->save();
 
-        return redirect()->route('admin.products')->with('success', 'Product created successfully.');
+        return response()->json();
     }
 
-    // Menampilkan form untuk mengedit produk
     public function editProduct($id)
     {
         $product = Product::findOrFail($id);
-        return view('admin.products.edit', compact('product'));
+        return response()->json($product);
     }
 
-    // Memperbarui produk yang ada
     public function updateProduct(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -95,18 +85,16 @@ class AdminController extends Controller
         $product->stock = $request->stock;
         $product->save();
 
-        return redirect()->route('admin.products')->with('success', 'Product updated successfully.');
+        return response()->json(['message' => 'Produk berhasil diperbarui.']);
     }
 
-    // Menghapus produk
     public function deleteProduct($id)
     {
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('admin.products')->with('success', 'Product deleted successfully.');
+        return response()->json(['message' => 'Produk berhasil dihapus.']);
     }
-
 
     // Users
     public function users()
@@ -115,13 +103,11 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    // Menampilkan form untuk membuat pengguna baru
     public function createUser()
     {
         return view('admin.users.create');
     }
 
-    // Menyimpan pengguna baru
     public function storeUser(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -141,19 +127,18 @@ class AdminController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->userrole = $request->userrole;
         $user->save();
 
-        return redirect()->route('admin.users')->with('success', 'User created successfully.');
+        return response()->json(['message' => 'User berhasil dibuat.']);
     }
 
-    // Menampilkan form untuk mengedit pengguna
     public function editUser($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.users.edit', compact('user'));
+        return response()->json($user);
     }
 
-    // Memperbarui pengguna yang ada
     public function updateUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -162,6 +147,7 @@ class AdminController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
+            'userrole' => 'required|string|in:admin,user',
         ]);
 
         if ($validator->fails()) {
@@ -172,6 +158,7 @@ class AdminController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->userrole = $request->userrole;
 
         if ($request->password) {
             $user->password = Hash::make($request->password);
@@ -179,15 +166,14 @@ class AdminController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users')->with('success', 'User updated successfully.');
+        return response()->json(['message' => 'User berhasil diperbarui.']);
     }
 
-    // Menghapus pengguna
     public function deleteUser($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
+        return response()->json(['message' => 'User berhasil dihapus.']);
     }
 }

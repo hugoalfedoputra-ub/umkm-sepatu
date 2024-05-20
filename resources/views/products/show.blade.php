@@ -1,6 +1,6 @@
 <x-app-layout>
    <x-slot name="title">
-      {{ $product->name }}
+      Produk - {{ $product->name }}
    </x-slot>
 
    <section class="product-detail py-8">
@@ -16,9 +16,10 @@
          </div>
          <div class="w-1/2 pl-8">
             <h1 class="text-3xl font-bold mb-4">{{ $product->name }}</h1>
-            <p class="text-green-600 text-2xl font-semibold mb-4">{{ $product->price }}</p>
+            <p class="text-green-600 text-2xl font-semibold mb-4">Rp {{ number_format($product->price) }}</p>
             <p class="mb-4">{{ $product->description }}</p>
-            <form action="{{ route('cart.store') }}" method="POST" class="mt-4">
+            <form action="{{ route('cart.store') }}" method="POST" class="mt-4" id="addToCartForm">
+
                @csrf
                <input type="hidden" name="product_id" value="{{ $product->id }}">
                <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>

@@ -1,6 +1,6 @@
 <x-app-layout>
    <x-slot name="title">
-      Manage Products
+      Kelola Produk
    </x-slot>
 
    <section class="flex">
@@ -8,54 +8,52 @@
 
       <div class="flex-1 p-4 text-white">
          <div class="container mx-auto py-8">
-            <h2 class="text-2xl font-bold mb-4">Manage Products</h2>
-            <a href="{{ route('admin.products.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">Add New
-               Product</a>
+            <h2 class="text-2xl font-bold mb-4">Kelola Produk</h2>
 
-            @if (session('success'))
-               <div class="bg-green-500 text-white p-2 rounded mb-4">
-                  {{ session('success') }}
-               </div>
-            @endif
+            <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4"
+               id="addProductBtn">Tambah Produk</button>
 
-            <div class="bg-white text-black p-4 rounded-lg shadow-md">
-               <table class="table-auto w-full">
-                  <thead>
+            <table class="min-w-full bg-gray-800 rounded-lg" id="productTable">
+               <thead>
+                  <tr>
+                     <th class="py-2 px-4">ID</th>
+                     <th class="py-2 px-4">Nama</th>
+                     <th class="py-2 px-4">Deskripsi</th>
+                     <th class="py-2 px-4">Harga</th>
+                     <th class="py-2 px-4">Gambar</th>
+                     <th class="py-2 px-4">Aksi</th>
+                  </tr>
+               </thead>
+               <tbody id="productTableBody">
+                  @foreach ($products as $product)
                      <tr>
-                        <th class="px-4 py-2">Name</th>
-                        <th class="px-4 py-2">Description</th>
-                        <th class="px-4 py-2">Price</th>
-                        <th class="px-4 py-2">Image</th>
-                        <th class="px-4 py-2">Actions</th>
+                        <td class="py-2 px-4">{{ $product->id }}</td>
+                        <td class="py-2 px-4">{{ $product->name }}</td>
+                        <td class="py-2 px-4">{{ $product->description }}</td>
+                        <td class="py-2 px-4">Rp {{ number_format($product->price) }}</td>
+                        <td class="py-2 px-4"><img src="{{ url($product->image) }}" alt="{{ $product->name }}"
+                              class="w-16 h-16 object-cover rounded"></td>
+                        <td class="py-2 px-4">
+                           <button
+                              class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded editProductBtn"
+                              data-id="{{ $product->id }}">Edit</button>
+                           <button
+                              class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded deleteProductBtn"
+                              data-id="{{ $product->id }}">Hapus</button>
+                        </td>
                      </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($products as $product)
-                        <tr>
-                           <td class="border px-4 py-2">{{ $product->name }}</td>
-                           <td class="border px-4 py-2">{{ $product->description }}</td>
-                           <td class="border px-4 py-2">{{ $product->price }}</td>
-                           <td class="border px-4 py-2"><img src="{{ url($product->image) }}" alt="{{ $product->name }}"
-                                 class="w-16 h-16 object-cover"></td>
-                           <td class="border px-4 py-2">
-                              <a href="{{ route('admin.products.edit', $product->id) }}"
-                                 class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
-                              <form action="{{ route('admin.products.delete', $product->id) }}" method="POST"
-                                 class="inline-block">
-                                 @csrf
-                                 @method('DELETE')
-                                 <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
-                              </form>
-                           </td>
-                        </tr>
-                     @endforeach
-                  </tbody>
-               </table>
-            </div>
+                  @endforeach
+               </tbody>
+            </table>
          </div>
          <div class="flex justify-center">
+
             {{ $products->links() }}
          </div>
       </div>
+
+      @include('admin.products.create')
+      {{-- @include('admin.products.edit') --}}
    </section>
+
 </x-app-layout>

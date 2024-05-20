@@ -1,6 +1,6 @@
 <x-app-layout>
    <x-slot name="title">
-      Manage Users
+      Kelola Pengguna
    </x-slot>
 
    <section class="flex">
@@ -8,48 +8,46 @@
 
       <div class="flex-1 p-4 text-white">
          <div class="container mx-auto py-8">
-            <h2 class="text-2xl font-bold mb-4">Manage Users</h2>
-            <a href="{{ route('admin.users.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">Add New
-               Users</a>
+            <h2 class="text-2xl font-bold mb-4">Kelola Pengguna</h2>
 
-            @if (session('success'))
-               <div class="bg-green-500 text-white p-2 rounded mb-4">
-                  {{ session('success') }}
-               </div>
-            @endif
+            <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mb-4"
+               id="addUserBtn">Tambah Pengguna</button>
 
-            <div class="bg-white text-black p-4 rounded-lg shadow-md">
-               <table class="table-auto w-full">
-                  <thead>
+            <!-- User Table -->
+            <table class="min-w-full bg-gray-800 rounded-lg" id="userTable">
+               <thead>
+                  <tr>
+                     <th class="py-2 px-4">ID</th>
+                     <th class="py-2 px-4">Nama</th>
+                     <th class="py-2 px-4">Email</th>
+                     <th class="py-2 px-4">Role</th>
+                     <th class="py-2 px-4">Aksi</th>
+                  </tr>
+               </thead>
+               <tbody id="userTableBody">
+                  @foreach ($users as $user)
                      <tr>
-                        <th class="px-4 py-2">Name</th>
-                        <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Role</th>
-                        <th class="px-4 py-2">Actions</th>
+                        <td class="py-2 px-4">{{ $user->id }}</td>
+                        <td class="py-2 px-4">{{ $user->name }}</td>
+                        <td class="py-2 px-4">{{ $user->email }}</td>
+                        <td class="py-2 px-4">{{ $user->userrole }}</td>
+                        <td class="py-2 px-4">
+                           <button
+                              class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded editUserBtn"
+                              data-id="{{ $user->id }}">Edit</button>
+                           <button
+                              class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded deleteUserBtn"
+                              data-id="{{ $user->id }}">Hapus</button>
+                        </td>
                      </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($users as $user)
-                        <tr>
-                           <td class="border px-4 py-2">{{ $user->name }}</td>
-                           <td class="border px-4 py-2">{{ $user->email }}</td>
-                           <td class="border px-4 py-2">{{ $user->userrole }}</td>
-                           <td class="border px-4 py-2">
-                              <a href="{{ route('admin.users.edit', $user->id) }}"
-                                 class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
-                              <form action="{{ route('admin.users.delete', $user->id) }}" method="POST"
-                                 class="inline-block">
-                                 @csrf
-                                 @method('DELETE')
-                                 <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
-                              </form>
-                           </td>
-                        </tr>
-                     @endforeach
-                  </tbody>
-               </table>
-            </div>
+                  @endforeach
+               </tbody>
+            </table>
          </div>
       </div>
+
+      @include('admin.users.create')
+      {{-- @include('admin.users.edit') --}}
    </section>
+
 </x-app-layout>
