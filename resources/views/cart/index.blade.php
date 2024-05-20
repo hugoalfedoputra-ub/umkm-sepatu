@@ -74,7 +74,7 @@
                      id="buy-button">
                      {{ $buyButton }}
                   </a>
-               @elseif ($totalPrice == 0)
+               @else
                   <p id="total-price" class="text-lg font-bold">Total: -</p>
                   <button class="mt-2 lg:mt-4 inline-block bg-gray-600 text-white py-2 px-4 rounded cursor-not-allowed"
                      disabled>
