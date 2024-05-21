@@ -37,11 +37,9 @@ class CheckoutController extends Controller
         ]);
 
         $userId = Auth::id();
-        $token = Cookie::get('cart_session_token');
 
-        $cartItems = CartItem::whereHas('cart', function ($query) use ($userId, $token) {
-            $query->where('user_id', $userId)
-                ->orWhere('session_token', $token);
+        $cartItems = CartItem::whereHas('cart', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
         })->where('selected', true)->get();
 
         if ($cartItems->isEmpty()) {
@@ -54,7 +52,6 @@ class CheckoutController extends Controller
 
         $order = Order::create([
             'user_id' => $userId,
-            'session_token' => $token,
             'status' => 'pending',
             'payment_method' => $request->payment_method,
             'total_price' => $totalPrice,

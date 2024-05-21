@@ -29,7 +29,8 @@
                </tbody>
             </table>
             <div class="text-right mb-4">
-               <h3 class="text-xl font-bold" id="totalPrice" data-total-price="{{ $totalPrice }}">Total: {{ number_format($totalPrice, 2) }}</h3>
+               <h3 class="text-xl font-bold" id="totalPrice" data-total-price="{{ $totalPrice }}">Total:
+                  {{ number_format($totalPrice, 2) }}</h3>
             </div>
             <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form">
                @csrf
@@ -48,9 +49,11 @@
                   </select>
                </div>
                <div class="text-right">
-                  <button type="submit" id="whatsapp-button" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Pesan via Whatsapp</button>
+                  <button type="submit" id="whatsapp-button"
+                     class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Pesan via Whatsapp</button>
                </div>
             </form>
+
          </div>
       </div>
    </section>
