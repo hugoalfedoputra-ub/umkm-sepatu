@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false, openSearch: false}" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
    <!-- Primary Navigation Menu -->
    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
@@ -41,13 +41,22 @@
 
                <!-- Search Input Field -->
                <div x-show="openSearch" @click.away="openSearch = false"
-                  class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
-                  <div class="relative">
-                     <input type="text" name="search" id="search"
-                        class="w-full border-0 bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
-                        placeholder="Search...">
-                  </div>
+                  class="absolute right-0 mt-4 w-full sm:w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+                  <form action="{{ route('search') }}" method="GET" class="relative">
+                     <div class="relative">
+                        <input type="text" name="query" id="search"
+                           class="w-full border-4 border-black rounded bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
+                           placeholder="Search...">
+                        <!-- Arrow Button -->
+                        <button
+                           type="submit"
+                           class="absolute inset-y-0 right-0 flex items-center rounded-r hover transition-colors duration-300">
+                           <span class="px-2 text-gray-700">→</span>
+                        </button>
+                     </div>
+                  </form>
                </div>
+
             </div>
 
             @auth
@@ -97,6 +106,24 @@
 
          <!-- Hamburger -->
          <div class="-me-2 flex items-center sm:hidden">
+               <button @click="openSearch = !openSearch"
+                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                  <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+               </button>
+
+               <!-- Search Input Field -->
+               <div x-show="openSearch" @click.away="openSearch = false"
+                  class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+                  <form action="{{ route('search') }}" method="GET" class="relative">
+                     <input type="text" name="query" id="search"
+                        class="w-full border-4 border-black rounded bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
+                        placeholder="Search...">
+                  </form>
+               </div>
+
             <button @click="open = ! open"
                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
