@@ -63,8 +63,9 @@ $(document).ready(function () {
                     $("#cart-item-" + itemId).remove();
                     $("#total-price").text(response.totalPrice);
                     $("#buy-button").text(response.selectedCount);
+                    $("#pricenih").load(location.href + " #pricenih");
+                    $("#isikart").load(location.href + " #isikart");
                 }
-                $("#pricenih").load(location.href + " #pricenih");
             },
         });
     });

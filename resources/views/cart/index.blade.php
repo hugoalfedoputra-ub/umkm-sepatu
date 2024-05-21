@@ -4,7 +4,7 @@
    <meta name="csrf-token" content="{{ csrf_token() }}">
 
    <section class="cart py-4 lg:py-8">
-      <div class="md:container md:mx-auto px-4 lg:px-8">
+      <div class="md:container md:mx-auto px-4 lg:px-8" id="isikart">
          <h2 class="text-2xl font-bold mb-4">Keranjang Belanja</h2>
          @if ($cart && $cart->items->isNotEmpty())
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -81,7 +81,7 @@
                      Beli
                   </button>
                @endif
-            @endif
+            @endif 
          </div>
       </div>
    </section>

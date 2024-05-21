@@ -4,7 +4,7 @@
    </x-slot>
 
    <section class="checkout py-8">
-      <div class="md:container md:mx-auto">
+      <div class="md:container md:mx-auto lg:px-16">
          <h2 class="text-2xl text-white font-bold mb-4">Checkout</h2>
          <div class="bg-white p-4 text-black rounded-lg shadow-md">
             <h3 class="text-xl text-black font-bold mb-4">Rincian Pesanan</h3>
@@ -29,9 +29,9 @@
                </tbody>
             </table>
             <div class="text-right mb-4">
-               <h3 class="text-xl font-bold">Total: {{ number_format($totalPrice, 2) }}</h3>
+               <h3 class="text-xl font-bold" id="totalPrice" data-total-price="{{ $totalPrice }}">Total: {{ number_format($totalPrice, 2) }}</h3>
             </div>
-            <form action="{{ route('checkout.store') }}" method="POST">
+            <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form">
                @csrf
                <div class="mb-4">
                   <label for="address" class="block text-sm font-medium text-gray-700">Alamat Pengiriman</label>
@@ -48,8 +48,7 @@
                   </select>
                </div>
                <div class="text-right">
-                  <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Selesaikan
-                     Pembayaran</button>
+                  <button type="submit" id="whatsapp-button" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Pesan via Whatsapp</button>
                </div>
             </form>
          </div>
