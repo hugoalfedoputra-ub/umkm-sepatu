@@ -39,11 +39,11 @@ $(document).ready(function () {
                 selected: $(this).is(":checked") ? 1 : 0,
             },
             success: function (response) {
-                $("#pricenih").load(location.href + " #pricenih");
                 if (response.success) {
                     $("#total-price").text(response.totalPrice);
                     $("#buy-button").text(response.selectedCount);
                 }
+                $("#pricenih").load(location.href + " #pricenih");
             },
         });
     });
@@ -63,8 +63,9 @@ $(document).ready(function () {
                     $("#cart-item-" + itemId).remove();
                     $("#total-price").text(response.totalPrice);
                     $("#buy-button").text(response.selectedCount);
-                    $("#pricenih").load(location.href + " #pricenih");
-                    $("#isikart").load(location.href + " #isikart");
+                    $("#pricenih, #isikart").load(
+                        location.href + " #pricenih, #isikart"
+                    );
                 }
             },
         });
