@@ -27,9 +27,41 @@
                <div class="bg-gray-800 p-4 rounded-lg shadow-md">
                   <h3 class="text-lg font-semibold">Pesanan Terbaru</h3>
                   <ul>
+                     <hr>
                      @foreach ($recentOrders as $order)
-                        <li>{{ $order->name }} - Rp{{ number_format($order->total, 2) }}</li>
+                        <li>Order ID: {{ $order->id }}</li>
+                        <li>Total Price: Rp{{ number_format($order->total_price, 2) }}</li>
+                        <li>Status: <span
+                              style="color: 
+                            @switch($order->status)
+                                @case('pending')
+                                    yellow;
+                                    @break
+                                @case('diproses')
+                                    orange;
+                                    @break
+                                @case('dalam perjalanan')
+                                    blue;
+                                    @break
+                                @case('selesai')
+                                    green;
+                                    @break
+                                @case('canceled')
+                                    red;
+                                    @break
+                            @endswitch
+                        ">{{ $order->status }}</span>
+                        </li>
+                        <li>Order Items:</li>
+                        <ul>
+                           @foreach ($order->items as $orderItem)
+                              <li>&emsp;&emsp;Product: {{ $orderItem->name }}</li>
+                              <li>&emsp;&emsp;Quantity: {{ $orderItem->quantity }}</li>
+                           @endforeach
+                        </ul>
+                        <hr>
                      @endforeach
+
                   </ul>
                </div>
             </div>

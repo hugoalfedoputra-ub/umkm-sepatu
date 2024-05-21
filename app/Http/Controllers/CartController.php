@@ -56,67 +56,35 @@ class CartController extends Controller
         return response()->json(['message' => 'Produk berhasil ditambahkan ke keranjang!']);
     }
 
-    public function updateQuantity(Request $request, $id)
-    {
-        $request->validate([
-            'quantity' => 'integer|min:1'
-        ]);
-
-        $item = CartItem::findOrFail($id);
-        $item->quantity = $request->quantity;
-        $item->save();
-
-        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
-        $totalPrice = $cart->items->where('selected', true)->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-        $countSelect = $cart->items->where('selected', true)->count();
-
-        return response()->json([
-            'success' => true,
-            'totalPrice' => 'Total: Rp ' . number_format($totalPrice),
-            'buyButton' => 'Beli (' . $countSelect . ')'
-        ]);
-    }
-
-    public function updateSelected(Request $request, $id)
-    {
-        $request->validate([
-            'selected' => 'boolean'
-        ]);
-
-        $item = CartItem::findOrFail($id);
-        $item->selected = $request->selected ?? false;
-        $item->save();
-
-        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
-        $totalPrice = $cart->items->where('selected', true)->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-        $countSelect = $cart->items->where('selected', true)->count();
-
-        return response()->json([
-            'success' => true,
-            'totalPrice' => 'Total: Rp ' . number_format($totalPrice),
-            'buyButton' => 'Beli (' . $countSelect . ')'
-        ]);
-    }
-
     public function remove($id)
     {
         $item = CartItem::findOrFail($id);
         $item->delete();
 
         $cart = Cart::with('items')->where('user_id', Auth::id())->first();
-        $totalPrice = $cart->items->where('selected', true)->sum(function ($item) {
-            return $item->price * $item->quantity;
-        });
-        $countSelect = $cart->items->where('selected', true)->count();
 
-        return response()->json([
-            'success' => true,
-            'totalPrice' => 'Total: Rp ' . number_format($totalPrice),
-            'buyButton' => 'Beli (' . $countSelect . ')'
-        ]);
+        return response()->json(['success' => true]);
+    }
+
+    public function confirmChanges(Request $request)
+    {
+        $items = $request->input('items');
+        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
+
+        if ($cart && !empty($items)) {
+            foreach ($items as $itemId => $itemData) {
+                $item = CartItem::find($itemId);
+                if ($item) {
+                    $item->quantity = $itemData['quantity'];
+                    $item->selected = $itemData['selected'];
+                    $item->save();
+                }
+            }
+
+            // Redirect to the checkout index if the operation is successful
+            return redirect()->route('checkout.index');
+        }
+
+        return response()->json(['success' => false]);
     }
 }

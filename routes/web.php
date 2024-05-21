@@ -30,6 +30,7 @@ Route::middleware(['auth', 'capre'])->group(function () {
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/updateQ/{id}', [CartController::class, 'updateQuantity'])->name('cart.updateQ');
     Route::post('/cart/updateS/{id}', [CartController::class, 'updateSelected'])->name('cart.updateS');
+    Route::post('/cart/confirmChanges', [CartController::class, 'confirmChanges'])->name('cart.confirmChanges');
 
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
