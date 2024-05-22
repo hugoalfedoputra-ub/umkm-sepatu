@@ -13,6 +13,8 @@
                   <tr>
                      <th class="text-left">Produk</th>
                      <th class="text-left">Jumlah</th>
+                     <th class="text-left">Ukuran</th>
+                     <th class="text-left">Warna</th>
                      <th class="text-left">Harga</th>
                      <th class="text-left">Total</th>
                   </tr>
@@ -22,6 +24,8 @@
                      <tr>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->quantity }}</td>
+                        <td>{{ $item->size }}</td>
+                        <td>{{ $item->color }}</td>
                         <td>{{ number_format($item->price, 2) }}</td>
                         <td>{{ number_format($item->price * $item->quantity, 2) }}</td>
                      </tr>

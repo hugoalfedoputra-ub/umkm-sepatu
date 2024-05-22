@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('image');
             $table->decimal('price', 10, 2);
             $table->integer('quantity');
+            $table->integer('size');
+            $table->string('color');
             $table->timestamps();
         });
     }

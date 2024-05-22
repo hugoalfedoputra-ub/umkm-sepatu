@@ -22,13 +22,35 @@
 
                @csrf
                <input type="hidden" name="product_id" value="{{ $product->id }}">
-               <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+
+               <label for="color" class="block text-sm font-medium text-gray-700">Warna</label>
+               <select name="color" id="color"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                  @foreach ($product->variants->unique('color') as $variant)
+                     <option value="{{ $variant->color }}">{{ ucfirst($variant->color) }}</option>
+                  @endforeach
+               </select>
+
+               <label for="size" class="block text-sm font-medium text-gray-700 mt-4">Ukuran</label>
+               <select name="size" id="size"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                  @foreach ($product->variants->unique('size') as $variant)
+                     <option value="{{ $variant->size }}">{{ $variant->size }}</option>
+                  @endforeach
+               </select>
+
+               <label for="quantity"
+                  class="quantity-label block text-sm font-medium text-gray-700 mt-4">Quantity</label>
                <input type="number" name="quantity" id="quantity" value="1" min="1"
                   class="mt-1 block w-16 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
-               <button type="submit"
-                  class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Tambah ke
+
+               <div id="stock-info" class="mt-2 text-sm"></div>
+
+               <button type="submit" class="mt-4 inline-block text-white py-2 px-4 rounded"
+                  id="add-to-cart-button">Tambah ke
                   Keranjang</button>
             </form>
+
             <section class="reviews mt-8">
                <h2 class="text-2xl font-bold mb-4">Ulasan Pelanggan</h2>
                @foreach ($product->reviews as $review)
@@ -42,4 +64,9 @@
          </div>
       </div>
    </section>
+
+   <script>
+      window.productVariants = @json($product->variants);
+   </script>
+
 </x-app-layout>

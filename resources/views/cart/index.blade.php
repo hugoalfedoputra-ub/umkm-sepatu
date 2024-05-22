@@ -30,12 +30,9 @@
                            </form>
                         </div>
                         <div class="flex flex-row items-center justify-between">
-                           <form action="{{ route('cart.updateS', $item->id) }}" method="POST" class="mb-4">
-                              @csrf
-                              <input class="item-checkbox rounded" type="checkbox" name="selected" value="1"
-                                 {{ $item->selected ? 'checked' : '' }} data-item-id="{{ $item->id }}"
-                                 style="transform: scale(1.5); cursor: pointer">
-                           </form>
+                           <input class="item-checkbox rounded" type="checkbox" name="selected" value="1"
+                              {{ $item->selected ? 'checked' : '' }} data-item-id="{{ $item->id }}"
+                              style="transform: scale(1.5); cursor: pointer">
                         </div>
                         <div class="flex flex-row items-center ml-4 w-full">
                            <img src="{{ $item->image }}" alt="{{ $item->name }}"
@@ -44,8 +41,24 @@
                               <div class="my-1">
                                  <span class="font-bold">{{ $item->name }}</span>
                               </div>
+                              <div>
+                                 <small>Color: {{ $item->color }}</small>
+                              </div>
+                              <div>
+                                 <small>Size: {{ $item->size }}</small>
+                              </div>
                               <div class="my-1">
                                  <p id="price-{{ $item->id }}">Rp {{ number_format($item->price) }}</p>
+                              </div>
+                              <div>
+                                 <div>
+                                    <small class="text-green-600">Tersedia:
+                                       {{ $item->product->variants->filter(function ($variant) use ($item) {
+                                               return $variant->size == $item->size && $variant->color == $item->color;
+                                           })->first()->stock ?? 'Tidak tersedia' }}
+
+                                    </small>
+                                 </div>
                               </div>
                               <div class="my-1 flex items-center">
                                  <div class="quantity-input-wrapper flex items-center">
@@ -53,7 +66,13 @@
                                        data-item-id="{{ $item->id }}" data-delta="-1">-</button>
                                     <input type="number" name="quantity" id="quantity-input-{{ $item->id }}"
                                        value="{{ $item->quantity }}" min="1"
-                                       class="quantity-input mx-1 lg:mx-2 text-sm w-12">
+                                       max="{{ $item->product->variants->filter(function ($variant) use ($item) {
+                                               return $variant->size == $item->size && $variant->color == $item->color;
+                                           })->first()->stock }}"
+                                       class="quantity-input mx-1 lg:mx-2 text-sm w-12"
+                                       data-stock="{{ $item->product->variants->filter(function ($variant) use ($item) {
+                                               return $variant->size == $item->size && $variant->color == $item->color;
+                                           })->first()->stock }}">
                                     <button type="button" class="quantity-button p-1"
                                        data-item-id="{{ $item->id }}" data-delta="1">+</button>
                                  </div>
@@ -70,25 +89,15 @@
 
          <div class="text-right mt-2 lg:mt-4" id="pricenih">
             @if ($cart && $cart->items !== null && $cart->items->isNotEmpty())
-               @if ($totalPrice !== 0)
-                  <p id="total-price" class="text-lg font-bold">{{ $totalPrice }}</p>
+               <p id="total-price" class="text-lg font-bold"></p>
 
-                  <form id="buy-form" action="{{ route('cart.confirmChanges') }}" method="POST"
-                     style="display: none;">
-                     @csrf
-                  </form>
+               <form id="buy-form" action="{{ route('cart.confirmChanges') }}" method="POST" style="display: none;">
+                  @csrf
+               </form>
 
-                  <button id="buy-button"
-                     class="mt-2 lg:mt-4 bg-green-600 inline-block text-white py-2 px-4 rounded hover:bg-green-500">
-                     {{ $buyButton }}
-                  </button>
-               @else
-                  <p id="total-price" class="text-lg font-bold">Total: -</p>
-                  <button class="mt-2 lg:mt-4 inline-block bg-gray-600 text-white py-2 px-4 rounded cursor-not-allowed"
-                     disabled>
-                     Beli
-                  </button>
-               @endif
+               <button id="buy-button"
+                  class="mt-2 lg:mt-4 bg-green-600 inline-block text-white py-2 px-4 rounded hover:bg-green-500">
+               </button>
             @endif
          </div>
       </div>

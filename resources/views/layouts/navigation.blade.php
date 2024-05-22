@@ -1,4 +1,4 @@
-<nav x-data="{ open: false, openSearch: false}" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false, openSearch: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
    <!-- Primary Navigation Menu -->
    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
@@ -13,14 +13,14 @@
             <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                @if (Auth::check() && Auth::user()->userrole == 'admin')
-                  <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">{{ __('Dashboard Admin') }}</x-nav-link>
+                  <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs(['admin.*'])">{{ __('Dashboard Admin') }}</x-nav-link>
                @endif
                <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-nav-link>
-               <x-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show'])">{{ __('Product') }}</x-nav-link>
+               <x-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show', 'search'])">{{ __('Product') }}</x-nav-link>
                <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">{{ __('Tentang Kami') }}</x-nav-link>
                <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">{{ __('Kontak') }}</x-nav-link>
                @auth
-                  <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">{{ __('Keranjang') }}</x-nav-link>
+                  <x-nav-link :href="route('cart.index')" :active="request()->routeIs(['cart.index', 'checkout.index'])">{{ __('Keranjang') }}</x-nav-link>
                @endauth
             </div>
          </div>
@@ -32,7 +32,7 @@
             <!-- Search Button -->
             <div class="ml-3 relative">
                <button @click="openSearch = !openSearch"
-                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-300 transition duration-150 ease-in-out">
                   <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -41,16 +41,19 @@
 
                <!-- Search Input Field -->
                <div x-show="openSearch" @click.away="openSearch = false"
+                  x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+                  x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
+                  x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                   class="absolute right-0 mt-4 w-full sm:w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
                   <form action="{{ route('search') }}" method="GET" class="relative">
                      <div class="relative">
                         <input type="text" name="query" id="search"
-                           class="w-full border-4 border-black rounded bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
-                           placeholder="Search...">
+                           class="w-full border-0 rounded bg-gray-50 pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-500"
+                           placeholder="Search..." oninput="this.form.sub.disabled = !this.value.trim();">
                         <!-- Arrow Button -->
-                        <button
-                           type="submit"
-                           class="absolute inset-y-0 right-0 flex items-center rounded-r hover transition-colors duration-300">
+                        <button type="submit" name="sub"
+                           class="absolute inset-y-0 right-0 flex items-center rounded-r-md bg-gray-200 hover:bg-gray-300 transition-colors duration-300"
+                           disabled>
                            <span class="px-2 text-gray-700">→</span>
                         </button>
                      </div>
@@ -104,26 +107,30 @@
          </div>
 
 
-         <!-- Hamburger -->
+         <!-- Search Field -->
          <div class="-me-2 flex items-center sm:hidden">
-               <button @click="openSearch = !openSearch"
-                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                  <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                  </svg>
-               </button>
+            <button @click="openSearch = !openSearch"
+               class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+               <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+               </svg>
+            </button>
 
-               <!-- Search Input Field -->
-               <div x-show="openSearch" @click.away="openSearch = false"
-                  class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
-                  <form action="{{ route('search') }}" method="GET" class="relative">
-                     <input type="text" name="query" id="search"
-                        class="w-full border-4 border-black rounded bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
-                        placeholder="Search...">
-                  </form>
-               </div>
+            <!-- Search Input Field -->
+            <div x-show="openSearch" @click.away="openSearch = false"
+               x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+               x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
+               x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+               class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+               <form action="{{ route('search') }}" method="GET" class="relative">
+                  <input type="text" name="query" id="search"
+                     class="w-full border-4 border-black rounded bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
+                     placeholder="Search...">
+               </form>
+            </div>
 
+            <!-- Hamburger -->
             <button @click="open = ! open"
                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -138,7 +145,10 @@
    </div>
 
    <!-- Responsive Navigation Menu -->
-   <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
+   <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden"
+      x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
+      x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
+      x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
 
       @if (Auth::check() && Auth::user()->userrole == 'admin')
          <x-responsive-nav-link :href="route('admin.dashboard')"
@@ -154,7 +164,7 @@
 
 
       <!-- Responsive Settings Options -->
-      <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+      <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600" x-transition>
 
          @auth
             <div class="px-4">

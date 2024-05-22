@@ -9,6 +9,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 
 class CheckoutController extends Controller
 {
@@ -38,7 +39,7 @@ class CheckoutController extends Controller
 
         $userId = Auth::id();
 
-        $cartItems = CartItem::whereHas('cart', function ($query) use ($userId) {
+        $cartItems = CartItem::with('product.variants')->whereHas('cart', function ($query) use ($userId) {
             $query->where('user_id', $userId);
         })->where('selected', true)->get();
 
@@ -65,12 +66,26 @@ class CheckoutController extends Controller
                 'name' => $cartItem->name,
                 'image' => $cartItem->image,
                 'price' => $cartItem->price,
+                'size' => $cartItem->size,
+                'color' => $cartItem->color,
                 'quantity' => $cartItem->quantity
             ]);
+
+            $variant = $cartItem->product->variants->first(function ($variant) use ($cartItem) {
+                return $variant->size == $cartItem->size && $variant->color == $cartItem->color;
+            });
+
+            // if ($variant) {
+            $variant->stock -= $cartItem->quantity;
+            $variant->save();
+            // } else {
+            // Handle the case where the variant is not found, if necessary
+            // }
+
 
             $cartItem->delete();
         }
 
-        return redirect()->route('home')->with('success', 'Pesanan Anda telah berhasil diproses!');
+        return redirect()->route('cart.index')->with('success', 'Pesanan Anda telah berhasil diproses!');
     }
 }

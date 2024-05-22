@@ -7,35 +7,38 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
+use App\Models\ProductVariant;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $cart = Cart::with('items')->where('user_id', Auth::id())->first();
+        $cart = Cart::with(['items.product.variants'])->where('user_id', Auth::id())->first();
 
-        $totalPrice = $cart ? $cart->items->where('selected', true)->sum(function ($item) {
-            return $item->price * $item->quantity;
-        }) : 0;
-
-        $countSelect = $cart ? $cart->items->where('selected', true)->count() : 0;
-        $totalPrice = 'Total: Rp ' . number_format($totalPrice);
-        $buyButton = 'Beli (' . $countSelect . ')';
-
-
-        return view('cart.index', compact('cart', 'totalPrice', 'buyButton'));
+        return view('cart.index', compact('cart'));
     }
 
     public function store(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
+            'color' => 'required|string',
+            'size' => 'required|integer'
         ]);
 
         $cart = Cart::firstOrCreate(['user_id' => Auth::id()]);
 
         $product = Product::findOrFail($request->product_id);
+        $productVariants = ProductVariant::findOrFail($request->product_id);
+
+        if ($productVariants->stock < $request->quantity) {
+            return response()->json(['message' => 'Stok produk tidak cukup'], 422);
+        }
 
         $cartItem = CartItem::firstOrCreate(
             ['cart_id' => $cart->id, 'product_id' => $product->id],
@@ -44,7 +47,10 @@ class CartController extends Controller
                 'image' => $product->image,
                 'price' => $product->price,
                 'quantity' => $request->quantity,
-                'selected' => true
+                'selected' => true,
+                'stock' => $productVariants->stock,
+                'color' => $request->color,
+                'size' => $request->size
             ]
         );
 

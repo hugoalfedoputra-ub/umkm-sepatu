@@ -40,14 +40,30 @@ $(document).ready(function () {
         const delta = parseInt(button.data("delta"));
         const input = $("#quantity-input-" + itemId);
         const currentQuantity = parseInt(input.val());
+        const maxStock = parseInt(input.data("stock"));
         const newQuantity = currentQuantity + delta;
 
-        if (newQuantity >= 1) {
-            // Ensure the quantity never goes below 1
+        if (newQuantity >= 1 && newQuantity <= maxStock) {
             input.val(newQuantity);
             recalculateCart();
         }
     });
+
+    $(".quantity-input").change(function () {
+        const input = $(this);
+        const maxStock = parseInt(input.data("stock"));
+        let quantity = parseInt(input.val());
+
+        if (quantity < 1) {
+            input.val(1);
+        } else if (quantity > maxStock) {
+            input.val(maxStock);
+        }
+
+        recalculateCart();
+    });
+
+    recalculateCart();
 
     $(".item-checkbox, .quantity-input").change(function () {
         recalculateCart();
@@ -114,6 +130,11 @@ $(document).ready(function () {
 
     // Event listener for the buy button
     $("#buy-button").on("click", function () {
+        buyButton();
+    });
+
+    // Menjalankan fungsi buyButton saat page di reload, back page, tab closed, dan hilang fokus
+    $(window).on("beforeunload pagehide", function () {
         buyButton();
     });
 });
