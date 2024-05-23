@@ -198,6 +198,7 @@ class ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d
         ),
         'A' => 
         array (
+            'ArielMejiaDev\\LarapexCharts\\' => 28,
             'App\\' => 4,
         ),
     );
@@ -594,6 +595,10 @@ class ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
+        'ArielMejiaDev\\LarapexCharts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src',
+        ),
         'App\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -628,11 +633,29 @@ class ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d
         'App\\Models\\Order' => __DIR__ . '/../..' . '/app/Models/Order.php',
         'App\\Models\\OrderItem' => __DIR__ . '/../..' . '/app/Models/OrderItem.php',
         'App\\Models\\Product' => __DIR__ . '/../..' . '/app/Models/Product.php',
+        'App\\Models\\ProductVariant' => __DIR__ . '/../..' . '/app/Models/ProductVariant.php',
         'App\\Models\\Review' => __DIR__ . '/../..' . '/app/Models/Review.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\View\\Components\\AppLayout' => __DIR__ . '/../..' . '/app/View/Components/AppLayout.php',
         'App\\View\\Components\\GuestLayout' => __DIR__ . '/../..' . '/app/View/Components/GuestLayout.php',
+        'ArielMejiaDev\\LarapexCharts\\AreaChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/AreaChart.php',
+        'ArielMejiaDev\\LarapexCharts\\BarChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/BarChart.php',
+        'ArielMejiaDev\\LarapexCharts\\Contracts\\MustAddComplexData' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/Contracts/MustAddComplexData.php',
+        'ArielMejiaDev\\LarapexCharts\\Contracts\\MustAddSimpleData' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/Contracts/MustAddSimpleData.php',
+        'ArielMejiaDev\\LarapexCharts\\DonutChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/DonutChart.php',
+        'ArielMejiaDev\\LarapexCharts\\Facades\\LarapexChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/Facades/LarapexChart.php',
+        'ArielMejiaDev\\LarapexCharts\\HeatMapChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/HeatMapChart.php',
+        'ArielMejiaDev\\LarapexCharts\\HorizontalBar' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/HorizontalBar.php',
+        'ArielMejiaDev\\LarapexCharts\\LarapexChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/LarapexChart.php',
+        'ArielMejiaDev\\LarapexCharts\\LarapexChartsServiceProvider' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/LarapexChartsServiceProvider.php',
+        'ArielMejiaDev\\LarapexCharts\\LineChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/LineChart.php',
+        'ArielMejiaDev\\LarapexCharts\\PieChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/PieChart.php',
+        'ArielMejiaDev\\LarapexCharts\\PolarAreaChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/PolarAreaChart.php',
+        'ArielMejiaDev\\LarapexCharts\\RadarChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/RadarChart.php',
+        'ArielMejiaDev\\LarapexCharts\\RadialChart' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/RadialChart.php',
+        'ArielMejiaDev\\LarapexCharts\\Traits\\ComplexChartDataAggregator' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/Traits/ComplexChartDataAggregator.php',
+        'ArielMejiaDev\\LarapexCharts\\Traits\\SimpleChartDataAggregator' => __DIR__ . '/..' . '/arielmejiadev/larapex-charts/src/Traits/SimpleChartDataAggregator.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',
@@ -1813,6 +1836,7 @@ class ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d
         'Illuminate\\Console\\Events\\ScheduledTaskSkipped' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/Events/ScheduledTaskSkipped.php',
         'Illuminate\\Console\\Events\\ScheduledTaskStarting' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/Events/ScheduledTaskStarting.php',
         'Illuminate\\Console\\GeneratorCommand' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/GeneratorCommand.php',
+        'Illuminate\\Console\\ManuallyFailedException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/ManuallyFailedException.php',
         'Illuminate\\Console\\MigrationGeneratorCommand' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/MigrationGeneratorCommand.php',
         'Illuminate\\Console\\OutputStyle' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/OutputStyle.php',
         'Illuminate\\Console\\Parser' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Console/Parser.php',
@@ -2341,6 +2365,7 @@ class ComposerStaticInitda9b7a1dc1dd923105198c572cc7df8d
         'Illuminate\\Foundation\\Inspiring' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/Inspiring.php',
         'Illuminate\\Foundation\\MaintenanceModeManager' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/MaintenanceModeManager.php',
         'Illuminate\\Foundation\\Mix' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/Mix.php',
+        'Illuminate\\Foundation\\MixManifestNotFoundException' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/MixManifestNotFoundException.php',
         'Illuminate\\Foundation\\PackageManifest' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/PackageManifest.php',
         'Illuminate\\Foundation\\Precognition' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/Precognition.php',
         'Illuminate\\Foundation\\ProviderRepository' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/ProviderRepository.php',

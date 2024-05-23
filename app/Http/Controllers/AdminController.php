@@ -9,6 +9,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\ProductVariant;
+use ArielMejiaDev\LarapexCharts\LarapexChart;
+use Carbon\Carbon;
 use Exception;
 
 class AdminController extends Controller
@@ -48,8 +50,70 @@ class AdminController extends Controller
         $productCount = Product::count();
         $userCount = User::count();
         $orderCount = Order::count();
+        $netSales = Order::where('status', 'selesai')->sum('total_price');
 
-        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount'));
+        // Charting
+
+        $statuses = ['pending', 'diproses', 'dalam perjalanan', 'selesai', 'canceled'];
+        $months = [];
+        $counts = [
+            'pending' => [],
+            'diproses' => [],
+            'dalam perjalanan' => [],
+            'selesai' => [],
+            'canceled' => []
+        ];
+
+        // Loop through the last 12 months
+        for ($i = 0; $i < 12; $i++) {
+            $month = Carbon::now()->subMonths($i)->format('Y-m');
+            $months[] = $month;
+
+            foreach ($statuses as $status) {
+                $counts[$status][] = Order::where('status', $status)
+                    ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
+                    ->whereMonth('created_at', Carbon::now()->subMonths($i)->month)
+                    ->count();
+            }
+        }
+
+        // Reverse arrays for correct chronological order
+        $months = array_reverse($months);
+        foreach ($statuses as $status) {
+            $counts[$status] = array_reverse($counts[$status]);
+        }
+
+        $chart = (new LarapexChart)->barChart()
+            ->setTitle('Kuantitas Penjualan')
+            ->setSubtitle('Berdasarkan status pesanan')
+            ->setXAxis($months)
+            ->setGrid()
+            ->setMarkers($colors = ['#000000'])
+            ->setFontFamily("Figtree")
+            ->setDataset([
+                [
+                    'name'  =>  'Pending',
+                    'data'  =>  $counts['pending']
+                ],
+                [
+                    'name'  =>  'Diproses',
+                    'data'  =>  $counts['diproses']
+                ],
+                [
+                    'name'  =>  'Dalam Perjalanan',
+                    'data'  =>  $counts['dalam perjalanan']
+                ],
+                [
+                    'name'  =>  'Selesai',
+                    'data'  =>  $counts['selesai']
+                ],
+                [
+                    'name'  =>  'Canceled',
+                    'data'  =>  $counts['canceled']
+                ]
+            ]);
+
+        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount', 'netSales', 'chart', 'months', 'counts'));
     }
 
     // Orders
