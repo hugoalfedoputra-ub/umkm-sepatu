@@ -27,21 +27,21 @@ class AdminController extends Controller
             $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
                 ->join('order_items', 'orders.id', '=', 'order_items.order_id')
                 ->orderBy('orders.' . $this->columnCommands['waktu_order'], 'desc')
-                ->limit(5)
-                ->get();
+                ->paginate(6)
+                ->withQueryString();
         } else {
             try {
                 $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
                     ->join('order_items', 'orders.id', '=', 'order_items.order_id')
                     ->orderBy('orders.' . $this->columnCommands[$sortRequest], $sortDirection)
-                    ->limit(5)
-                    ->get();
+                    ->paginate(6)
+                    ->withQueryString();
             } catch (Exception $e) {
                 $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
                     ->join('order_items', 'orders.id', '=', 'order_items.order_id')
                     ->orderBy('order_items.' . $this->columnCommands[$sortRequest], $sortDirection)
-                    ->limit(5)
-                    ->get();
+                    ->paginate(6)
+                    ->withQueryString();
             }
         }
 
@@ -50,6 +50,25 @@ class AdminController extends Controller
         $orderCount = Order::count();
 
         return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount'));
+    }
+
+    // Orders
+    public function showOrders($id)
+    {
+        $recentOrder = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->where('orders.id', $id)
+            ->get();
+        return view('admin.orders.update', compact('recentOrder'));
+    }
+
+    public function updateOrders(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $order->status = $request->status;
+        $order->save();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Pesanan berhasil diperbarui.');
     }
 
     // Products

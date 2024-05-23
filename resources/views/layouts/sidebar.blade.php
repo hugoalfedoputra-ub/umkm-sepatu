@@ -2,7 +2,7 @@
     <h2 class="text-xl font-bold mb-4">Sidebar</h2>
     <ul>
         <li>
-            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">{{ __('Overview') }}</x-nav-link>
+            <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard') || request()->routeIs('admin.orders.update')">{{ __('Overview') }}</x-nav-link>
         </li>
         <li>
             <x-nav-link :href="route('admin.products')" :active="request()->routeIs('admin.products')">{{ __('Products') }}</x-nav-link>

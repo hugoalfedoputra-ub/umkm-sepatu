@@ -26,7 +26,13 @@
                 </div>
 
                 <!-- Card untuk pesanan terbaru -->
-                <h2 class="text-2xl font-bold mb-4">Pesanan Terbaru</h2>
+                <div class="flex flex-row justify-between">
+                    <h2 class="text-2xl font-bold mb-4">Pesanan Terbaru</h2>
+                    <div class="flex justify-center">
+
+                        {{ $recentOrders->links() }}
+                    </div>
+                </div>
                 <form action="{{ route('admin.dashboard') }}" method="GET">
                     <div class="flex flex-row gap-4 flex-shrink-0 mb-4 flex-wrap items-center">
                         <div class="flex flex-col">
@@ -82,36 +88,41 @@
 
                 <div class="grid grid-cols-2 gap-4">
                     @foreach ($recentOrders as $order)
-                        <div class="bg-gray-800 p-4 rounded-lg shadow-md">
-                            <p>Order ID: {{ $order->nomor_id }}</p>
-                            <p>Total Price: Rp{{ number_format($order->harga, 2) }}</p>
-                            <p>Status: <span
-                                    style="color:
-                            @switch($order->status)
-                                @case('pending')
-                                    yellow;
-                                    @break
-                                @case('diproses')
-                                    orange;
-                                    @break
-                                @case('dalam perjalanan')
-                                    blue;
-                                    @break
-                                @case('selesai')
-                                    green;
-                                    @break
-                                @case('canceled')
-                                    red;
-                                    @break
-                            @endswitch
-                        ">{{ $order->status }}</span>
-                            </p>
-                            <p>Order Items:</p>
-                            <ul>
-                                <p>&emsp;&emsp;Product: {{ $order->nama_produk }}</p>
-                                <p>&emsp;&emsp;Color: {{ $order->color }}</p>
-                                <p>&emsp;&emsp;Quantity: {{ $order->kuantitas }}</p>
-                            </ul>
+                        <div class="flex flex-row justify-between bg-gray-800 p-4 rounded-lg shadow-md relative">
+                            <div class="">
+                                <p>Order ID: {{ $order->nomor_id }}</p>
+                                <p>Total Price: Rp{{ number_format($order->harga, 2) }}</p>
+                                <p>Status: <span
+                                        style="color:
+                                        @switch($order->status)
+                                            @case('pending')
+                                                yellow;
+                                                @break
+                                            @case('diproses')
+                                                orange;
+                                                @break
+                                            @case('dalam perjalanan')
+                                                blue;
+                                                @break
+                                            @case('selesai')
+                                                green;
+                                                @break
+                                            @case('canceled')
+                                                red;
+                                                @break
+                                        @endswitch
+                                    ">{{ $order->status }}</span>
+                                </p>
+                                <p>Order Items:</p>
+                                <ul>
+                                    <p>&emsp;&emsp;Product: {{ $order->nama_produk }}</p>
+                                    <p>&emsp;&emsp;Color: {{ $order->color }}</p>
+                                    <p>&emsp;&emsp;Quantity: {{ $order->kuantitas }}</p>
+                                </ul>
+                            </div>
+                            <button onclick="window.location='{{ url('admin/orders/update/' . $order->nomor_id) }}'"
+                                class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded absolute bottom-4 right-4">Edit
+                                pesanan</button>
                         </div>
                     @endforeach
                 </div>
