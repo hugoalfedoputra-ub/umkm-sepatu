@@ -22,6 +22,7 @@
                     @if (Auth::check() && Auth::user()->userrole != 'admin')
                         @auth
                             <x-nav-link :href="route('cart.index')" :active="request()->routeIs(['cart.index', 'checkout.index'])">{{ __('Keranjang') }}</x-nav-link>
+                            <x-nav-link :href="url('history/' . \Auth::id())" :active="request()->routeIs(['history.index'])">{{ __('Pemesanan') }}</x-nav-link>
                         @endauth
                     @endif
                 </div>

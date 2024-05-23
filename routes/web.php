@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\SearchController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,6 +32,8 @@ Route::middleware(['auth', 'capre'])->group(function () {
     Route::post('/cart/store', [CartController::class, 'store'])->name('cart.store');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::post('/cart/confirmChanges', [CartController::class, 'confirmChanges'])->name('cart.confirmChanges');
+
+    Route::get('/history/{id}', [HistoryController::class, 'index'])->name('history.index');
 
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout/store', [CheckoutController::class, 'store'])->name('checkout.store');
