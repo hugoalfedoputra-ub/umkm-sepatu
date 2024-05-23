@@ -41,7 +41,7 @@ $(document).ready(function () {
     });
 
     // Edit Product
-    $(".editProductBtn").on("click", function () {
+    $("#editProductBtn").on("click", function () {
         let id = $(this).data("id");
 
         $.get(`/admin/products/edit/${id}`, function (data) {
@@ -71,8 +71,7 @@ $(document).ready(function () {
                 _token: $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
-                $("#productTable").load(location.href + " #productTable");
-                $("#cancelProductBtn").click();
+                location.reload();
             },
             error: function (xhr) {
                 alert("Terjadi kesalahan. Silakan coba lagi.");

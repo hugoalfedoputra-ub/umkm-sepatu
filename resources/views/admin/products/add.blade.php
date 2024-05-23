@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="title">
-        Edit Produk
+        Tambah Produk
     </x-slot>
 
     <section class="flex">
@@ -10,20 +10,15 @@
             <button class="underline" onclick="window.location='{{ route('admin.products.products') }}'">
                 Kembali </button>
             <div class="container mx-auto py-8">
-                <h2 class="text-2xl font-bold mb-4">Edit Informasi Produk [V2]</h2>
+                <h2 class="text-2xl font-bold mb-4">Tambah Produk Baru [V2]</h2>
 
-                <form action="{{ url('admin/products/update/v2/' . $product->id) }}" method="POST"
-                    enctype="multipart/form-data">
+                <form action="{{ url('admin/products/add/save') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="flex flex-col gap-y-4 flex-shrink-0 w-full">
                         @foreach ($errors->all() as $error)
                             <p>{{ $error }}</p>
                         @endforeach
                         <div class="bg-gray-800 rounded-lg flex flex-row gap-x-4 p-4">
-                            <div class="min-w-32">
-                                <img src="{{ url($product->image) }}" alt="{{ $product->name }}"
-                                    class="w-32 h-32 object-cover rounded">
-                            </div>
                             <div>
                                 <table class="min-w-full bg-gray-800 rounded-lg" id="productTable">
                                     <thead>
@@ -33,21 +28,21 @@
                                                     class="block text-sm font-medium text-gray-300">Nama</label>
                                                 <input type="text" name="name" id="name"
                                                     class="mt-1 block w-full bg-gray-900 border-gray-700 text-white rounded-md shadow-sm"
-                                                    value="{{ $product->name }}" required>
+                                                    placeholder="Masukkan nama produk..." required>
                                             </div>
                                             <div class="mb-4">
                                                 <label for="description"
                                                     class="block text-sm font-medium text-gray-300">Deskripsi</label>
                                                 <textarea name="description" id="description"
-                                                    class="mt-1 block w-full bg-gray-900 border-gray-700 text-white rounded-md shadow-sm" required>{{ $product->description }}
-                                                </textarea>
+                                                    class="mt-1 block w-full bg-gray-900 border-gray-700 text-white rounded-md shadow-sm"
+                                                    placeholder="Masukkan deskripsi produk..." required></textarea>
                                             </div>
                                             <div class="mb-4">
                                                 <label for="price"
                                                     class="block text-sm font-medium text-gray-300">Harga</label>
                                                 <input type="number" name="price" id="price"
                                                     class="mt-1 block w-full bg-gray-900 border-gray-700 text-white rounded-md shadow-sm"
-                                                    value="{{ $product->price }}" required>
+                                                    placeholder="0" required>
                                             </div>
                                             <div class="mb-4">
                                                 <label for="fileInput"
@@ -65,34 +60,6 @@
                                             </div>
                                         </tr>
                                     </thead>
-                                    <tbody id="productTableBody">
-                                        <div class="flex flex-row justify-between">
-                                            <h2>Data stok</h2>
-                                            <button
-                                                onclick="window.location='{{ url('admin/products/edit/stock/v2/' . $product->id) }}'"
-                                                class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded"
-                                                data-id="{{ $product->id }}">Atur stok</button>
-                                        </div>
-
-                                        @foreach ($productVariants as $variant)
-                                            @if ($variant->product_id == $product->id)
-                                                {{-- Note that we also can use $variant->id --}}
-                                                <tr>
-                                                    <td class="py-2 px-4">{{ $variant->size }}</td>
-                                                    <td class="py-2 px-4">{{ $variant->color }}</td>
-                                                    <td class="py-2 px-4">
-                                                        <input
-                                                            class="mt-1 block w-32 bg-gray-900 border-gray-700 text-white rounded-md shadow-sm"
-                                                            type="number" name="stock[]" value="{{ $variant->stock }}"
-                                                            required>
-                                                        <input type="number" name="variant_id[]"
-                                                            value="{{ $variant->id }}" hidden required>
-                                                    </td>
-
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
                                 </table>
                             </div>
                         </div>

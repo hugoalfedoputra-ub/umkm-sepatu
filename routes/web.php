@@ -40,10 +40,22 @@ Route::middleware(['auth', 'admin', 'capre'])->group(function () {
     Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::get('/admin/products/v2', [AdminController::class, 'products_v2'])->name('admin.products.products');
     Route::get('/admin/products/create', [AdminController::class, 'createProduct'])->name('admin.products.create');
     Route::post('/admin/products/create', [AdminController::class, 'storeProduct'])->name('admin.products.store');
     Route::get('/admin/products/edit/{id}', [AdminController::class, 'editProduct'])->name('admin.products.edit');
-    Route::put('/admin/products/edit/{id}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+    Route::put('/admin/products/update/{id}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+
+    Route::get('/admin/products/add/v2', [AdminController::class, 'createProduct'])->name('admin.products.add');
+    Route::post('/admin/products/add/save', [AdminController::class, 'storeProduct_v2']);
+
+    Route::get('/admin/products/edit/v2/{id}', [AdminController::class, 'editProduct_v2'])->name('admin.products.edit');
+    Route::get('/admin/products/edit/stock/v2/{id}', [AdminController::class, 'editStock'])->name('admin.products.add_stock');
+    Route::post('/admin/products/edit/stock/save/v2/{id}', [AdminController::class, 'updateStock'])->name('admin.products.update_stock');
+    Route::get('/admin/products/delete/stock/v2/{id}', [AdminController::class, 'showStock'])->name('admin.products.delete_stock');
+    Route::get('/admin/products/delete/stock/v2/{id}/{ret}', [AdminController::class, 'deleteStock']);
+    Route::post('/admin/products/update/v2/{id}', [AdminController::class, 'updateProduct_v2'])->name('admin.products.update');
+
     Route::delete('/admin/products/delete/{id}', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
 
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
