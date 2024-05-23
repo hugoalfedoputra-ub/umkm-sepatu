@@ -1,4 +1,5 @@
 @import "./cart";
+@import "./ad_product";
 /* @import "./sidebar"; */
 
 @tailwind base;
