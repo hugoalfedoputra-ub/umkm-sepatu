@@ -67,7 +67,8 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        $reviews = $product->reviews()->latest()->paginate(10); // Paginasi reviews
+        return view('products.show', compact('product', 'reviews'));
     }
 
     public function filter(Request $request)
@@ -78,7 +79,7 @@ class ProductController extends Controller
 
         $query = Product::with('reviews', 'variants')
             ->where('name', 'like', '%' . $request->input('query') . '%');
-    
+
         // Filter
         if ($request->filled('color')) {
             $query->whereHas('variants', function ($q) use ($request) {
@@ -99,7 +100,7 @@ class ProductController extends Controller
         if ($request->filled('price_max')) {
             $query->where('price', '<=', $request->price_max);
         }
-    
+
         // Sorting
         if ($request->filled('sort')) {
             switch ($request->sort) {
