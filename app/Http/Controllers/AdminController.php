@@ -26,24 +26,18 @@ class AdminController extends Controller
 
         if ($sortRequest == null || !in_array($sortRequest, array_keys($this->columnCommands))) {
             // Default sorting
-            $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                ->orderBy('orders.' . $this->columnCommands['waktu_order'], 'desc')
-                ->paginate(6)
-                ->withQueryString();
+            $recentOrders = Order::with(['items' => function ($query) {
+                $query->orderBy($this->columnCommands['waktu_order'], 'desc');
+            }])->paginate(6)->withQueryString();
         } else {
             try {
-                $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-                    ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                    ->orderBy('orders.' . $this->columnCommands[$sortRequest], $sortDirection)
-                    ->paginate(6)
-                    ->withQueryString();
+                $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
+                    $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
+                }])->paginate(6)->withQueryString();
             } catch (Exception $e) {
-                $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-                    ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                    ->orderBy('order_items.' . $this->columnCommands[$sortRequest], $sortDirection)
-                    ->paginate(6)
-                    ->withQueryString();
+                $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
+                    $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
+                }])->paginate(6)->withQueryString();
             }
         }
 
@@ -119,11 +113,8 @@ class AdminController extends Controller
     // Orders
     public function showOrders($id)
     {
-        $recentOrder = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-            ->where('orders.id', $id)
-            ->get();
-        return view('admin.orders.update', compact('recentOrder'));
+        $orders = Order::findOrFail($id)->load('items');
+        return view('admin.orders.update', compact('orders'));
     }
 
     public function updateOrders(Request $request, $id)

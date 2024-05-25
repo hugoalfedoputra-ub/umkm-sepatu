@@ -86,38 +86,56 @@
             </form>
 
             <div class="grid grid-cols-2 gap-4">
-               @php
-                  $uniqueOrders = $recentOrders->unique('nomor_id');
-               @endphp
-               @foreach ($uniqueOrders as $order)
+
+               @foreach ($recentOrders as $order)
                   <div class="flex flex-row justify-between bg-gray-800 p-4 rounded-lg shadow-md relative">
-                     <div class="">
-                        <p>Order ID: {{ $order->nomor_id }}</p>
-                        <p>Total Price: Rp{{ number_format($order->harga, 2) }}</p>
-                        <p>Status: <span
-                              style="color:
-                                        @switch($order->status)
-                                            @case('pending')
-                                                yellow;
-                                                @break
-                                            @case('diproses')
-                                                orange;
-                                                @break
-                                            @case('dalam perjalanan')
-                                                blue;
-                                                @break
-                                            @case('selesai')
-                                                green;
-                                                @break
-                                            @case('canceled')
-                                                red;
-                                                @break
-                                        @endswitch
-                                    ">{{ $order->status }}</span>
-                        </p>
-                     </div>
-                     <button onclick="window.location='{{ url('admin/orders/update/' . $order->nomor_id) }}'"
-                        class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded absolute bottom-4 right-4">Edit
+                     <table class="text-white">
+                        <tbody>
+                           <tr>
+                              <td>Order ID</td>
+                              <td>: {{ $order->id }}</td>
+                           </tr>
+                           <tr>
+                              <td>Total Price</td>
+                              <td>: Rp{{ number_format($order->total_price, 2) }}</td>
+                           </tr>
+                           <tr>
+                              <td>Status</td>
+                              <td>:
+                                 <span
+                                    style="color:
+                                    @switch($order->status)
+                                        @case('pending')
+                                            yellow;
+                                            @break
+                                        @case('diproses')
+                                            orange;
+                                            @break
+                                        @case('dalam perjalanan')
+                                            blue;
+                                            @break
+                                        @case('selesai')
+                                            green;
+                                            @break
+                                        @case('canceled')
+                                            red;
+                                            @break
+                                    @endswitch
+                                 ">{{ $order->status }}</span>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td class="pr-2">Jumlah Produk Dibeli</td>
+                              <td>: {{ $order->items->sum('quantity') }}</td>
+                           </tr>
+                           <tr>
+                              <td>Waktu Order</td>
+                              <td>: {{ $order->created_at->format('d M Y H:i') }}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <button onclick="window.location='{{ url('admin/orders/update/' . $order->id) }}'"
+                        class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded absolute bottom-4 right-4">Detail
                         pesanan</button>
                   </div>
                @endforeach

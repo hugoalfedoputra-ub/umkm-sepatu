@@ -18,7 +18,7 @@ class OrderSeeder extends Seeder
         $products = Product::all();
 
         foreach ($users as $user) {
-            for ($i = 0; $i < 30; $i++) {
+            for ($i = 0; $i < 2; $i++) {
                 $date = $faker->dateTimeBetween('-1 years', 'now');
                 $order = Order::create([
                     'user_id' => $user->id,
