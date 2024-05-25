@@ -31,10 +31,10 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-
+                
                 <!-- Search Button -->
                 <div class="ml-3 relative">
-                    <button @click="openSearch = !openSearch"
+                    <button id="searchButton" @click="openSearch = !openSearch"
                         class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-300 transition duration-150 ease-in-out">
                         <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -49,7 +49,7 @@
                         x-transition:leave="transition ease-in duration-300"
                         x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                         class="absolute right-0 mt-4 w-full sm:w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
-                        <form action="{{ route('search') }}" method="GET" class="relative">
+                        <form action="{{ route('filter') }}" method="GET" class="relative">
                             <div class="relative">
                                 <input type="text" name="query" id="search"
                                     class="w-full border-0 rounded bg-gray-50 pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-500"
@@ -63,7 +63,6 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
 
                 @auth
@@ -128,7 +127,7 @@
                     x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
                     x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
                     class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
-                    <form action="{{ route('search') }}" method="GET" class="relative">
+                    <form action="{{ route('filter') }}" method="GET" class="relative">
                         <input type="text" name="query" id="search"
                             class="w-full border-4 border-black rounded bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
                             placeholder="Search...">

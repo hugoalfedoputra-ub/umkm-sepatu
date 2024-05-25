@@ -9,12 +9,11 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HistoryController;
-use App\Http\Controllers\SearchController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
-Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/filter', [ProductController::class, 'filter'])->name('filter');
 
 Route::get('/about', function () {
     return view('about.index');
