@@ -80,10 +80,6 @@
                         </table>
                      </div>
                   </div>
-                  <?php
-                  $order_status = $order->status;
-                  $order_id = $order->nomor_id;
-                  ?>
                @endforeach
             </div>
             <br>
@@ -92,15 +88,15 @@
                <div>
                   Status:
                   <select name="status" class="bg-gray-700 text-white rounded-md">
-                     <option value="pending" @if ($order_status == 'pending') selected @endif>
+                     <option value="pending" @if ($orders->status == 'pending') selected @endif>
                         Pending</option>
-                     <option value="diproses" @if ($order_status == 'diproses') selected @endif>
+                     <option value="diproses" @if ($orders->status == 'diproses') selected @endif>
                         Diproses</option>
-                     <option value="dalam perjalanan" @if ($order_status == 'dalam perjalanan') selected @endif>Dalam
+                     <option value="dalam perjalanan" @if ($orders->status == 'dalam perjalanan') selected @endif>Dalam
                         Perjalanan</option>
-                     <option value="selesai" @if ($order_status == 'selesai') selected @endif>
+                     <option value="selesai" @if ($orders->status == 'selesai') selected @endif>
                         Selesai</option>
-                     <option value="canceled" @if ($order_status == 'canceled') selected @endif>
+                     <option value="canceled" @if ($orders->status == 'canceled') selected @endif>
                         Canceled</option>
                   </select>
                </div>
