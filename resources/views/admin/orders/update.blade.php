@@ -60,10 +60,24 @@
                @foreach ($orders->items as $order)
                   <div class="flex flex-row justify-between bg-gray-800 p-4 rounded-lg shadow-md relative">
                      <div class="">
-                        <p>Nama Produk: {{ $order->name }}</p>
-                        <p>Warna: {{ $order->color }}</p>
-                        <p>Kuantitas: {{ $order->quantity }}</p>
-                        <p>Harga: Rp{{ number_format($order->price, 2) }}</p>
+                        <table>
+                           <tr>
+                              <td class="pr-2">Nama Produk</td>
+                              <td>: {{ $order->name }}</td>
+                           </tr>
+                           <tr>
+                              <td>Warna</td>
+                              <td>: {{ $order->color }}</td>
+                           </tr>
+                           <tr>
+                              <td>Kuantitas</td>
+                              <td>: {{ $order->quantity }}</td>
+                           </tr>
+                           <tr>
+                              <td>Harga</td>
+                              <td>: Rp{{ number_format($order->price, 2) }}</td>
+                           </tr>
+                        </table>
                      </div>
                   </div>
                   <?php
