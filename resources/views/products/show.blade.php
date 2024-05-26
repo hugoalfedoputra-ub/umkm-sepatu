@@ -45,9 +45,20 @@
 
                <div id="stock-info" class="mt-2 text-sm"></div>
 
-               <button type="submit" class="mt-4 inline-block text-white py-2 px-4 rounded"
-                  id="add-to-cart-button">Tambah ke
-                  Keranjang</button>
+
+               @if (Auth::check() && Auth::user()->userrole === 'admin')
+                  <button
+                     class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded opacity-50 cursor-not-allowed">Tambah
+                     ke
+                     Keranjang</button>
+               @else
+                  <button type="submit" class="mt-4 inline-block text-white py-2 px-4 rounded"
+                     id="add-to-cart-button">Tambah ke
+                     Keranjang</button>
+                  <a href="/products/{{ $product->id }}"
+                     class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Beli
+                     Sekarang</a>
+               @endif
             </form>
          </div>
       </div>
