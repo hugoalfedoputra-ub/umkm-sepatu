@@ -1,4 +1,5 @@
 import "./bootstrap";
+import "./live_search";
 import "./ad_user";
 import "./ad_product";
 import "./product";

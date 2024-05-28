@@ -15,6 +15,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('/filter', [ProductController::class, 'filter'])->name('filter');
+Route::get('/live-search', [ProductController::class, 'liveSearch'])->name('liveSearch');
 
 Route::get('/about', function () {
     return view('about.index');

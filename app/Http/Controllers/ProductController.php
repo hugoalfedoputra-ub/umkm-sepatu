@@ -129,4 +129,27 @@ class ProductController extends Controller
 
         return view('products.filter', compact('products', 'sizes', 'colors', 'request'));
     }
+
+    public function liveSearch(Request $request)
+    {
+        if ($request->ajax()) {
+            $products = Product::where('name', 'LIKE', '%' . $request->search . '%')->get();
+            $output = '';
+            
+            if (count($products) > 0) {
+                foreach ($products as $product) {
+                    $output .= '<a href="' . route('products.show', $product->id) . '" class="block p-2 hover:bg-gray-200 border-t first:border-t-0 last:border-b-0">';
+                    $output .= '<div class="flex items-center space-x-4">';
+                    $output .= '<img src="' . $product->image . '" class="w-16 h-16 object-cover rounded-lg">';
+                    $output .= '<p class="text-sm font-medium text-gray-900">' . $product->name . '</p>';
+                    $output .= '</div>';
+                    $output .= '</a>';
+                }
+            } else {
+                $output = '<div class="p-2">No results found</div>';
+            }
+            
+            return response($output);
+        }
+    }    
 }

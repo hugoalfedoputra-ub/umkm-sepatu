@@ -32,7 +32,7 @@
                {{-- First Page Link --}}
                @if (!$paginator->onFirstPage())
                   <a href="{{ $paginator->url(1) }}"
-                     class="relative inline-flex items-center px-2 py-2 ml-3 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-l-md leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-green-800 transition ease-in-out duration-150 dark:bg-green-800 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
+                     class="relative inline-flex items-center px-2 py-2 ml-3 text-sm font-medium text-white bg-green-600 border border-green-600 rounded-l-md leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-700 transition ease-in-out duration-150 dark:bg-gray-700 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
                      aria-label="{{ __('pagination.first') }}">
                      {!! __('FIRST') !!} (1)
                   </a>
@@ -53,7 +53,7 @@
                   </span>
                @else
                   <a href="{{ $paginator->previousPageUrl() }}" rel="prev"
-                     class="relative inline-flex items-center px-2 py-2 mx-2 text-sm font-medium text-white bg-green-600 border border-green-600 leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-green-800 transition ease-in-out duration-150 dark:bg-green-800 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
+                     class="relative inline-flex items-center px-2 py-2 mx-2 text-sm font-medium text-white bg-green-600 border border-green-600 leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-700 transition ease-in-out duration-150 dark:bg-gray-700 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
                      aria-label="{{ __('pagination.previous') }}">
                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -71,7 +71,7 @@
                         @if ($page == $paginator->currentPage())
                            <span aria-current="page">
                               <span
-                                 class="relative inline-flex items-center px-4 py-2 mx-2 -ml-px text-sm font-medium text-white bg-green-600 border border-green-600 cursor-default leading-5 dark:bg-green-800 dark:border-green-800">{{ $page }}</span>
+                                 class="relative inline-flex items-center px-4 py-2 mx-2 -ml-px text-sm font-medium text-white bg-green-600 border border-green-600 cursor-default leading-5 dark:bg-gray-700 dark:border-green-800">{{ $page }}</span>
                            </span>
                         @elseif ($page >= $paginator->currentPage() - 2 && $page <= $paginator->currentPage() + 2)
                            <a href="{{ $url }}"
@@ -87,7 +87,7 @@
                {{-- Next Page Link --}}
                @if ($paginator->hasMorePages())
                   <a href="{{ $paginator->nextPageUrl() }}" rel="next"
-                     class="relative inline-flex items-center px-2 py-2 mx-2 -ml-px text-sm font-medium text-white bg-green-600 border border-green-600 leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-green-800 transition ease-in-out duration-150 dark:bg-green-800 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
+                     class="relative inline-flex items-center px-2 py-2 mx-2 -ml-px text-sm font-medium text-white bg-green-600 border border-green-600 leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-700 transition ease-in-out duration-150 dark:bg-gray-700 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
                      aria-label="{{ __('pagination.next') }}">
                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd"
@@ -112,7 +112,7 @@
                {{-- Last Page Link --}}
                @if ($paginator->hasMorePages())
                   <a href="{{ $paginator->url($paginator->lastPage()) }}"
-                     class="relative inline-flex items-center px-2 py-2 mx-2 -ml-px text-sm font-medium text-white bg-green-600 border border-green-600 rounded-r-md leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-green-800 transition ease-in-out duration-150 dark:bg-green-800 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
+                     class="relative inline-flex items-center px-2 py-2 mx-2 -ml-px text-sm font-medium text-white bg-green-600 border border-green-600 rounded-r-md leading-5 hover:bg-green-700 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-700 transition ease-in-out duration-150 dark:bg-gray-700 dark:border-green-800 dark:hover:bg-green-700 dark:active:bg-green-900 dark:focus:border-blue-800"
                      aria-label="{{ __('pagination.last') }}">
                      {!! __('LAST') !!}
                      ({{ $paginator->lastPage() }})

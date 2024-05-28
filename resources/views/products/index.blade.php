@@ -8,10 +8,10 @@
          <h2 class="text-2xl font-bold mb-4">Produk</h2>
 
          <form action="{{ route('filter') }}" method="GET" class="flex flex-col md:flex-row md:space-x-4 mb-6">
-            <input type="text" name="query" placeholder="Search Products" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white">
+            <input type="text" name="query" placeholder="Cari produk" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white">
             <div class="relative mb-4 md:mb-0 flex-grow">
                <select name="color" class="bg-gray-800 border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
-                     <option value="">Select Color</option>
+                     <option value="">Pilih Warna</option>
                      @foreach ($colors as $color)
                         <option value="{{ $color->color }}">{{ ucfirst($color->color) }}</option>
                      @endforeach
@@ -19,23 +19,23 @@
             </div>
             <div class="relative mb-4 md:mb-0 flex-grow">
                <select name="size" class="bg-gray-800 border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
-                     <option value="">Select Size</option>
+                     <option value="">Pilih Ukuran</option>
                      @foreach ($sizes as $size)
                         <option value="{{ $size->size }}">{{ $size->size }}</option>
                      @endforeach
                </select>
             </div>
-            <input type="number" name="price_min" placeholder="Min Price" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white" step="1000" min="0">
-            <input type="number" name="price_max" placeholder="Max Price" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white" step="1000" min="0">
+            <input type="number" name="price_min" placeholder="Harga Min" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white" step="1000" min="0">
+            <input type="number" name="price_max" placeholder="Harga maks" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white" step="1000" min="0">
             <div class="relative mb-4 md:mb-0 flex-grow">
                <select name="sort" class="bg-gray-800 border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
-                     <option value="">Sort By</option>
-                     <option value="rating_desc">Rating: Highest</option>
-                     <option value="rating_asc">Rating: Lowest</option>
-                     <option value="price_desc">Price: Highest</option>
-                     <option value="price_asc">Price: Lowest</option>
-                     <option value="comments_desc">Comments: Most</option>
-                     <option value="comments_asc">Comments: Least</option>
+                     <option value="">Urutkan</option>
+                     <option value="rating_desc">Rating Tertinggi</option>
+                     <option value="rating_asc">Rating Terendah</option>
+                     <option value="price_desc">Harga Tertinggi</option>
+                     <option value="price_asc">Harga Terendah</option>
+                     <option value="comments_desc">Komentar Terbanyak</option>
+                     <option value="comments_asc">Komentar Paling Sedikit</option>
                </select>
             </div>
             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg h-10">filter</button>

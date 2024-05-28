@@ -9,10 +9,7 @@
         </li>
         <li>
             <x-nav-link :href="route('admin.products.products')" :active="request()->routeIs(
-                'admin.products.products',
-                'admin.products.edit',
-                'admin.products.add_stock',
-                'admin.products.delete_stock',
+                'admin.products.*',
             )">{{ __('Products [V2]') }}</x-nav-link>
         </li>
         <li>
