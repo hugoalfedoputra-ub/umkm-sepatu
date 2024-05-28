@@ -28,16 +28,29 @@ class AdminController extends Controller
             // Default sorting
             $recentOrders = Order::with(['items' => function ($query) {
                 $query->orderBy($this->columnCommands['waktu_order'], 'desc');
-            }])->paginate(6)->withQueryString();
+            }])->paginate(6);
         } else {
             try {
-                $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
-                    $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
-                }])->paginate(6)->withQueryString();
+                if ($sortRequest == 'kuantitas') {
+                    $recentOrders = Order::with(['items'])
+                        ->select('orders.*', \DB::raw('SUM(order_items.quantity) as total_quantity'))
+                        ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                        ->groupBy('orders.id')
+                        ->orderBy('total_quantity', $sortDirection)
+                        ->paginate(6);
+                } else if ($sortRequest == 'status') {
+                    $recentOrders = Order::with(['items'])
+                        ->orderBy($this->columnCommands[$sortRequest], $sortDirection)
+                        ->paginate(6);
+                } else {
+                    $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
+                        $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
+                    }])->paginate(6);
+                }
             } catch (Exception $e) {
                 $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
                     $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
-                }])->paginate(6)->withQueryString();
+                }])->paginate(6);
             }
         }
 
