@@ -6,31 +6,45 @@
    <section class="flex">
 
       <!-- Sidebar -->
-      @include('layouts.sidebar')
+      {{-- @include('layouts.sidebar') --}}
 
       <!-- Main Content -->
       <main class="flex-1 p-4 ">
          <div class="container mx-auto">
             <h2 class="text-2xl font-bold mb-4">Selamat Datang di Dashboard Admin</h2>
-            <div class="grid grid-cols-3 gap-4 mb-8">
+            <div class="flex flex-wrap justify-between gap-4 mb-8">
                <!-- Card untuk jumlah produk -->
-               <div class="bg-gray-800 p-4 rounded-lg shadow-md">
+               <div class="bg-gray-800 p-4 rounded-lg shadow-md flex-1">
                   <h3 class="text-lg font-semibold">Banyak Produk</h3>
                   <p class="text-2xl">{{ $productCount }}</p>
                </div>
                <!-- Card untuk jumlah pengguna -->
-               <div class="bg-gray-800 p-4 rounded-lg shadow-md">
+               <div class="bg-gray-800 p-4 rounded-lg shadow-md flex-1">
                   <h3 class="text-lg font-semibold">Banyak Pengguna</h3>
                   <p class="text-2xl">{{ $userCount }}</p>
                </div>
-               <div class="bg-gray-800 p-4 rounded-lg shadow-md">
+               <!-- Card untuk Net Sales -->
+               <div class="bg-gray-800 p-4 rounded-lg shadow-md flex-1">
                   <h3 class="text-lg font-semibold">Net Sales</h3>
                   <p class="text-2xl">Rp. {{ number_format($netSales) }}</p>
                </div>
             </div>
 
-            {{-- Card untuk statistika penjualan --}}
+            {{-- Dropdown untuk memilih data chart --}}
+            <form action="{{ route('admin.dashboard') }}" method="GET">
+               <div class="flex flex-row gap-4 flex-shrink-0 mb-4 flex-wrap items-center">
+                  <select name="chart_type" class="bg-gray-800 text-white p-2 rounded-lg w-44">
+                     <option value="status" {{ request('chart_type') == 'status' ? 'selected' : '' }}>Status Pesanan
+                     </option>
+                     <option value="sales" {{ request('chart_type') == 'sales' ? 'selected' : '' }}>Produk Terjual
+                     </option>
+                  </select>
+                  <button type="submit"
+                     class="bg-gray-800 py-2 px-3 rounded-lg shadow-md hover:bg-gray-700 transition-colors duration-300">Tampilkan</button>
+               </div>
+            </form>
 
+            {{-- Card untuk statistika penjualan --}}
             <div id="sales_chart" class="container mb-8 text-black">
                <div class="p-4 bg-gray-100 rounded-lg">
                   {!! $chart->container() !!}
@@ -38,18 +52,16 @@
             </div>
 
             <script src="{{ $chart->cdn() }}"></script>
-
             {{ $chart->script() }}
 
             <div class="flex flex-row justify-between">
                <h2 class="text-2xl font-bold mb-4">Pesanan Terbaru</h2>
                <div class="flex justify-center">
-
                   {{ $recentOrders->links() }}
                </div>
             </div>
 
-            <!-- Card untuk pesanan terbaru -->
+            <!-- option untuk recent order -->
             <form action="{{ route('admin.dashboard') }}" method="GET">
                <div class="flex flex-row gap-4 flex-shrink-0 mb-4 flex-wrap items-center">
                   <select name="sort" class="bg-gray-800 text-white p-2 rounded-lg">
@@ -65,9 +77,6 @@
                      </option>
                      <option value="harga" {{ request('sort') == 'harga' ? 'selected' : '' }}>Harga total
                         pesanan
-                     </option>
-                     <option value="nama_produk" {{ request('sort') == 'nama_produk' ? 'selected' : '' }}>Nama
-                        produk
                      </option>
                   </select>
 
@@ -85,22 +94,23 @@
                </div>
             </form>
 
-            <div class="grid grid-cols-2 gap-4">
-
+            {{-- cards untuk recent Order --}}
+            <div class="flex flex-wrap -mx-2">
                @foreach ($recentOrders as $order)
-                  <div class="flex flex-row justify-between bg-gray-800 p-4 rounded-lg shadow-md relative">
-                     <table class="text-white">
-                        <tbody>
-                           <tr>
-                              <td>Order ID</td>
+                  <div class="w-full md:w-1/2 px-2 mb-4">
+                     <div class="bg-gray-800 p-4 rounded-lg shadow-md relative">
+                        <table class="w-full text-white"
+                           style="border-collapse: collapse; border: none; font-size: 0.9rem;">
+                           <tr class="mb-2">
+                              <td class="font-bold">Order ID</td>
                               <td>: {{ $order->id }}</td>
                            </tr>
-                           <tr>
-                              <td>Total Price</td>
+                           <tr class="mb-2">
+                              <td class="font-bold">Total Price</td>
                               <td>: Rp{{ number_format($order->total_price, 2) }}</td>
                            </tr>
-                           <tr>
-                              <td>Status</td>
+                           <tr class="mb-2">
+                              <td class="font-bold">Status</td>
                               <td>:
                                  <span
                                     style="color:
@@ -124,25 +134,28 @@
                                  ">{{ $order->status }}</span>
                               </td>
                            </tr>
-                           <tr>
-                              <td class="pr-2">Jumlah Produk Dibeli</td>
+                           <tr class="mb-2">
+                              <td class="font-bold">Jumlah Produk Dibeli</td>
                               <td>: {{ $order->items->sum('quantity') }}</td>
                            </tr>
                            <tr>
-                              <td>Waktu Order</td>
+                              <td class="font-bold">Waktu Order</td>
                               <td>: {{ $order->created_at->format('d M Y H:i') }}</td>
                            </tr>
-                        </tbody>
-                     </table>
-                     <button onclick="window.location='{{ url('admin/orders/update/' . $order->id) }}'"
-                        class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded absolute bottom-4 right-4">Detail
-                        pesanan</button>
+                           <tr>
+                              <td></td>
+                              <td class="flex justify-end mt-2">
+                                 <button onclick="window.location='{{ url('admin/orders/update/' . $order->id) }}'"
+                                    class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded">Detail
+                                    pesanan</button>
+                              </td>
+                           </tr>
+                        </table>
+                     </div>
                   </div>
                @endforeach
             </div>
          </div>
       </main>
-
-      <script></script>
    </section>
 </x-app-layout>

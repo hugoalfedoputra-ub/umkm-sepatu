@@ -23,6 +23,7 @@ class AdminController extends Controller
         $user = User::all();
         $sortRequest = $request->sort;
         $sortDirection = $request->direction;
+        $chartType = $request->chart_type ?? 'status';
 
         if ($sortRequest == null || !in_array($sortRequest, array_keys($this->columnCommands))) {
             // Default sorting
@@ -60,67 +61,66 @@ class AdminController extends Controller
         $netSales = Order::where('status', 'selesai')->sum('total_price');
 
         // Charting
-
-        $statuses = ['pending', 'diproses', 'dalam perjalanan', 'selesai', 'canceled'];
         $months = [];
-        $counts = [
-            'pending' => [],
-            'diproses' => [],
-            'dalam perjalanan' => [],
-            'selesai' => [],
-            'canceled' => []
-        ];
+        $chartData = [];
 
         // Loop through the last 12 months
         for ($i = 0; $i < 12; $i++) {
             $month = Carbon::now()->subMonths($i)->format('Y-m');
             $months[] = $month;
 
-            foreach ($statuses as $status) {
-                $counts[$status][] = Order::where('status', $status)
+            if ($chartType == 'status') {
+                $statuses = ['pending', 'diproses', 'dalam perjalanan', 'selesai', 'canceled'];
+                foreach ($statuses as $status) {
+                    $chartData[$status][] = Order::where('status', $status)
+                        ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
+                        ->whereMonth('created_at', Carbon::now()->subMonths($i)->month)
+                        ->count();
+                }
+            } else if ($chartType == 'sales') {
+                $chartData['selesai'][] = Order::where('status', 'selesai')
                     ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
                     ->whereMonth('created_at', Carbon::now()->subMonths($i)->month)
-                    ->count();
+                    ->withSum('items', 'quantity')
+                    ->get()
+                    ->sum('items_sum_quantity');
             }
         }
 
         // Reverse arrays for correct chronological order
         $months = array_reverse($months);
-        foreach ($statuses as $status) {
-            $counts[$status] = array_reverse($counts[$status]);
+        foreach ($chartData as $key => $data) {
+            $chartData[$key] = array_reverse($data);
         }
 
-        $chart = (new LarapexChart)->barChart()
-            ->setTitle('Kuantitas Penjualan')
-            ->setSubtitle('Berdasarkan status pesanan')
-            ->setXAxis($months)
-            ->setGrid()
-            ->setMarkers($colors = ['#000000'])
-            ->setFontFamily("Figtree")
-            ->setDataset([
-                [
-                    'name'  =>  'Pending',
-                    'data'  =>  $counts['pending']
-                ],
-                [
-                    'name'  =>  'Diproses',
-                    'data'  =>  $counts['diproses']
-                ],
-                [
-                    'name'  =>  'Dalam Perjalanan',
-                    'data'  =>  $counts['dalam perjalanan']
-                ],
-                [
-                    'name'  =>  'Selesai',
-                    'data'  =>  $counts['selesai']
-                ],
-                [
-                    'name'  =>  'Canceled',
-                    'data'  =>  $counts['canceled']
-                ]
-            ]);
+        if ($chartType == 'status') {
+            $chart = (new LarapexChart)->barChart()
+                ->setTitle('Kuantitas Penjualan')
+                ->setSubtitle('Berdasarkan status pesanan')
+                ->setXAxis($months)
+                ->setGrid()
+                ->setMarkers($colors = ['#000000'])
+                ->setFontFamily("Figtree")
+                ->setDataset(array_map(function ($key, $data) {
+                    return ['name' => ucfirst($key), 'data' => $data];
+                }, array_keys($chartData), $chartData));
+        } else if ($chartType == 'sales') {
+            $chart = (new LarapexChart)->lineChart()
+                ->setTitle('Produk Terjual')
+                ->setSubtitle('Berdasarkan Produk Terjual')
+                ->setXAxis($months)
+                ->setGrid()
+                ->setMarkers($colors = ['#000000'])
+                ->setFontFamily("Figtree")
+                ->setDataset([
+                    [
+                        'name' => 'Terjual',
+                        'data' => $chartData['selesai']
+                    ]
+                ]);
+        }
 
-        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount', 'netSales', 'chart', 'months', 'counts'));
+        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount', 'netSales', 'chart', 'months', 'chartData'));
     }
 
     // Orders
