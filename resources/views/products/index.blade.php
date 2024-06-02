@@ -5,43 +5,38 @@
 
    <section class="bg-whitebg products md:container md:mx-auto py-8 lg:px-16">
       <div class="container mx-auto">
-<<<<<<< HEAD
          <h2 class="text-2xl text-black font-bold mb-4">Produk</h2>
-         <div class="grid grid-cols-1 text-black md:grid-cols-3 gap-4">
-            @foreach ($products as $product)
-               <div class="bg-beige p-4 rounded-lg shadow-md m-2">
-                  <img src="{{ $product->image }}" alt="{{ $product->name }}"
-                     class="w-full h-48 object-cover mb-4 rounded">
-                  <h3 class="font-bold">{{ $product->name }}</h3>
-                  <p class="text-green-600 font-semibold">Rp {{ number_format($product->price) }}</p>
-                  <a href="/products/{{ $product->id }}"
-                     class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv">Beli
-                     Sekarang</a>
-=======
-         <h2 class="text-2xl font-bold mb-4">Produk</h2>
 
-         <form action="{{ route('filter') }}" method="GET" class="flex flex-col md:flex-row md:space-x-4 mb-6">
-            <input type="text" name="query" placeholder="Cari produk" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white">
-            <div class="relative mb-4 md:mb-0 flex-grow">
-               <select name="color" class="bg-gray-800 border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
+         <!-- Search Input -->
+         <form action="{{ route('filter') }}" method="GET" class="mb-6">
+            <input type="text" name="query" placeholder="Cari produk" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10 mb-4">
+         
+            <!-- Filters -->
+            <div class="flex flex-wrap md:flex-nowrap md:space-x-4">
+               <div class="flex-grow mb-4 md:mb-0">
+                  <select name="color" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
                      <option value="">Pilih Warna</option>
                      @foreach ($colors as $color)
                         <option value="{{ $color->color }}">{{ ucfirst($color->color) }}</option>
                      @endforeach
-               </select>
-            </div>
-            <div class="relative mb-4 md:mb-0 flex-grow">
-               <select name="size" class="bg-gray-800 border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
+                  </select>
+               </div>
+               <div class="flex-grow mb-4 md:mb-0">
+                  <select name="size" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
                      <option value="">Pilih Ukuran</option>
                      @foreach ($sizes as $size)
                         <option value="{{ $size->size }}">{{ $size->size }}</option>
                      @endforeach
-               </select>
-            </div>
-            <input type="number" name="price_min" placeholder="Harga Min" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white" step="1000" min="0">
-            <input type="number" name="price_max" placeholder="Harga maks" class="bg-gray-800 border p-2 rounded-lg mb-4 md:mb-0 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto placeholder-white" step="1000" min="0">
-            <div class="relative mb-4 md:mb-0 flex-grow">
-               <select name="sort" class="bg-gray-800 border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
+                  </select>
+               </div>
+               <div class="flex-grow mb-4 md:mb-0">
+                  <input type="number" name="price_min" placeholder="Harga Min" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10" step="1000" min="0">
+               </div>
+               <div class="flex-grow mb-4 md:mb-0">
+                  <input type="number" name="price_max" placeholder="Harga Maks" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10" step="1000" min="0">
+               </div>
+               <div class="flex-grow mb-4 md:mb-0">
+                  <select name="sort" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
                      <option value="">Urutkan</option>
                      <option value="rating_desc">Rating Tertinggi</option>
                      <option value="rating_asc">Rating Terendah</option>
@@ -49,21 +44,21 @@
                      <option value="price_asc">Harga Terendah</option>
                      <option value="comments_desc">Komentar Terbanyak</option>
                      <option value="comments_asc">Komentar Paling Sedikit</option>
-               </select>
+                  </select>
+               </div>
+               <div class="flex-grow mb-4 md:mb-0">
+                  <button type="submit" class="bg-orange text-white py-2 px-4 rounded-lg w-full h-10">Filter</button>
+               </div>
             </div>
-            <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg h-10">filter</button>
          </form>
-
-
 
          <div class="grid grid-cols-1 text-black md:grid-cols-3 gap-4">
             @foreach ($products as $product)
-               <div class="bg-white p-4 rounded-lg shadow-md m-2">
+               <div class="bg-beige p-4 rounded-lg shadow-md m-2">
                   <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-48 object-cover mb-4 rounded">
                   <h3 class="font-bold">{{ $product->name }}</h3>
-                  <p class="text-green-600 font-semibold">Rp {{ number_format($product->price) }}</p>
-                  <a href="/products/{{ $product->id }}" class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Beli Sekarang</a>
->>>>>>> 0c737c266b1be29e5da31c051ce944939eeec25f
+                  <p class="text-brown font-semibold">Rp {{ number_format($product->price) }}</p>
+                  <a href="/products/{{ $product->id }}" class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv">Beli Sekarang</a>
                </div>
             @endforeach
          </div>

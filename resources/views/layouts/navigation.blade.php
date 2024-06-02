@@ -1,34 +1,4 @@
-<<<<<<< HEAD
-<nav x-data="{ open: false, openSearch: false }" class="bg-white dark:bg-brown border-b border-gray-100 dark:border-beige">
-    <!-- Primary Navigation Menu -->
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    @if (Auth::check() && Auth::user()->userrole == 'admin')
-                        <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs(['admin.*'])">{{ __('Dashboard Admin') }}</x-nav-link>
-                    @endif
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-nav-link>
-                    <x-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show', 'search'])">{{ __('Product') }}</x-nav-link>
-                    <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">{{ __('Tentang Kami') }}</x-nav-link>
-                    <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">{{ __('Kontak') }}</x-nav-link>
-                    @if (Auth::check() && Auth::user()->userrole != 'admin')
-                        @auth
-                            <x-nav-link :href="route('cart.index')" :active="request()->routeIs(['cart.index', 'checkout.index'])">{{ __('Keranjang') }}</x-nav-link>
-                            <x-nav-link :href="url('history/' . \Auth::id())" :active="request()->routeIs(['history.index'])">{{ __('Pemesanan') }}</x-nav-link>
-                        @endauth
-                    @endif
-                </div>
-=======
-<nav x-data="{ open: false, openSearch: false }" class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false, openSearch: false }" class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-brown border-b border-gray-100 dark:border-gray-700">
    <!-- Primary Navigation Menu -->
    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
@@ -38,7 +8,6 @@
                <a href="{{ route('home') }}">
                   <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                </a>
->>>>>>> 0c737c266b1be29e5da31c051ce944939eeec25f
             </div>
 
             <!-- Navigation Links -->

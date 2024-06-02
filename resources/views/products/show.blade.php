@@ -45,13 +45,6 @@
 
                <div id="stock-info" class="mt-2 text-sm"></div>
 
-<<<<<<< HEAD
-               <button type="submit" class="bg-orange hover:bg-orangehv mt-4 inline-block text-white py-2 px-4 rounded"
-                  id="add-to-cart-button">Tambah ke
-                  Keranjang</button>
-            </form>
-=======
->>>>>>> 0c737c266b1be29e5da31c051ce944939eeec25f
 
                @if (Auth::check() && Auth::user()->userrole === 'admin')
                   <button

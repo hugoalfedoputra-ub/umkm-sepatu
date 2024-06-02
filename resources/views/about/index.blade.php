@@ -4,17 +4,17 @@
    </x-slot>
 
    <section class="about py-8">
-      <div class="container mx-auto px-4 md:px-8 lg:px-16 py-8">
-         <h2 class="text-2xl font-bold mb-4">Tentang Kami</h2>
-         <p class="mb-4">
+      <div class="bg-whitebg container mx-auto px-4 md:px-8 lg:px-16 py-8">
+         <h2 class="text-2xl text-black font-bold mb-4">Tentang Kami</h2>
+         <p class="text-black mb-4">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim
             sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.
          </p>
-         <p class="mb-4">
+         <p class="text-black mb-4">
             Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam.
             Sed arcu. Cras consequat.
          </p>
-         <p>
+         <p class ="text-black">
             Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
             Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.
          </p>

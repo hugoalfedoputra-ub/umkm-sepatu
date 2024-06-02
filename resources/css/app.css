@@ -1,11 +1,7 @@
 @import "./cart";
 @import "./ad_product";
-<<<<<<< HEAD
-@import "./sidebar";
-=======
 @import "./review";
 /* @import "./sidebar"; */
->>>>>>> 0c737c266b1be29e5da31c051ce944939eeec25f
 
 @tailwind base;
 @tailwind components;
