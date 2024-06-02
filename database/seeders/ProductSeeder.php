@@ -14,13 +14,15 @@ class ProductSeeder extends Seeder
         $faker = Faker::create('id_ID');
         $sizes = ['37', '38', '39', '40', '41', '42', '43', '44'];
         $colors = ['black', 'red', 'white'];
+        $imagesPath = public_path('storage/images');
+        $images = array_diff(scandir($imagesPath), array('.', '..'));
 
         for ($i = 0; $i < 50; $i++) {
             $product = Product::create([
                 'name' => $faker->word,
-                'description' => $faker->sentence,
+                'description' => $faker->sentence(500),
                 'price' => $faker->numberBetween(100000, 500000),
-                'image' => 'storage/images/sepatu.jpg'
+                'image' => 'storage/images/' . $faker->randomElement($images),
             ]);
 
             foreach ($sizes as $size) {

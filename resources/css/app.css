@@ -1,6 +1,11 @@
 @import "./cart";
 @import "./ad_product";
+<<<<<<< HEAD
 @import "./sidebar";
+=======
+@import "./review";
+/* @import "./sidebar"; */
+>>>>>>> 0c737c266b1be29e5da31c051ce944939eeec25f
 
 @tailwind base;
 @tailwind components;
@@ -30,7 +35,7 @@ body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
         sans-serif;
-    font-size: 1.125rem;
+    font-size: 1rem;
     line-height: 1.6;
     background-color: darkslateblue;
 }

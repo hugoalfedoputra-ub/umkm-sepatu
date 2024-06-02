@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
         User::factory()->create([
             'name' => 'miaw',
@@ -27,7 +26,10 @@ class DatabaseSeeder extends Seeder
             'userrole' => 'admin',
         ]);
 
+        User::factory(50)->create();
+
         $this->call(ProductSeeder::class);
         $this->call(OrderSeeder::class);
+        $this->call(ReviewSeeder::class);
     }
 }

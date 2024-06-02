@@ -23,27 +23,35 @@ class AdminController extends Controller
         $user = User::all();
         $sortRequest = $request->sort;
         $sortDirection = $request->direction;
+        $chartType = $request->chart_type ?? 'status';
 
         if ($sortRequest == null || !in_array($sortRequest, array_keys($this->columnCommands))) {
             // Default sorting
-            $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                ->orderBy('orders.' . $this->columnCommands['waktu_order'], 'desc')
-                ->paginate(6)
-                ->withQueryString();
+            $recentOrders = Order::with(['items' => function ($query) {
+                $query->orderBy($this->columnCommands['waktu_order'], 'desc');
+            }])->paginate(6);
         } else {
             try {
-                $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-                    ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                    ->orderBy('orders.' . $this->columnCommands[$sortRequest], $sortDirection)
-                    ->paginate(6)
-                    ->withQueryString();
+                if ($sortRequest == 'kuantitas') {
+                    $recentOrders = Order::with(['items'])
+                        ->select('orders.*', \DB::raw('SUM(order_items.quantity) as total_quantity'))
+                        ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                        ->groupBy('orders.id')
+                        ->orderBy('total_quantity', $sortDirection)
+                        ->paginate(6);
+                } else if ($sortRequest == 'status') {
+                    $recentOrders = Order::with(['items'])
+                        ->orderBy($this->columnCommands[$sortRequest], $sortDirection)
+                        ->paginate(6);
+                } else {
+                    $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
+                        $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
+                    }])->paginate(6);
+                }
             } catch (Exception $e) {
-                $recentOrders = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-                    ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                    ->orderBy('order_items.' . $this->columnCommands[$sortRequest], $sortDirection)
-                    ->paginate(6)
-                    ->withQueryString();
+                $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
+                    $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
+                }])->paginate(6);
             }
         }
 
@@ -53,77 +61,73 @@ class AdminController extends Controller
         $netSales = Order::where('status', 'selesai')->sum('total_price');
 
         // Charting
-
-        $statuses = ['pending', 'diproses', 'dalam perjalanan', 'selesai', 'canceled'];
         $months = [];
-        $counts = [
-            'pending' => [],
-            'diproses' => [],
-            'dalam perjalanan' => [],
-            'selesai' => [],
-            'canceled' => []
-        ];
+        $chartData = [];
 
         // Loop through the last 12 months
         for ($i = 0; $i < 12; $i++) {
             $month = Carbon::now()->subMonths($i)->format('Y-m');
             $months[] = $month;
 
-            foreach ($statuses as $status) {
-                $counts[$status][] = Order::where('status', $status)
+            if ($chartType == 'status') {
+                $statuses = ['pending', 'diproses', 'dalam perjalanan', 'selesai', 'canceled'];
+                foreach ($statuses as $status) {
+                    $chartData[$status][] = Order::where('status', $status)
+                        ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
+                        ->whereMonth('created_at', Carbon::now()->subMonths($i)->month)
+                        ->count();
+                }
+            } else if ($chartType == 'sales') {
+                $chartData['selesai'][] = Order::where('status', 'selesai')
                     ->whereYear('created_at', Carbon::now()->subMonths($i)->year)
                     ->whereMonth('created_at', Carbon::now()->subMonths($i)->month)
-                    ->count();
+                    ->withSum('items', 'quantity')
+                    ->get()
+                    ->sum('items_sum_quantity');
             }
         }
 
         // Reverse arrays for correct chronological order
         $months = array_reverse($months);
-        foreach ($statuses as $status) {
-            $counts[$status] = array_reverse($counts[$status]);
+        foreach ($chartData as $key => $data) {
+            $chartData[$key] = array_reverse($data);
         }
 
-        $chart = (new LarapexChart)->barChart()
-            ->setTitle('Kuantitas Penjualan')
-            ->setSubtitle('Berdasarkan status pesanan')
-            ->setXAxis($months)
-            ->setGrid()
-            ->setMarkers($colors = ['#000000'])
-            ->setFontFamily("Figtree")
-            ->setDataset([
-                [
-                    'name'  =>  'Pending',
-                    'data'  =>  $counts['pending']
-                ],
-                [
-                    'name'  =>  'Diproses',
-                    'data'  =>  $counts['diproses']
-                ],
-                [
-                    'name'  =>  'Dalam Perjalanan',
-                    'data'  =>  $counts['dalam perjalanan']
-                ],
-                [
-                    'name'  =>  'Selesai',
-                    'data'  =>  $counts['selesai']
-                ],
-                [
-                    'name'  =>  'Canceled',
-                    'data'  =>  $counts['canceled']
-                ]
-            ]);
+        if ($chartType == 'status') {
+            $chart = (new LarapexChart)->barChart()
+                ->setTitle('Kuantitas Penjualan')
+                ->setSubtitle('Berdasarkan status pesanan')
+                ->setXAxis($months)
+                ->setGrid()
+                ->setMarkers($colors = ['#000000'])
+                ->setFontFamily("Figtree")
+                ->setDataset(array_map(function ($key, $data) {
+                    return ['name' => ucfirst($key), 'data' => $data];
+                }, array_keys($chartData), $chartData));
+        } else if ($chartType == 'sales') {
+            $chart = (new LarapexChart)->lineChart()
+                ->setTitle('Produk Terjual')
+                ->setSubtitle('Berdasarkan Produk Terjual')
+                ->setXAxis($months)
+                ->setGrid()
+                ->setMarkers($colors = ['#000000'])
+                ->setFontFamily("Figtree")
+                ->setDataset([
+                    [
+                        'name' => 'Terjual',
+                        'data' => $chartData['selesai']
+                    ]
+                ]);
+        }
 
-        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount', 'netSales', 'chart', 'months', 'counts'));
+        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount', 'netSales', 'chart', 'months', 'chartData'));
     }
 
     // Orders
     public function showOrders($id)
     {
-        $recentOrder = Order::select('orders.id as nomor_id', 'orders.created_at as waktu_order', 'orders.status as status', 'orders.address as address', 'order_items.quantity as kuantitas', 'order_items.price as harga', 'order_items.name as nama_produk', 'order_items.color as color')
-            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-            ->where('orders.id', $id)
-            ->get();
-        return view('admin.orders.update', compact('recentOrder'));
+        $orders = Order::findOrFail($id)->load('items');
+        return view('admin.orders.update', compact('orders'));
     }
 
     public function updateOrders(Request $request, $id)

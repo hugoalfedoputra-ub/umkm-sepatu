@@ -22,7 +22,11 @@
 
             <div class="flex flex-col gap-y-4 flex-shrink-0 w-full">
                @foreach ($products as $product)
+<<<<<<< HEAD
                   <div class="bg-beige rounded-lg flex flex-row gap-x-4 p-4">
+=======
+                  <div class="bg-gray-800 rounded-lg flex flex-row gap-x-16 p-4">
+>>>>>>> 0c737c266b1be29e5da31c051ce944939eeec25f
                      <div class="min-w-32">
                         <img src="{{ url($product->image) }}" alt="{{ $product->name }}"
                            class="w-32 h-32 object-cover rounded">
@@ -43,10 +47,15 @@
                            data-id="{{ $product->id }}">Hapus Produk</button>
                      </div>
                      <div>
-                        <p>{{ $product->description }}</p>
+                        <p>{{ Str::limit($product->description, 220, '...') }}</p>
                         <p>Rp. {{ number_format($product->price) }}</p>
+<<<<<<< HEAD
                         <div class="overflow-y-auto h-56">
                            <table class="min-w-full bg-whitebg rounded-lg" id="productTable">
+=======
+                        <div class="overflow-y-auto h-56 w-80">
+                           <table class="min-w-full bg-gray-800 rounded-lg text-center" id="productTable">
+>>>>>>> 0c737c266b1be29e5da31c051ce944939eeec25f
                               <thead>
                                  <tr>
                                     <th class="py-2 px-4">Ukuran</th>
