@@ -8,14 +8,14 @@
         <!-- Email Address -->
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('Email')" style="color:brown" />
             <x-text-input id="email" class="block mt-1 w-full bg-black text-white placeholder-white" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Password')" style="color:brown" />
             <x-text-input id="password" class="block mt-1 w-full bg-black text-white placeholder-gray-500" type="password" name="password" required autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>

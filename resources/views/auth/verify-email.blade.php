@@ -1,44 +1,31 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    </div>
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+    @if (session('status') == 'verification-link-sent')
+        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+        </div>
+    @endif
 
-        <!-- Email Address -->
-        <div class="bg-beige mt-4">
+    <div class="mt-4 flex items-center justify-between">
+        <form method="POST" action="{{ route('verification.send') }}">
+            @csrf
+
             <div>
-                <x-input-label for="email" :value="__('Email')" class="text-beige" />
-                <x-text-input id="email" class="block mt-1 w-full bg-beige text-black placeholder-gray-700" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-                <x-input-error :messages="$errors->get('email')" class="mt-2 text-beige" />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Password')" class="text-beige" />
-                <x-text-input id="password" class="block mt-1 w-full bg-beige text-black placeholder-gray-700" type="password" name="password" required autocomplete="current-password" />
-                <x-input-error :messages="$errors->get('password')" class="mt-2 text-beige" />
-            </div>
-
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center text-beige">
-                    <input id="remember_me" type="checkbox" class="rounded border-beige text-beige shadow-sm focus:ring-beige" name="remember">
-                    <span class="ml-2 text-sm">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-beige hover:text-beige rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-beige" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-primary-button class="ml-3 bg-beige text-black">
-                    {{ __('Log in') }}
+                <x-primary-button>
+                    {{ __('Resend Verification Email') }}
                 </x-primary-button>
             </div>
-        </div>
-    </form>
+        </form>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                {{ __('Log Out') }}
+            </button>
+        </form>
+    </div>
 </x-guest-layout>
