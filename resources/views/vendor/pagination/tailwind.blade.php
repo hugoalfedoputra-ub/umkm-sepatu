@@ -22,7 +22,7 @@
                @if ($paginator->onFirstPage())
                   <span aria-disabled="true" aria-label="{{ __('pagination.previous') }}">
                      <span
-                        class="relative inline-flex items-center px-1 py-2 mx-1 text-xs lg:text-lg font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-l-md leading-5 h-11 dark:bg-gray-800 dark:border-gray-600"
+                        class="relative inline-flex items-center px-1 py-2 mx-1 text-xs lg:text-lg font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-l-md leading-5 h-full dark:bg-gray-800 dark:border-gray-600"
                         aria-hidden="true">
                         <svg class="w-4 h-4 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20">
                            <path fill-rule="evenodd"
@@ -78,7 +78,7 @@
                @else
                   <span aria-disabled="true" aria-label="{{ __('pagination.next') }}">
                      <span
-                        class="relative inline-flex items-center px-1 py-1 mx-1 -ml-px text-xs lg:text-lg font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5 dark:bg-gray-800 dark:border-gray-600"
+                        class="relative inline-flex items-center px-1 py-1 mx-1 -ml-px text-xs lg:text-lg font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-r-md leading-5 dark:bg-gray-800 dark:border-gray-600 h-full"
                         aria-hidden="true">
                         <svg class="w-4 h-4 lg:w-6 lg:h-6" fill="currentColor" viewBox="0 0 20 20">
                            <path fill-rule="evenodd"

@@ -9,7 +9,7 @@
             <button class="text-base font-bold underline" onclick="window.location='{{ route('admin.products.products') }}' ">
                 Kembali </button>
             <div class="container mx-auto py-8">
-                <h2 class="text-2xl font-bold mb-4">Tambah Produk Baru [V2]</h2>
+                <h2 class="text-2xl font-bold mb-4">Tambah Produk Baru</h2>
 
                 <form action="{{ url('admin/products/add/save') }}" method="POST" enctype="multipart/form-data">
                     @csrf

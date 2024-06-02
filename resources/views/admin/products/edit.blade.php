@@ -9,7 +9,7 @@
          <button class="text-base font-bold underline" onclick="window.location='{{ route('admin.products.products') }}'">
             Kembali </button>
          <div class="container mx-auto py-8">
-            <h2 class="text-2xl font-sans mb-4">Edit Informasi Produk [V2]</h2>
+            <h2 class="text-2xl font-sans mb-4">Edit Informasi Produk</h2>
 
             <form action="{{ url('admin/products/update/v2/' . $product->id) }}" method="POST"
                enctype="multipart/form-data">
@@ -19,7 +19,7 @@
                      <p>{{ $error }}</p>
                   @endforeach
                   <div class="bg-beige rounded-lg flex flex-row gap-x-4 p-4">
-                     <div class="min-w-64">
+                     <div class="min-w-64 w-1/2">
                         <img src="{{ url($product->image) }}" alt="{{ $product->name }}" class=" object-cover rounded">
                      </div>
                      <div class="w-full">

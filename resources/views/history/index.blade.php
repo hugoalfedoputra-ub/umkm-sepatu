@@ -11,9 +11,13 @@
                <div class="grid grid-cols-3 gap-4">
                   @foreach ($myOrders as $order)
                      <div class="bg-beige p-4 rounded-lg shadow-md">
+                        <p>Order Items:</p>
+                        <ul>
+                           <p>&emsp;&emsp;Product: {{ $order->nama_produk }}</p>
+                           <p>&emsp;&emsp;Color: {{ $order->color }}</p>
+                           <p>&emsp;&emsp;Quantity: {{ $order->kuantitas }}</p>
+                        </ul>
                         <div class="">
-                           <p>Order ID: {{ $order->nomor_id }}</p>
-                           <p>Total Price: Rp{{ number_format($order->harga, 2) }}</p>
                            <p>Status: <span
                                  style="color:
                                         @switch($order->status)
@@ -35,13 +39,9 @@
                                         @endswitch
                                     ">{{ $order->status }}</span>
                            </p>
-                           <p>Order Items:</p>
-                           <ul>
-                              <p>&emsp;&emsp;Product: {{ $order->nama_produk }}</p>
-                              <p>&emsp;&emsp;Color: {{ $order->color }}</p>
-                              <p>&emsp;&emsp;Quantity: {{ $order->kuantitas }}</p>
-                           </ul>
+                           <p>Total Price: Rp{{ number_format($order->harga, 2) }}</p>
                         </div>
+
                      </div>
                   @endforeach
                </div>
