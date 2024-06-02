@@ -1,5 +1,5 @@
-<aside class="w-64 bg-gray-800 text-white min-h-screen p-4">
-    <h2 class="text-xl font-bold mb-4">Sidebar</h2>
+<aside class="w-64 bg-beige text-orange min-h-screen p-4">
+    <h2 class="text-3xl font-sans mb-4">SIDEBAR</h2>
     <ul>
         <li>
             <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard', 'admin.orders.update')">{{ __('Overview') }}</x-nav-link>

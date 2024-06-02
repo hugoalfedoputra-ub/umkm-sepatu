@@ -3,16 +3,16 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <section class="cart py-4 lg:py-8">
+    <section class="bg-whitebg cart py-4 lg:py-8">
         <div class="md:container md:mx-auto px-4 lg:px-8">
-            <h2 class="text-2xl font-bold mb-4">Keranjang Belanja</h2>
+            <h2 class="text-2xl text-black font-bold mb-4">Keranjang Belanja</h2>
             <div id="isikart">
 
                 @if ($cart && $cart->items->isNotEmpty())
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                         @foreach ($cart->items as $item)
                             <div id="cart-item-{{ $item->id }}"
-                                class="bg-white text-black p-3 lg:p-4 rounded-lg shadow-md flex flex-row relative">
+                                class="bg-beige text-black p-3 lg:p-4 rounded-lg shadow-md flex flex-row relative">
                                 <div class="absolute top-2 right-2">
                                     <form action="{{ route('cart.remove', $item->id) }}" method="POST"
                                         id="remove-form-{{ $item->id }}">
@@ -84,13 +84,13 @@
                         @endforeach
                     </div>
                 @else
-                    <p>Keranjang Anda kosong.</p>
+                <p class="text-xl text-black mb-4">Keranjang Anda Kosong</p>
                 @endif
             </div>
 
             <div class="text-right mt-2 lg:mt-4" id="pricenih">
                 @if ($cart && $cart->items !== null && $cart->items->isNotEmpty())
-                    <p id="total-price" class="text-lg font-bold"></p>
+                    <p id="total-price" class="text-lg text-black font-bold"></p>
 
                     <form id="buy-form" action="{{ route('cart.confirmChanges') }}" method="POST"
                         style="display: none;">
@@ -98,7 +98,7 @@
                     </form>
 
                     <button id="buy-button"
-                        class="mt-2 lg:mt-4 bg-green-600 inline-block text-white py-2 px-4 rounded hover:bg-green-500">
+                        class="mt-2 lg:mt-4 bg-orange inline-block text-white py-2 px-4 rounded hover:bg-orangehv">
                     </button>
                 @endif
             </div>

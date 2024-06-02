@@ -3,9 +3,9 @@
       Kontak Kami
    </x-slot>
 
-   <section class="contact py-8">
+   <section class="bg-whitebg contact py-8">
       <div class="md:container md:mx-auto px-4 md:px-8 lg:px-16 py-8">
-         <h2 class="text-2xl font-bold mb-4">Kontak Kami</h2>
+         <h2 class="text-2xl text-black font-bold mb-4">Kontak Kami</h2>
          <form>
             <div class="mb-4">
                <label for="name" class="block text-gray-700 font-bold mb-2">Nama</label>
@@ -26,7 +26,7 @@
                   required></textarea>
             </div>
             <button type="submit"
-               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+               class="bg-orange hover:bg-orangehv text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                Kirim Pesan
             </button>
          </form>

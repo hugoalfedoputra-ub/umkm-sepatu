@@ -17,16 +17,16 @@
 
    <section class="products py-8 min-h-screen lg:px-16 md:container md:mx-auto">
       <div class="container mx-auto">
-         <h2 class="text-2xl text-white font-bold mb-4">Produk Terbaru</h2>
+         <h2 class="text-2xl text-black font-bold mb-4">Produk Terbaru</h2>
          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @foreach ($products as $product)
-               <div class="bg-white text-black p-4 rounded-lg shadow-md m-2">
+               <div class="bg-beige text-black p-4 rounded-lg shadow-md m-2">
                   <img src="{{ $product->image }}" alt="{{ $product->name }}"
                      class="w-full h-48 object-cover mb-4 rounded">
                   <h3 class="font-bold">{{ $product->name }}</h3>
                   <p class="text-green-600 font-semibold">Rp {{ number_format($product->price) }}</p>
                   <a href="/products/{{ $product->id }}"
-                     class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Beli
+                     class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv">Beli
                      Sekarang</a>
                </div>
             @endforeach

@@ -3,8 +3,8 @@
       Produk - {{ $product->name }}
    </x-slot>
 
-   <section class="product-detail py-8">
-      <div class="container mx-auto flex text-black bg-white p-4 rounded-lg shadow-md">
+   <section class="bg-whitebg product-detail py-8">
+      <div class="container mx-auto flex text-black bg-beige p-4 rounded-lg shadow-md">
          <div class="w-1/2">
             <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
                class="w-full h-96 object-cover rounded-lg mb-4">
@@ -42,11 +42,11 @@
                <label for="quantity"
                   class="quantity-label block text-sm font-medium text-gray-700 mt-4">Quantity</label>
                <input type="number" name="quantity" id="quantity" value="1" min="1"
-                  class="mt-1 block w-16 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                  class="mt-1 block w-16 rounded-md border-gray-300 shado w-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
 
                <div id="stock-info" class="mt-2 text-sm"></div>
 
-               <button type="submit" class="mt-4 inline-block text-white py-2 px-4 rounded"
+               <button type="submit" class="bg-orange hover:bg-orangehv mt-4 inline-block text-white py-2 px-4 rounded"
                   id="add-to-cart-button">Tambah ke
                   Keranjang</button>
             </form>

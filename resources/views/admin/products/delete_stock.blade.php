@@ -6,8 +6,8 @@
     <section class="flex">
         @include('layouts.sidebar')
 
-        <div class="flex-1 p-4 text-white">
-            <button class="underline" onclick="window.location='{{ route('admin.products.products') }}'">
+        <div class="bg-whitebg flex-1 p-4 text-black">
+            <button class=" text-base font-bold underline" onclick="window.location='{{ route('admin.products.products') }}'">
                 Kembali </button>
             <div class="container mx-auto py-8">
                 <h2 class="text-2xl font-bold mb-4">Hapus Inventaris Produk [V2]</h2>
@@ -16,7 +16,7 @@
 
                 <div class="flex flex-col gap-y-4 flex-shrink-0 w-full">
 
-                    <table class="w-[50%] bg-gray-800 rounded-lg" id="productTable">
+                    <table class="w-[50%] bg-beige rounded-lg" id="productTable">
                         <thead>
                             <tr>
                                 <th class="py-2 px-4">Ukuran</th>
@@ -37,7 +37,7 @@
                                                 action="{{ url('admin/products/delete/stock/v2/' . $variant->id . '/' . $product->id) }}"
                                                 method="GET">
                                                 <button type="submit"
-                                                    class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded">Hapus
+                                                    class="bg-orange hover:bg-orangehv text-white font-bold py-1 px-2 rounded">Hapus
                                                     Stok</button>
                                             </form>
                                         </td>

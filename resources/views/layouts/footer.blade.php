@@ -1,4 +1,4 @@
-<footer class="dark:bg-gray-800 text-white border border-gray-100 dark:border-gray-700 p-4">
+<footer class="dark:bg-brown text-white border border-gray-100 dark:border-gray-700 p-4">
    <div class="container mx-auto flex flex-col items-center justify-center">
       <p>&copy; 2024 Butik Sepatu. All rights reserved.</p>
       <nav class="text-center">

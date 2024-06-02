@@ -6,8 +6,8 @@
     <section class="flex">
         @include('layouts.sidebar')
 
-        <div class="flex-1 p-4 text-white">
-            <button class="underline" onclick="window.location='{{ route('admin.products.products') }}'">
+        <div class="bg-whitebg flex-1 p-4 text-black">
+            <button class="text-base font-bold underline" onclick="window.location='{{ route('admin.products.products') }}'">
                 Kembali </button>
             <div class="container mx-auto py-8">
 
@@ -16,12 +16,12 @@
                     <p>{{ $error }}</p>
                 @endforeach
                 <button
-                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange text-base font-medium text-white hover:bg-orangehv focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                     onclick="addRow()">Tambah baris</button>
 
                 <form action="{{ url('admin/products/edit/stock/save/v2/' . $product->id) }}" method="POST">
                     @csrf
-                    <table class="min-w-full bg-gray-800 rounded-lg mt-4" id="productTable">
+                    <table class="min-w-full bg-beige rounded-lg mt-4" id="productTable">
                         <thead>
                             <tr>
                                 <th class="p-4">Ukuran</th>
@@ -36,7 +36,7 @@
                     </table>
                     <div class="mt-4">
                         <button
-                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Simpan</button>
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange text-base font-medium text-white hover:bg-orangehv focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Simpan</button>
                     </div>
 
                     <br>

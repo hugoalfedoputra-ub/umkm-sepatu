@@ -3,10 +3,10 @@
         Checkout
     </x-slot>
 
-    <section class="checkout py-8">
+    <section class="bg-whitebg checkout py-8">
         <div class="md:container md:mx-auto lg:px-16">
-            <h2 class="text-2xl text-white font-bold mb-4">Checkout</h2>
-            <div class="bg-white p-4 text-black rounded-lg shadow-md">
+            <h2 class="text-2xl text-black font-bold mb-4">Checkout</h2>
+            <div class="bg-beige p-4 text-black rounded-lg shadow-md">
                 <h3 class="text-xl text-black font-bold mb-4">Rincian Pesanan</h3>
                 <table class="w-full mb-4">
                     <thead>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="text-right">
                         <button type="submit" id="whatsapp-button"
-                            class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Pesan via
+                            class="bg-orange text-white px-4 py-2 rounded hover:bg-orangehv">Pesan via
                             Whatsapp</button>
                     </div>
                 </form>
