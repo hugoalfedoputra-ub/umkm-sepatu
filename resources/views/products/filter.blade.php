@@ -9,7 +9,7 @@
 
          <!-- Search Input -->
          <form action="{{ route('filter') }}" method="GET" class="mb-6">
-
+            <input type="hidden" name="query" value="{{ $request->input('query') }}">
             <!-- Button to show filters on small screens -->
             <button type="button" class="md:hidden bg-orange text-white py-2 px-4 rounded-lg flex items-center"
                id="toggle-filters-button">
@@ -75,9 +75,9 @@
                   <img src="{{ $product->image }}" alt="{{ $product->name }}"
                      class="w-full h-48 object-cover mb-4 rounded">
                   <h3 class="font-bold">{{ $product->name }}</h3>
-                  <p class="text-green-600 font-semibold">Rp {{ number_format($product->price) }}</p>
+                  <p class="text-brown font-semibold">Rp {{ number_format($product->price) }}</p>
                   <a href="/products/{{ $product->id }}"
-                     class="mt-4 inline-block bg-green-600 text-white py-2 px-4 rounded hover:bg-green-500">Beli
+                     class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv">Beli
                      Sekarang</a>
                </div>
             @endforeach
