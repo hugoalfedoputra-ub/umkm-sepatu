@@ -4,13 +4,13 @@
    </x-slot>
 
    <section class="cart py-4 lg:py-8">
-      <div class="md:container md:mx-auto px-4 lg:px-8">
-         <h2 class="text-2xl font-bold mb-4">Pemesanan Anda</h2>
+      <div class="md:container md:mx-auto px-4 lg:px-8 text-black">
+         <h2 class="text-2xl text-black font-bold mb-4">Pemesanan Anda</h2>
          <div>
             @if ($myOrders->isNotEmpty())
                <div class="grid grid-cols-3 gap-4">
                   @foreach ($myOrders as $order)
-                     <div class="bg-gray-800 p-4 rounded-lg shadow-md">
+                     <div class="bg-beige p-4 rounded-lg shadow-md">
                         <div class="">
                            <p>Order ID: {{ $order->nomor_id }}</p>
                            <p>Total Price: Rp{{ number_format($order->harga, 2) }}</p>
@@ -18,7 +18,7 @@
                                  style="color:
                                         @switch($order->status)
                                             @case('pending')
-                                                yellow;
+                                                maroon;
                                                 @break
                                             @case('diproses')
                                                 orange;
@@ -49,7 +49,7 @@
                   {{ $myOrders->links() }}
                </div>
             @else
-               <p>Anda belum memesan.</p>
+               <p class="text-black">Anda belum memesan.</p>
             @endif
          </div>
       </div>
