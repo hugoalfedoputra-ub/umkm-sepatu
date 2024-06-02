@@ -3,18 +3,29 @@
       Produk
    </x-slot>
 
-   <section class="bg-whitebg products md:container md:mx-auto py-8 lg:px-16">
+   <section class="bg-whitebg products md:container md:mx-auto py-8 p-4 lg:px-16">
       <div class="container mx-auto">
          <h2 class="text-2xl text-black font-bold mb-4">Produk</h2>
 
          <!-- Search Input -->
          <form action="{{ route('filter') }}" method="GET" class="mb-6">
-            <input type="text" name="query" placeholder="Cari produk" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10 mb-4">
-         
+
+            <!-- Button to show filters on small screens -->
+            <button type="button" class="md:hidden bg-orange text-white py-2 px-4 rounded-lg flex items-center"
+               id="toggle-filters-button">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                     d="M3 4a1 1 0 011-1h16a1 1 0 110 2H4a1 1 0 01-1-1zM3 12a1 1 0 011-1h16a1 1 0 110 2H4a1 1 0 01-1-1zM3 20a1 1 0 011-1h16a1 1 0 110 2H4a1 1 0 01-1-1z" />
+               </svg>
+            </button>
+
             <!-- Filters -->
-            <div class="flex flex-wrap md:flex-nowrap md:space-x-4">
+            <div id="filters"class="hidden md:flex flex-col mt-4 lg:mt-0 lg:flex lg:flex-row lg:space-x-4">
+
                <div class="flex-grow mb-4 md:mb-0">
-                  <select name="color" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
+                  <select name="color"
+                     class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
                      <option value="">Pilih Warna</option>
                      @foreach ($colors as $color)
                         <option value="{{ $color->color }}">{{ ucfirst($color->color) }}</option>
@@ -22,7 +33,8 @@
                   </select>
                </div>
                <div class="flex-grow mb-4 md:mb-0">
-                  <select name="size" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
+                  <select name="size"
+                     class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
                      <option value="">Pilih Ukuran</option>
                      @foreach ($sizes as $size)
                         <option value="{{ $size->size }}">{{ $size->size }}</option>
@@ -30,13 +42,18 @@
                   </select>
                </div>
                <div class="flex-grow mb-4 md:mb-0">
-                  <input type="number" name="price_min" placeholder="Harga Min" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10" step="1000" min="0">
+                  <input type="number" name="price_min" placeholder="Harga Min"
+                     class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10"
+                     step="1000" min="0">
                </div>
                <div class="flex-grow mb-4 md:mb-0">
-                  <input type="number" name="price_max" placeholder="Harga Maks" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10" step="1000" min="0">
+                  <input type="number" name="price_max" placeholder="Harga Maks"
+                     class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white h-10"
+                     step="1000" min="0">
                </div>
                <div class="flex-grow mb-4 md:mb-0">
-                  <select name="sort" class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
+                  <select name="sort"
+                     class="bg-brown border p-2 rounded-lg w-full text-white focus:outline-none focus:ring-2 focus:ring-blue-500 h-10">
                      <option value="">Urutkan</option>
                      <option value="rating_desc">Rating Tertinggi</option>
                      <option value="rating_asc">Rating Terendah</option>
@@ -55,10 +72,13 @@
          <div class="grid grid-cols-1 text-black md:grid-cols-3 gap-4">
             @foreach ($products as $product)
                <div class="bg-beige p-4 rounded-lg shadow-md m-2">
-                  <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-full h-48 object-cover mb-4 rounded">
+                  <img src="{{ $product->image }}" alt="{{ $product->name }}"
+                     class="w-full h-48 object-cover mb-4 rounded">
                   <h3 class="font-bold">{{ $product->name }}</h3>
                   <p class="text-brown font-semibold">Rp {{ number_format($product->price) }}</p>
-                  <a href="/products/{{ $product->id }}" class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv">Beli Sekarang</a>
+                  <a href="/products/{{ $product->id }}"
+                     class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv">Beli
+                     Sekarang</a>
                </div>
             @endforeach
          </div>

@@ -3,7 +3,7 @@
       Produk - {{ $product->name }}
    </x-slot>
 
-   <section class="bg-whitebg product-detail py-8">
+   <section class="bg-whitebg product-detail md:container md:mx-auto py-8 p-4 lg:px-16">
       <div class="container mx-auto flex text-black bg-beige p-4 rounded-lg shadow-md">
          <div class="w-1/2">
             <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
@@ -47,12 +47,12 @@
 
 
                @if (Auth::check() && Auth::user()->userrole === 'admin')
-                  <button
-                     class="mt-4 inline-block text-white py-2 px-4 rounded opacity-50 cursor-not-allowed">Tambah
+                  <button class="mt-4 inline-block text-white py-2 px-4 rounded opacity-50 cursor-not-allowed">Tambah
                      ke
                      Keranjang</button>
                @else
-                  <button type="submit" class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv"
+                  <button type="submit"
+                     class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv"
                      id="add-to-cart-button">Tambah ke
                      Keranjang</button>
                   <a href="/products/{{ $product->id }}"

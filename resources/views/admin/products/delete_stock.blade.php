@@ -4,7 +4,6 @@
     </x-slot>
 
     <section class="flex">
-        @include('layouts.sidebar')
 
         <div class="bg-whitebg flex-1 p-4 text-black">
             <button class=" text-base font-bold underline" onclick="window.location='{{ route('admin.products.products') }}'">

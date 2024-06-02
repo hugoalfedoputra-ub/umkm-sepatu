@@ -1,6 +1,17 @@
 // product.js
 
 $(document).ready(function () {
+    // Pastikan ini adalah selektor jQuery yang benar
+    const filters = $("#filters");
+
+    $("#toggle-filters-button").click(function (event) {
+        if (filters.hasClass("hidden")) {
+            filters.removeClass("hidden").addClass("flex mt-4");
+        } else {
+            filters.removeClass("flex mt-4").addClass("hidden");
+        }
+    });
+
     $("#addToCartForm").on("submit", function (event) {
         event.preventDefault();
 

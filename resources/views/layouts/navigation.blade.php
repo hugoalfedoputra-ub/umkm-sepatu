@@ -1,4 +1,5 @@
-<nav x-data="{ open: false, openSearch: false }" class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-brown border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false, openSearch: false }"
+   class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-brown border-b border-gray-100 dark:border-gray-700">
    <!-- Primary Navigation Menu -->
    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16">
@@ -13,13 +14,14 @@
             <!-- Navigation Links -->
             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                @if (Auth::check() && Auth::user()->userrole == 'admin')
-                  <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs(['admin.*'])">{{ __('Dashboard Admin') }}</x-nav-link>
-               @endif
-               <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-nav-link>
-               <x-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show', 'search'])">{{ __('Product') }}</x-nav-link>
-               <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">{{ __('Tentang Kami') }}</x-nav-link>
-               <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">{{ __('Kontak') }}</x-nav-link>
-               @if (Auth::check() && Auth::user()->userrole != 'admin')
+                  <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs(['admin.dashboard'])">{{ __('Dashboard Admin') }}</x-nav-link>
+                  <x-nav-link :href="route('admin.products.products')" :active="request()->routeIs('admin.products.*')">{{ __('Products') }}</x-nav-link>
+                  <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">{{ __('Users') }}</x-nav-link>
+               @else
+                  <x-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-nav-link>
+                  <x-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show', 'search', 'filter'])">{{ __('Product') }}</x-nav-link>
+                  <x-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">{{ __('Tentang Kami') }}</x-nav-link>
+                  <x-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">{{ __('Kontak') }}</x-nav-link>
                   @auth
                      <x-nav-link :href="route('cart.index')" :active="request()->routeIs(['cart.index', 'checkout.index'])">{{ __('Keranjang') }}</x-nav-link>
                      <x-nav-link :href="url('history/' . \Auth::id())" :active="request()->routeIs(['history.index'])">{{ __('Pemesanan') }}</x-nav-link>
@@ -33,9 +35,9 @@
          <div class="hidden sm:flex sm:items-center sm:ms-6">
 
             <!-- Search Button -->
-            <div class="ml-3 relative">
+            <div class="mr-3 relative">
                <button id="searchButton" @click="openSearch = !openSearch"
-                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-300 transition duration-150 ease-in-out">
+                  class="inline-flex items-center justify-center p-1 rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-300 transition duration-150 ease-in-out">
                   <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -62,8 +64,8 @@
                      </div>
                   </form>
                   <!-- Search Results Container -->
-                  <div id="search-results" class="absolute w-full bg-white border border-gray-300 mt-1 rounded-md shadow-lg z-50 hidden text-black max-h-72 overflow-y-auto">
-                     <!-- Results will be appended here -->
+                  <div id="search-results"
+                     class="absolute w-full bg-white border border-gray-300 mt-1 rounded-md shadow-lg z-50 hidden text-black max-h-72 overflow-y-auto">
                   </div>
                </div>
             </div>
@@ -158,15 +160,18 @@
 
       @if (Auth::check() && Auth::user()->userrole == 'admin')
          <x-responsive-nav-link :href="route('admin.dashboard')"
-            :active="request()->routeIs('admin.dashboard')">{{ __('Dashboard Admin') }}</x-responsive-nav-link>
+            :active="request()->routeIs(['admin.dashboard'])">{{ __('Dashboard Admin') }}</x-responsive-nav-link>
+         <x-responsive-nav-link :href="route('admin.products.products')" :active="request()->routeIs('admin.products.*')">{{ __('Products [V2]') }}</x-responsive-nav-link>
+         <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">{{ __('Users') }}</x-responsive-nav-link>
+      @else
+         <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-responsive-nav-link>
+         <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show'])">Produk</x-responsive-nav-link>
+         <x-responsive-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">Tentang Kami</x-responsive-nav-link>
+         <x-responsive-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">Kontak</x-responsive-nav-link>
+         @auth
+            <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">Keranjang</x-responsive-nav-link>
+         @endauth
       @endif
-      <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-responsive-nav-link>
-      <x-responsive-nav-link :href="route('products.index')" :active="request()->routeIs(['products.index', 'products.show'])">Produk</x-responsive-nav-link>
-      <x-responsive-nav-link :href="route('about.index')" :active="request()->routeIs('about.index')">Tentang Kami</x-responsive-nav-link>
-      <x-responsive-nav-link :href="route('contact.index')" :active="request()->routeIs('contact.index')">Kontak</x-responsive-nav-link>
-      @auth
-         <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">Keranjang</x-responsive-nav-link>
-      @endauth
 
 
       <!-- Responsive Settings Options -->

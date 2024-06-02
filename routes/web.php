@@ -45,7 +45,7 @@ Route::middleware(['auth', 'capre'])->group(function () {
 Route::middleware(['auth', 'admin', 'capre'])->group(function () {
     Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-    Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
+    // Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
     Route::get('/admin/products/v2', [AdminController::class, 'products_v2'])->name('admin.products.products');
     Route::get('/admin/products/create', [AdminController::class, 'createProduct'])->name('admin.products.create');
     Route::post('/admin/products/create', [AdminController::class, 'storeProduct'])->name('admin.products.store');

@@ -47,7 +47,7 @@ a {
 /* Media query for responsive font sizes */
 @media (max-width: 768px) {
     body {
-        font-size: 1rem;
+        font-size: 0.75rem;
     }
 
     main {
@@ -57,7 +57,7 @@ a {
 
 @media (max-width: 480px) {
     body {
-        font-size: 0.875rem;
+        font-size: 0.75rem;
     }
 
     main {

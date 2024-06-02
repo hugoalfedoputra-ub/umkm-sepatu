@@ -15,7 +15,7 @@
       </div>
    </section>
 
-   <section class="products py-8 min-h-screen lg:px-16 md:container md:mx-auto">
+   <section class="products py-8 min-h-screen p-4 lg:px-16 md:container md:mx-auto">
       <div class="container mx-auto">
          <h2 class="text-2xl text-black font-bold mb-4">Produk Terbaru</h2>
          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

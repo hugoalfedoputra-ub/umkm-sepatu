@@ -4,7 +4,6 @@
    </x-slot>
 
    <section class="flex">
-      @include('layouts.sidebar')
 
       <div class="flex-1 p-4 text-white">
 
