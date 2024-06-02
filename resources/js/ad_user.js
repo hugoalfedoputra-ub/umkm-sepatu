@@ -7,11 +7,6 @@ $(document).ready(function () {
         $("#userModal").removeClass("hidden");
     });
 
-    // Close the modal
-    $("#cancelUserBtn").on("click", function () {
-        $("#userModal").addClass("hidden");
-    });
-
     // Save or update user
     $("#saveUserBtn").on("click", function (e) {
         e.preventDefault();
@@ -28,7 +23,7 @@ $(document).ready(function () {
             url: url,
             data: formData,
             success: function (response) {
-                $("#userTable").load(location.href + " #userTable");
+                loadUserTable();
                 $("#cancelUserBtn").click();
             },
             error: function (error) {
@@ -47,8 +42,8 @@ $(document).ready(function () {
             $("#name").val(data.name);
             $("#email").val(data.email);
             $("#userrole").val(data.userrole);
-            $("#password").val(""); // Clear password field
-            $("#password_confirmation").val(""); // Clear password confirmation field
+            $("#password").val("");
+            $("#password_confirmation").val("");
             $("#userModal").removeClass("hidden");
         });
     });
@@ -64,7 +59,7 @@ $(document).ready(function () {
                     _token: $('meta[name="csrf-token"]').attr("content"),
                 },
                 success: function (response) {
-                    $("#userTable").load(location.href + " #userTable");
+                    window.location.reload();
                     $("#cancelUserBtn").click();
                 },
                 error: function (xhr) {

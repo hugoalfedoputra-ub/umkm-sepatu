@@ -9,8 +9,8 @@
          <div class="container mx-auto py-8">
             <h2 class="text-xl md:text-2xl text-black font-bold mb-4">Kelola Pengguna</h2>
 
-            <button class="bg-orange hover:bg-orangehv text-white font-bold py-2 px-4 rounded mb-4" id="addUserBtn">Tambah
-               Pengguna</button>
+            <button class="bg-orange hover:bg-orangehv text-white font-bold py-2 px-4 rounded mb-4" id="addUserBtn"
+               x-data="" x-on:click.prevent="$dispatch('open-modal', 'user-modal')">Tambah Pengguna</button>
 
             <!-- Responsive Table -->
             <div class="hidden md:block">
@@ -34,7 +34,8 @@
                            <td class="py-2 px-4">
                               <button
                                  class="bg-burgundy hover:bg-burgundyhv text-white font-bold py-1 px-2 rounded editUserBtn"
-                                 data-id="{{ $user->id }}">Edit</button>
+                                 data-id="{{ $user->id }}" x-data=""
+                                 x-on:click.prevent="$dispatch('open-modal', 'user-modal')">Edit</button>
                               <button
                                  class="bg-maroon hover:bg-maroonhv text-white font-bold py-1 px-2 rounded deleteUserBtn"
                                  data-id="{{ $user->id }}">Hapus</button>
@@ -56,7 +57,8 @@
                      <div>
                         <button
                            class="bg-burgundy hover:bg-burgundyhv text-white font-bold py-1 px-2 rounded editUserBtn"
-                           data-id="{{ $user->id }}">Edit</button>
+                           data-id="{{ $user->id }}" x-data=""
+                           x-on:click.prevent="$dispatch('open-modal', 'user-modal')">Edit</button>
                         <button class="bg-maroon hover:bg-maroonhv text-white font-bold py-1 px-2 rounded deleteUserBtn"
                            data-id="{{ $user->id }}">Hapus</button>
                      </div>

@@ -393,6 +393,12 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
+    public function userTable()
+    {
+        $users = User::paginate(10);
+        return view('admin.users.partials.user_table', compact('users'));
+    }
+
     public function createUser()
     {
         return view('admin.users.create');

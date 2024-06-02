@@ -73,6 +73,8 @@ Route::middleware(['auth', 'admin', 'capre'])->group(function () {
     Route::get('/admin/users/edit/{id}', [AdminController::class, 'editUser'])->name('admin.users.edit');
     Route::put('/admin/users/edit/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
     Route::delete('/admin/users/delete/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+    Route::get('/admin/users/table', [AdminController::class, 'userTable'])->name('admin.users.table');
 });
+
 
 require __DIR__ . '/auth.php';
