@@ -8,8 +8,7 @@ cmds = [
     'composer require laravel/breeze --dev',
     'php artisan breeze:install vue',
     'npm ci',
-    'npm install --save-dev vite laravel-vite-plugin @vitejs/plugin-vue',
-    'npm run build'
+    'npm install --save-dev vite laravel-vite-plugin @vitejs/plugin-vue'
 ]
 
 [deploy]

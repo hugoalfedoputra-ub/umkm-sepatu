@@ -9,7 +9,7 @@ export default defineConfig({
         }),
     ],
     build: {
-        outDir: "public", // Specify the output directory
+        outDir: "public/build", // Specify the output directory
         assetsDir: ".", // Specify assets directory relative to outDir
     },
 });
