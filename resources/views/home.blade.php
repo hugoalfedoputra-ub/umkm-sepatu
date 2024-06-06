@@ -6,7 +6,8 @@
    <section class="hero bg-cover bg-center h-64 text-white"
       style="background: 
             linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-            url('/storage/images/sepatu.jpg') no-repeat center center; background-size: cover;">
+            url('/storage/images/sepatu.jpg') no-repeat center center; background-size: cover;"
+      data-aos="fade-in" data-aos-easing="linear" data-aos-duration="900" data-aos-delay="600">
       <div class="container mx-auto flex justify-center items-center h-full">
          <div class="text-center">
             <h1 class="text-4xl font-bold">Selamat Datang di Butik Sepatu</h1>
@@ -15,7 +16,8 @@
       </div>
    </section>
 
-   <section class="products py-8 min-h-screen p-4 lg:px-16 md:container md:mx-auto">
+   <section class="products py-8 min-h-screen p-4 lg:px-16 md:container md:mx-auto" data-aos="fade-up"
+      data-aos-easing="linear" data-aos-duration="1000" data-aos-delay="900">
       <div class="container mx-auto">
          <h2 class="text-2xl text-black font-bold mb-4">Produk Terbaru</h2>
          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

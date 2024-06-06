@@ -3,7 +3,8 @@
       Produk - {{ $product->name }}
    </x-slot>
 
-   <section class="bg-whitebg product-detail md:container md:mx-auto py-8 p-4 lg:px-16">
+   <section class="bg-whitebg product-detail md:container md:mx-auto py-8 p-4 lg:px-16" data-aos="fade-in"
+      data-aos-easing="linear" data-aos-duration="500" data-aos-delay="500">
       <div class="container mx-auto flex text-black bg-beige p-4 rounded-lg shadow-md">
          <div class="w-1/2">
             <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"

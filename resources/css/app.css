@@ -1,3 +1,4 @@
+@import "./preloader";
 @import "./cart";
 @import "./ad_product";
 @import "./review";
@@ -63,4 +64,9 @@ a {
     main {
         width: min(55ch, 100% -1rem);
     }
+}
+
+:root {
+    --color-white: #ede6ca;
+    --color-primary: #443842; /* Contoh warna biru */
 }

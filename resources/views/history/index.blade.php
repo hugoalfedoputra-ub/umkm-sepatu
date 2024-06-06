@@ -3,7 +3,8 @@
       Pemesanan
    </x-slot>
 
-   <section class="cart py-4 lg:py-8">
+   <section class="cart py-4 lg:py-8" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000"
+      data-aos-delay="500">
       <div class="md:container md:mx-auto px-4 lg:px-8 text-black">
          <h2 class="text-2xl text-black font-bold mb-4">Pemesanan Anda</h2>
          <div>

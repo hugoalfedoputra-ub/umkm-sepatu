@@ -1,3 +1,4 @@
+import "./preloader";
 import "./bootstrap";
 import "./live_search";
 import "./ad_user";
@@ -11,3 +12,5 @@ import Alpine from "alpinejs";
 window.Alpine = Alpine;
 
 Alpine.start();
+
+AOS.init();

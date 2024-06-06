@@ -5,7 +5,7 @@
       <div class="flex justify-between h-16">
          <div class="flex">
             <!-- Logo -->
-            <div class="shrink-0 flex items-center">
+            <div class="shrink-0 flex items-center" style="width: 90px;">
                <a href="{{ route('home') }}">
                   <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
                </a>
@@ -115,7 +115,7 @@
          </div>
 
 
-         <!-- Search Field -->
+         <!-- Mobile Search Field -->
          <div class="-me-2 flex items-center sm:hidden">
             <button @click="openSearch = !openSearch"
                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
@@ -125,17 +125,29 @@
                </svg>
             </button>
 
-            <!-- Search Input Field -->
+            <!-- Mobile Search Input Field -->
             <div x-show="openSearch" @click.away="openSearch = false"
                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-               class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100">
+               class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 mt-32 mr-10">
                <form action="{{ route('filter') }}" method="GET" class="relative">
-                  <input type="text" name="query" id="search"
-                     class="w-full border-4 border-black rounded bg-transparent pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0"
-                     placeholder="Search...">
+                  <div class="relative">
+                     <input type="text" name="query" id="search"
+                        class="w-full border-0 rounded bg-gray-50 pl-4 pr-10 py-3 text-sm leading-5 text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-gray-500"
+                        placeholder="Search..." oninput="this.form.sub.disabled = !this.value.trim();">
+                     <!-- Arrow Button -->
+                     <button type="submit" name="sub"
+                        class="absolute inset-y-0 right-0 flex items-center rounded-r-md bg-gray-200 hover:bg-gray-300 transition-colors duration-300"
+                        disabled>
+                        <span class="px-2 text-gray-700">→</span>
+                     </button>
+                  </div>
                </form>
+               <!-- Search Results Container -->
+               <div id="search-results"
+                  class="absolute w-full bg-white border border-gray-300 mt-1 rounded-md shadow-lg z-50 hidden text-black max-h-72 overflow-y-auto">
+               </div>
             </div>
 
             <!-- Hamburger -->

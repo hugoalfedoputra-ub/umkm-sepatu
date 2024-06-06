@@ -3,7 +3,8 @@
       Produk
    </x-slot>
 
-   <section class="bg-whitebg products md:container md:mx-auto py-8 p-4 lg:px-16">
+   <section class="bg-whitebg products md:container md:mx-auto py-8 p-4 lg:px-16" data-aos="fade-in"
+      data-aos-easing="linear" data-aos-duration="500" data-aos-delay="500">
       <div class="container mx-auto">
          <h2 class="text-2xl text-black font-bold mb-4">Produk</h2>
 

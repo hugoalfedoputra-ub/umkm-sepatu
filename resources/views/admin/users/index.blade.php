@@ -3,14 +3,16 @@
       Kelola Pengguna
    </x-slot>
 
-   <section class="flex flex-col md:flex-row">
+   <section class="flex flex-col md:flex-row" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000"
+      data-aos-delay="500">
 
       <div class="flex-1 p-4 text-white">
          <div class="container mx-auto py-8">
             <h2 class="text-xl md:text-2xl text-black font-bold mb-4">Kelola Pengguna</h2>
 
             <button class="bg-orange hover:bg-orangehv text-white font-bold py-2 px-4 rounded mb-4" id="addUserBtn"
-               x-data="" x-on:click.prevent="$dispatch('open-modal', 'user-modal')">Tambah Pengguna</button>
+               x-data="" x-on:click.prevent="$dispatch('open-modal', 'user-modal')">Tambah
+               Pengguna</button>
 
             <!-- Responsive Table -->
             <div class="hidden md:block">

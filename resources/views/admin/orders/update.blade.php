@@ -3,7 +3,7 @@
       Update Pesanan
    </x-slot>
 
-   <section class="flex">
+   <section class="flex" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000" data-aos-delay="500">
 
       <div class="flex-1 p-4 text-white">
 
