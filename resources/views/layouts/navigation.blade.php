@@ -117,6 +117,7 @@
 
          <!-- Mobile Search Field -->
          <div class="-me-2 flex items-center sm:hidden">
+            @if (Auth::check() && Auth::user()->userrole != 'admin')
             <button @click="openSearch = !openSearch"
                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -124,13 +125,13 @@
                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                </svg>
             </button>
-
+         @endif
             <!-- Mobile Search Input Field -->
             <div x-show="openSearch" @click.away="openSearch = false"
                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-               class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 mt-32 mr-10">
+               class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 mt-28 mr-10">
                <form action="{{ route('filter') }}" method="GET" class="relative">
                   <div class="relative">
                      <input type="text" name="query" id="search"
@@ -211,12 +212,12 @@
                </form>
             </div>
          @else
-            <div>
-               <a href="{{ route('login') }}" class="mx-2">Login</a>
-            </div>
-            <div>
-               <a href="{{ route('register') }}" class="mx-2">Register</a>
-            </div>
+         <div>
+                  <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">{{ __('Login') }}</x-nav-link>
+               </div>
+               <div>
+                  <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">{{ __('Register') }}</x-nav-link>
+               </div>
          @endauth
 
       </div>

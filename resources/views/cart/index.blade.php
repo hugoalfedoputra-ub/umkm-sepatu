@@ -3,8 +3,8 @@
 
    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-   <section class="bg-whitebg cart py-4 lg:py-8" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000"
-      data-aos-delay="500">
+   <section class="bg-whitebg cart md:container md:mx-auto py-8 p-4 lg:px-16" data-aos="fade-in" data-aos-easing="linear" data-aos-duration="300"
+      data-aos-delay="300">
       <div class="md:container md:mx-auto px-4 lg:px-8">
          <h2 class="text-2xl text-black font-bold mb-4">Keranjang Belanja</h2>
          <div id="isikart">
@@ -37,7 +37,7 @@
                         </div>
                         <div class="flex flex-row items-center ml-4 w-full">
                            <img src="{{ $item->image }}" alt="{{ $item->name }}"
-                              class="w-32 h-32 lg:w-40 lg:h-40 object-cover rounded">
+                              class="w-28 h-28 lg:w-36 lg:h-36 object-cover rounded">
                            <div class="flex flex-col justify-between ml-4 w-full">
                               <div class="my-1">
                                  <span class="font-bold">{{ $item->name }}</span>
@@ -62,7 +62,7 @@
                                  </div>
                               </div>
                               <div class="my-1 flex items-center">
-                                 <div class="quantity-input-wrapper flex items-center">
+                                 <div class="quantity-input-wrapper flex items-center bg-white">
                                     <button type="button" class="quantity-button p-1"
                                        data-item-id="{{ $item->id }}" data-delta="-1">-</button>
                                     <input type="number" name="quantity" id="quantity-input-{{ $item->id }}"

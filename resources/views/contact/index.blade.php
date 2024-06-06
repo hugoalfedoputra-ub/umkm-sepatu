@@ -4,7 +4,7 @@
    </x-slot>
 
    <section class="bg-whitebg contact py-8" data-aos="fade-in" data-aos-easing="linear" data-aos-duration="500"
-      data-aos-delay="500">
+      data-aos-delay="100">
       <div class="md:container md:mx-auto px-4 md:px-8 lg:px-16 py-8">
          <h2 class="text-2xl text-black font-bold mb-4">Kontak Kami</h2>
          <form>

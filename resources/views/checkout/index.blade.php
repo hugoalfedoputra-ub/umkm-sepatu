@@ -3,7 +3,7 @@
       Checkout
    </x-slot>
 
-   <section class="bg-whitebg checkout py-8" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000"
+   <section class="bg-whitebg checkout py-8" data-aos="fade-in" data-aos-easing="linear" data-aos-duration="400"
       data-aos-delay="500">
       <div class="md:container md:mx-auto lg:px-16">
          <h2 class="text-2xl text-black font-bold mb-4">Checkout</h2>

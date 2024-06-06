@@ -81,7 +81,7 @@
                   $averageRating = $product->reviews->avg('rating');
                   $reviewCount = $product->reviews->count();
                   $ratingsCount = [];
-                  foreach (range(1, 5) as $rating) {
+                  foreach (range(5, 1, -1) as $rating) {
                       $ratingsCount[$rating] = $product->reviews->where('rating', $rating)->count();
                   }
                @endphp
@@ -120,11 +120,11 @@
                      <label for="rating" class="block text-sm font-medium text-brown mt-4">Rating:</label>
                      <select name="rating" id="rating"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-maroon focus:ring focus:ring-maroon focus:ring-opacity-50">
-                        <option value="1">1 ★</option>
-                        <option value="2">2 ★</option>
-                        <option value="3">3 ★</option>
-                        <option value="4">4 ★</option>
                         <option value="5">5 ★</option>
+                        <option value="4">4 ★</option>
+                        <option value="3">3 ★</option>
+                        <option value="2">2 ★</option>
+                        <option value="1">1 ★</option>
                      </select>
 
                      <input type="hidden" name="product_id" value="{{ $product->id }}">

@@ -3,8 +3,8 @@
       Admin Dashboard
    </x-slot>
 
-   <section class="bg-whitebg dashboard-ad md:container md:mx-auto py-8 lg:px-16" data-aos="fade-up"
-      data-aos-easing="linear" data-aos-duration="1000" data-aos-delay="500">
+   <section class="bg-whitebg dashboard-ad md:container md:mx-auto py-8 lg:px-16" data-aos="fade-in"
+      data-aos-easing="linear" data-aos-duration="500" data-aos-delay="500">
 
       <!-- Sidebar -->
       {{-- @include('layouts.sidebar') --}}
