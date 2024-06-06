@@ -11,7 +11,7 @@
 
 
                <div class="flex flex-col sm:flex-row justify-between mb-4">
-                  <button class="bg-orange hover:bg-orangehv text-white font-bold py-2 px-4 rounded"
+                  <button class="bg-orange hover:bg-orangehv text-white font-bold py-2 px-4 rounded lg:mb-0 mb-2"
                      onclick="window.location='{{ url('admin/products/add/v2/') }}'">Tambah Produk</button>
 
                   <div class="flex flex-col justify-between lg:flex-row text-black">
