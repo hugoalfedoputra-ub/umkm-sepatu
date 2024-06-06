@@ -56,9 +56,6 @@
                      class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv"
                      id="add-to-cart-button">Tambah ke
                      Keranjang</button>
-                  <a href="/products/{{ $product->id }}"
-                     class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv">Beli
-                     Sekarang</a>
                @endif
             </form>
          </div>
