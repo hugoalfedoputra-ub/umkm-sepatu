@@ -3,7 +3,8 @@
       Tambah Produk
    </x-slot>
 
-   <section class="flex" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000" data-aos-delay="500">
+   <section class="flex md:container md:mx-auto py-8 lg:px-16" data-aos="fade-in" data-aos-easing="linear"
+      data-aos-duration="500" data-aos-delay="300">
 
       <div class="bg-whitebg flex-1 p-4 text-black">
          <button class="text-base font-bold underline"
@@ -27,20 +28,20 @@
                                     <label for="name" class="block text-sm font-medium text-black">Nama</label>
                                     <input type="text" name="name" id="name"
                                        class="mt-1 block w-full bg-white border-gray-700 text-white rounded-md shadow-sm"
-                                       placeholder="Masukkan nama produk..." required>
+                                       placeholder="Nama produk..." style="color: black" required>
                                  </div>
                                  <div class="mb-4">
                                     <label for="description"
                                        class="block text-sm font-medium text-black">Deskripsi</label>
                                     <textarea name="description" id="description"
-                                       class="mt-1 block w-full bg-white border-gray-700 text-white rounded-md shadow-sm"
-                                       placeholder="Masukkan deskripsi produk..." required></textarea>
+                                       class="mt-1 block w-full bg-white border-gray-700 text-white rounded-md shadow-sm" placeholder="Deskripsi produk..."
+                                       style="color: black" required></textarea>
                                  </div>
                                  <div class="mb-4">
                                     <label for="price" class="block text-sm font-medium text-black">Harga</label>
                                     <input type="number" name="price" id="price"
                                        class="mt-1 block w-full bg-white border-gray-700 text-white rounded-md shadow-sm"
-                                       placeholder="0" required>
+                                       placeholder="0" style="color: black" required>
                                  </div>
                                  <div class="mb-4">
                                     <label for="fileInput" class="block text-sm font-medium text-black">File
@@ -54,7 +55,7 @@
                                        sebagai</label>
                                     <input type="text" name="imageName" id="imageName"
                                        class="mt-1 block w-full bg-white border-gray-700 text-white rounded-md shadow-sm"
-                                       required readonly>
+                                       style="color: black" required readonly>
                                  </div>
                               </tr>
                            </thead>
@@ -62,11 +63,11 @@
                      </div>
                   </div>
                </div>
-               <div class="pt-4">
+               <div class="pt-4 flex justify-end">
                   <button onclick="window.location='{{ route('admin.products.products') }}'"
-                     class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">Batal</button>
+                     class="justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 mx-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">Batal</button>
                   <button
-                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Simpan</button>
+                     class=" justify-center rounded-md border border-transparent shadow-sm px-4 py-2 mx-2 bg-orange text-base font-medium text-white hover:bg-orangehv focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm">Simpan</button>
                </div>
             </form>
          </div>

@@ -6,7 +6,6 @@
       @csrf
 
       <!-- Email Address -->
-
       <div>
          <x-input-label for="email" :value="__('Email')" style="color:brown" />
          <x-text-input id="email" class="block mt-1 w-full bg-black text-white placeholder-white" type="email"

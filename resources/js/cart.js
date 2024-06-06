@@ -89,7 +89,9 @@ $(document).ready(function () {
 
                     // Check if cart is empty after removing item
                     if ($("#isikart .cart-item").length === 0) {
-                        $("#isikart").html("<p>Keranjang Anda kosong.</p>");
+                        $("#isikart").html(
+                            "<p class='text-black'>Keranjang Anda kosong.</p>"
+                        );
                         $("#buy-button").addClass("hidden");
                         $("#total-price").addClass("hidden");
                     }

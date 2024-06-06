@@ -4,7 +4,7 @@
    </x-slot>
 
    <section class="bg-whitebg dashboard-ad md:container md:mx-auto py-8 lg:px-16" data-aos="fade-in"
-      data-aos-easing="linear" data-aos-duration="500" data-aos-delay="500">
+      data-aos-easing="linear" data-aos-duration="600" data-aos-delay="500">
 
       <!-- Sidebar -->
       {{-- @include('layouts.sidebar') --}}

@@ -1,4 +1,53 @@
 $(document).ready(function () {
+    // Load user data
+    function loadUserData(
+        url = "/admin/users/table",
+        search = "",
+        sortBy = "name",
+        sortOrder = "asc"
+    ) {
+        $.ajax({
+            url: url,
+            method: "GET",
+            data: {
+                search: search,
+                sort_by: sortBy,
+                sort_order: sortOrder,
+            },
+            success: function (data) {
+                console.log(data); // Tambahkan log ini untuk debugging
+                $("#userTableBody").html(data.table);
+                $("#mobileUserTable").html(data.mobile);
+                $("#paginationLinks").html(data.pagination);
+            },
+            error: function (error) {
+                alert("Gagal memuat data pengguna");
+                console.log(error);
+            },
+        });
+    }
+
+    // Call loadUserData on page load
+    loadUserData();
+
+    // Handle pagination click
+    $(document).on("click", "#paginationLinks a", function (e) {
+        e.preventDefault();
+        let url = $(this).attr("href");
+        let search = $("#userSearchInput").val() || "";
+        let sortBy = $("#userSortBy").val() || "name";
+        let sortOrder = $("#userSortOrder").val() || "asc";
+        loadUserData(url, search, sortBy, sortOrder);
+    });
+
+    // Handle search and sort
+    $("#userSearchBtn").on("click", function () {
+        let search = $("#userSearchInput").val() || "";
+        let sortBy = $("#userSortBy").val() || "name";
+        let sortOrder = $("#userSortOrder").val() || "asc";
+        loadUserData("/admin/users/table", search, sortBy, sortOrder);
+    });
+
     // Open the modal to create a new user
     $("#addUserBtn").on("click", function () {
         $("#userModalTitle").text("Tambah Pengguna");
@@ -23,8 +72,8 @@ $(document).ready(function () {
             url: url,
             data: formData,
             success: function (response) {
-                loadUserTable();
-                $("#cancelUserBtn").click();
+                loadUserData();
+                $("#userModal").addClass("hidden");
             },
             error: function (error) {
                 alert("Gagal menyimpan user");
@@ -34,7 +83,7 @@ $(document).ready(function () {
     });
 
     // Edit user
-    $(".editUserBtn").on("click", function () {
+    $(document).on("click", ".editUserBtn", function () {
         let id = $(this).data("id");
         $.get(`/admin/users/edit/${id}`, function (data) {
             $("#userModalTitle").text("Edit Pengguna");
@@ -49,7 +98,7 @@ $(document).ready(function () {
     });
 
     // Delete user
-    $(".deleteUserBtn").on("click", function () {
+    $(document).on("click", ".deleteUserBtn", function () {
         if (confirm("Apakah Anda yakin ingin menghapus pengguna ini?")) {
             let id = $(this).data("id");
             $.ajax({
@@ -59,8 +108,7 @@ $(document).ready(function () {
                     _token: $('meta[name="csrf-token"]').attr("content"),
                 },
                 success: function (response) {
-                    window.location.reload();
-                    $("#cancelUserBtn").click();
+                    loadUserData();
                 },
                 error: function (xhr) {
                     alert(

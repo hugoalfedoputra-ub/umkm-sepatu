@@ -1,5 +1,6 @@
 import "./preloader";
 import "./bootstrap";
+import "./ad_dashboard";
 import "./live_search";
 import "./ad_user";
 import "./ad_product";

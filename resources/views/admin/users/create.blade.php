@@ -44,7 +44,8 @@
    </div>
    <div class="bg-gray-900 px-2 py-2 sm:px-4 sm:flex sm:flex-row-reverse">
       <button id="saveUserBtn"
-         class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-2 py-1 bg-blue-600 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-2 sm:w-auto">Simpan</button>
+         class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-2 py-1 bg-blue-600 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-2 sm:w-auto"
+         x-on:click="$dispatch('close')">Simpan</button>
       <button id="cancelUserBtn"
          class="mt-2 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-2 py-1 bg-gray-600 text-sm font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto"
          x-on:click="$dispatch('close')">Batal</button>

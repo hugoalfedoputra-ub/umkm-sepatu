@@ -142,13 +142,40 @@ class AdminController extends Controller
     // Products
     public function products()
     {
-        $products = Product::paginate(10)->withQueryString();
+        $products = Product::paginate(10);
         return view('admin.products.index', compact('products'));
+    }
+
+    public function productTable(Request $request)
+    {
+        $query = Product::query();
+
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('description', 'like', "%{$search}%");
+        }
+
+        // Pengurutan
+        if ($request->has('sort_by') && $request->has('sort_order')) {
+            $sortBy = $request->input('sort_by');
+            $sortOrder = $request->input('sort_order');
+            $query->orderBy($sortBy, $sortOrder);
+        }
+
+        $products = $query->paginate(5);
+        $productVariants = ProductVariant::all();
+
+        $tableView = view('admin.products.partials.product_table', compact('products', 'productVariants'))->render();
+        $paginationView = view('admin.products.partials.pagination', compact('products'))->render();
+
+        return response()->json(['table' => $tableView, 'pagination' => $paginationView]);
     }
 
     public function products_v2()
     {
-        $products = Product::paginate(5)->withQueryString();
+        $products = Product::paginate(5);
         $productVariants = ProductVariant::all();
         return view('admin.products.products', compact('products', 'productVariants'));
     }
@@ -393,10 +420,31 @@ class AdminController extends Controller
         return view('admin.users.index', compact('users'));
     }
 
-    public function userTable()
+    public function userTable(Request $request)
     {
-        $users = User::paginate(10);
-        return view('admin.users.partials.user_table', compact('users'));
+        $query = User::query();
+
+        // Pencarian
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        }
+
+        // Pengurutan
+        if ($request->has('sort_by') && $request->has('sort_order')) {
+            $sortBy = $request->input('sort_by');
+            $sortOrder = $request->input('sort_order');
+            $query->orderBy($sortBy, $sortOrder);
+        }
+
+        $users = $query->paginate(10);
+
+        $tableView = view('admin.users.partials.user_table', compact('users'))->render();
+        $mobileView = view('admin.users.partials.mobile_user_table', compact('users'))->render();
+        $paginationView = view('admin.users.partials.pagination', compact('users'))->render();
+
+        return response()->json(['table' => $tableView, 'mobile' => $mobileView, 'pagination' => $paginationView]);
     }
 
     public function createUser()

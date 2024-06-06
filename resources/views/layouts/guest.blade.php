@@ -17,7 +17,7 @@
    </head>
 
    <body class="bg-gray-100">
-      <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-whitebg">
+      <div class="min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 bg-whitebg px-8">
          <div>
             <a href="/">
                {{-- <x-application-logo class="fill-current text-black miaw" /> --}}

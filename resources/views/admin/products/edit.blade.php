@@ -3,7 +3,7 @@
       Edit Produk
    </x-slot>
 
-   <section class="flex" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000" data-aos-delay="500">
+   <section class="flex md:container md:mx-auto py-8 lg:px-16" data-aos="fade-in" data-aos-easing="linear" data-aos-duration="500" data-aos-delay="300">
 
       <div class="bg-whitebg flex-1 p-4 text-black">
          <button class="text-base font-bold underline" onclick="window.location='{{ route('admin.products.products') }}'">
@@ -18,11 +18,11 @@
                   @foreach ($errors->all() as $error)
                      <p>{{ $error }}</p>
                   @endforeach
-                  <div class="bg-beige rounded-lg flex flex-row gap-x-4 p-4">
-                     <div class="min-w-64 w-1/2">
-                        <img src="{{ url($product->image) }}" alt="{{ $product->name }}" class=" object-cover rounded">
+                  <div class="bg-beige rounded-lg flex flex-col md:flex-row gap-4 p-4">
+                     <div class="w-full md:min-w-64 md:w-1/2 atas">
+                        <img src="{{ url($product->image) }}" alt="{{ $product->name }}" class="object-cover rounded">
                      </div>
-                     <div class="w-full">
+                     <div class="w-full bawah">
                         <div class="rounded-lg w-full" id="productDetails">
                            <div class="flex flex-col gap-y-4">
                               <div class="mb-4">
@@ -71,22 +71,25 @@
                               <table class="w-full text-left table-fixed border-collapse">
                                  <thead>
                                     <tr>
-                                       <th class="px-4 py-2 border-brown border bg-orangehv text-bold">Ukuran</th>
-                                       <th class="px-4 py-2 border-brown border bg-orangehv text-bold">Warna</th>
-                                       <th class="px-4 py-2 border-brown border bg-orangehv text-bold">Stok</th>
+                                       <th class="px-2 py-2 border-brown border bg-orangehv text-bold sm:px-4">Ukuran
+                                       </th>
+                                       <th class="px-2 py-2 border-brown border bg-orangehv text-bold sm:px-4">Warna
+                                       </th>
+                                       <th class="px-2 py-2 border-brown border bg-orangehv text-bold sm:px-4">Stok</th>
                                     </tr>
                                  </thead>
                                  <tbody>
                                     @foreach ($productVariants as $variant)
                                        @if ($variant->product_id == $product->id)
                                           <tr>
-                                             <td class="px-4 py-2 border-brown border">{{ $variant->size }}</td>
-                                             <td class="px-4 py-2 border-brown border">
-                                                <span class="inline-block w-4 h-4 ml-2 mr-4"
+                                             <td class="px-2 py-2 border-brown border sm:px-4">{{ $variant->size }}
+                                             </td>
+                                             <td class="px-2 py-2 border-brown border sm:px-4">
+                                                <span class="inline-block lg:w-4 lg:h-4 lg:ml-2 lg:mr-4 w-2 h-2 mr-2"
                                                    style="background-color: {{ $variant->color }}"></span>
                                                 {{ $variant->color }}
                                              </td>
-                                             <td class="px-4 py-2 border-brown border">
+                                             <td class="px-2 py-2 border-brown border sm:px-4">
                                                 <input
                                                    class="mt-1 block w-full bg-beige border-brown text-black rounded-md shadow-sm"
                                                    type="number" name="stock[]" value="{{ $variant->stock }}"
@@ -103,11 +106,11 @@
                         </div>
                      </div>
                   </div>
-                  <div class="pt-4">
+                  <div class="pt-4 flex justify-end">
                      <button onclick="window.location='{{ route('admin.products.products') }}'"
-                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">Batal</button>
+                        class="justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 mx-2 bg-gray-600 text-base font-medium text-white hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm">Batal</button>
                      <button
-                        class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange text-base font-medium text-white hover:bg-orangehv focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">Simpan</button>
+                        class=" justify-center rounded-md border border-transparent shadow-sm px-4 py-2 mx-2 bg-orange text-base font-medium text-white hover:bg-orangehv focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm">Simpan</button>
                   </div>
             </form>
          </div>

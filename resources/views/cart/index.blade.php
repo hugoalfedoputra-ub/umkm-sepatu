@@ -3,8 +3,8 @@
 
    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-   <section class="bg-whitebg cart md:container md:mx-auto py-8 p-4 lg:px-16" data-aos="fade-in" data-aos-easing="linear" data-aos-duration="300"
-      data-aos-delay="300">
+   <section class="bg-whitebg cart md:container md:mx-auto py-8 p-4 lg:px-16" data-aos="fade-in" data-aos-easing="linear"
+      data-aos-duration="300" data-aos-delay="300">
       <div class="md:container md:mx-auto px-4 lg:px-8">
          <h2 class="text-2xl text-black font-bold mb-4">Keranjang Belanja</h2>
          <div id="isikart">

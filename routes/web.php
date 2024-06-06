@@ -47,6 +47,7 @@ Route::middleware(['auth', 'admin', 'capre'])->group(function () {
 
     // Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
     Route::get('/admin/products/v2', [AdminController::class, 'products_v2'])->name('admin.products.products');
+    Route::get('/admin/products/table', [AdminController::class, 'productTable'])->name('admin.products.table');
     Route::get('/admin/products/create', [AdminController::class, 'createProduct'])->name('admin.products.create');
     Route::post('/admin/products/create', [AdminController::class, 'storeProduct'])->name('admin.products.store');
     Route::get('/admin/products/edit/{id}', [AdminController::class, 'editProduct'])->name('admin.products.edit');
@@ -66,8 +67,10 @@ Route::middleware(['auth', 'admin', 'capre'])->group(function () {
     Route::post('/admin/products/update/v2/{id}', [AdminController::class, 'updateProduct_v2'])->name('admin.products.update');
 
     Route::delete('/admin/products/delete/{id}', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
+    Route::get('/admin/products/table', [AdminController::class, 'productTable'])->name('admin.products.table');
 
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+    Route::get('/admin/users/table', [AdminController::class, 'userTable'])->name('admin.users.table');
     Route::get('/admin/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
     Route::post('/admin/users/create', [AdminController::class, 'storeUser'])->name('admin.users.store');
     Route::get('/admin/users/edit/{id}', [AdminController::class, 'editUser'])->name('admin.users.edit');

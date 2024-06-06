@@ -5,17 +5,17 @@
 
    <section class="bg-whitebg product-detail md:container md:mx-auto py-8 p-4 lg:px-16" data-aos="fade-in"
       data-aos-easing="linear" data-aos-duration="500" data-aos-delay="500">
-      <div class="container mx-auto flex text-black bg-beige p-4 rounded-lg shadow-md">
-         <div class="w-1/2">
+      <div class="container mx-auto flex flex-col md:flex-row text-black bg-beige p-4 rounded-lg shadow-md">
+         <div class="md:w-1/2">
             <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
-               class="w-full h-96 object-cover rounded-lg mb-4">
+               class="md:w-full object-cover rounded-lg mb-4">
             <div class="flex space-x-4">
                {{-- @foreach ($product->images as $image)
                    <img src="{{ $image }}" alt="{{ $product->name }}" class="w-24 h-24 object-cover rounded">
                 @endforeach --}}
             </div>
          </div>
-         <div class="w-1/2 pl-8">
+         <div class="md:w-1/2 md:pl-8">
             <h1 class="text-3xl font-bold mb-4">{{ $product->name }}</h1>
             <p class="text-maroon text-2xl font-semibold mb-4">Rp {{ number_format($product->price) }}</p>
             <form action="{{ route('cart.store') }}" method="POST" class="mt-4" id="addToCartForm">
@@ -42,21 +42,24 @@
                <label for="quantity"
                   class="quantity-label block text-sm font-medium text-gray-700 mt-4">Quantity</label>
                <input type="number" name="quantity" id="quantity" value="1" min="1"
-                  class="mt-1 block w-16 rounded-md border-gray-300 shado w-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
+                  class="mt-1 block w-16 rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50">
 
                <div id="stock-info" class="mt-2 text-sm"></div>
 
+               <div>
 
-               @if (Auth::check() && Auth::user()->userrole === 'admin')
-                  <button class="mt-4 inline-block text-white py-2 px-4 rounded opacity-50 cursor-not-allowed">Tambah
-                     ke
-                     Keranjang</button>
-               @else
-                  <button type="submit"
-                     class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv"
-                     id="add-to-cart-button">Tambah ke
-                     Keranjang</button>
-               @endif
+                  @if (Auth::check() && Auth::user()->userrole === 'admin')
+                     <button
+                        class="mt-4 inline-block text-white py-2 px-4 rounded opacity-50 cursor-not-allowed button-disabled">Tambah
+                        ke
+                        Keranjang</button>
+                  @else
+                     <button type="submit"
+                        class="mt-4 inline-block bg-orange text-white py-2 px-4 rounded hover:bg-orangehv"
+                        id="add-to-cart-button">Tambah ke
+                        Keranjang</button>
+                  @endif
+               </div>
             </form>
          </div>
       </div>
@@ -83,7 +86,7 @@
                   }
                @endphp
                <div class="flex bg-beige p-4 rounded-lg mb-4 justify-between">
-                  <div class="flex flex-col justify-center mr-2 items-center" style="width: 10%;">
+                  <div class="flex flex-col justify-center mr-2 items-center" style="width: 20%;">
                      <h3 class="font-bold text-black text-2xl">{{ number_format($averageRating, 1) }} <span
                            class="text-sm text-gray-600">/ 5</span></h3>
                      <p class="text-sm text-gray-600">{{ $reviewCount }} ulasan</p>

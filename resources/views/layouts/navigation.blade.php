@@ -118,20 +118,21 @@
          <!-- Mobile Search Field -->
          <div class="-me-2 flex items-center sm:hidden">
             @if (Auth::check() && Auth::user()->userrole != 'admin')
-            <button @click="openSearch = !openSearch"
-               class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-               <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-               </svg>
-            </button>
-         @endif
+               <button @click="openSearch = !openSearch"
+                  class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                  <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+               </button>
+            @endif
             <!-- Mobile Search Input Field -->
             <div x-show="openSearch" @click.away="openSearch = false"
                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-               class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 mt-28 mr-10">
+               class="absolute right-0 mt-4 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 mr-10"
+               style="margin-top: 120px;">
                <form action="{{ route('filter') }}" method="GET" class="relative">
                   <div class="relative">
                      <input type="text" name="query" id="search"
@@ -166,15 +167,12 @@
    </div>
 
    <!-- Responsive Navigation Menu -->
-   <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden"
-      x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95"
-      x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-300"
-      x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95">
+   <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
 
       @if (Auth::check() && Auth::user()->userrole == 'admin')
          <x-responsive-nav-link :href="route('admin.dashboard')"
             :active="request()->routeIs(['admin.dashboard'])">{{ __('Dashboard Admin') }}</x-responsive-nav-link>
-         <x-responsive-nav-link :href="route('admin.products.products')" :active="request()->routeIs('admin.products.*')">{{ __('Products [V2]') }}</x-responsive-nav-link>
+         <x-responsive-nav-link :href="route('admin.products.products')" :active="request()->routeIs('admin.products.*')">{{ __('Products') }}</x-responsive-nav-link>
          <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">{{ __('Users') }}</x-responsive-nav-link>
       @else
          <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">{{ __('Home') }}</x-responsive-nav-link>
@@ -196,7 +194,7 @@
                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
             <div class="mt-3 space-y-1">
-               <x-responsive-nav-link :href="route('profile.edit')">
+               <x-responsive-nav-link :href="route('profile.edit')" :active="request()->routeIs('profile.edit')">
                   {{ __('Profile') }}
                </x-responsive-nav-link>
 
@@ -212,12 +210,12 @@
                </form>
             </div>
          @else
-         <div>
-                  <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">{{ __('Login') }}</x-nav-link>
-               </div>
-               <div>
-                  <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">{{ __('Register') }}</x-nav-link>
-               </div>
+            <div>
+               <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">{{ __('Login') }}</x-nav-link>
+            </div>
+            <div>
+               <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">{{ __('Register') }}</x-nav-link>
+            </div>
          @endauth
 
       </div>
