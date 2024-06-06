@@ -2,7 +2,7 @@
 builder = "NIXPACKS"
 
 [build.nixpacksPlan.phases.install]
-cmds = ['npm ci && npm install --save-dev vite laravel-vite-plugin && npm install --save-dev @vitejs/plugin-vue']
+cmds = ['mkdir -p /var/log/nginx && mkdir -p /var/cache/nginx && composer install --ignore-platform-reqs && composer require laravel/breeze --dev && php artisan breeze:install vue && npm ci && npm install --save-dev vite laravel-vite-plugin && npm install --save-dev @vitejs/plugin-vue' && npm run dev]
 
 [deploy]
 runtime = "PODMAN"
