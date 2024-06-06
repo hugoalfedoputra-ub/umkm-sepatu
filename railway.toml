@@ -1,8 +1,8 @@
-[phases.install]
-cmds = ['npm ci && npm install --save-dev vite laravel-vite-plugin && npm install --save-dev @vitejs/plugin-vue']
-
 [build]
 builder = "NIXPACKS"
+
+[build.nixpacksPlan.phases.install]
+cmds = ['npm ci && npm install --save-dev vite laravel-vite-plugin && npm install --save-dev @vitejs/plugin-vue']
 
 [deploy]
 runtime = "PODMAN"
