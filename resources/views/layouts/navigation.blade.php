@@ -41,7 +41,7 @@
          <div class="hidden sm:flex sm:items-center sm:ms-6">
 
             <!-- Search Button -->
-            @if (Auth::check() && Auth::user()->userrole == '!admin')
+            @if (Auth::check() && Auth::user()->userrole != 'admin')
                <div class="mr-3 relative">
                   <button id="searchButton" @click="openSearch = !openSearch"
                      class="inline-flex items-center justify-center p-1 rounded-md text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-800 focus:text-gray-600 dark:focus:text-gray-300 transition duration-150 ease-in-out">
