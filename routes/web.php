@@ -45,7 +45,8 @@ Route::middleware(['auth', 'capre'])->group(function () {
 Route::middleware(['auth', 'admin', 'capre'])->group(function () {
     Route::get('/admin-dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
-    // Route::get('/admin/products', [AdminController::class, 'products'])->name('admin.products');
+    Route::get('/admin/get-chart-data', [AdminController::class, 'getChartData'])->name('admin.getChartData');
+
     Route::get('/admin/products/v2', [AdminController::class, 'products_v2'])->name('admin.products.products');
     Route::get('/admin/products/table', [AdminController::class, 'productTable'])->name('admin.products.table');
     Route::get('/admin/products/create', [AdminController::class, 'createProduct'])->name('admin.products.create');
@@ -55,6 +56,8 @@ Route::middleware(['auth', 'admin', 'capre'])->group(function () {
 
     Route::get('/admin/products/add/v2', [AdminController::class, 'createProduct'])->name('admin.products.add');
     Route::post('/admin/products/add/save', [AdminController::class, 'storeProduct_v2']);
+
+    Route::get('/admin-dashboard/get-recent-orders', [AdminController::class, 'getRecentOrders'])->name('admin.getRecentOrders');
 
     Route::get('/admin/orders/update/{id}', [AdminController::class, 'showOrders'])->name('admin.orders.update');
     Route::post('/admin/orders/update/save/{id}', [AdminController::class, 'updateOrders'])->name('admin.orders.update');
@@ -67,7 +70,6 @@ Route::middleware(['auth', 'admin', 'capre'])->group(function () {
     Route::post('/admin/products/update/v2/{id}', [AdminController::class, 'updateProduct_v2'])->name('admin.products.update');
 
     Route::delete('/admin/products/delete/{id}', [AdminController::class, 'deleteProduct'])->name('admin.products.delete');
-    Route::get('/admin/products/table', [AdminController::class, 'productTable'])->name('admin.products.table');
 
     Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
     Route::get('/admin/users/table', [AdminController::class, 'userTable'])->name('admin.users.table');
@@ -76,7 +78,6 @@ Route::middleware(['auth', 'admin', 'capre'])->group(function () {
     Route::get('/admin/users/edit/{id}', [AdminController::class, 'editUser'])->name('admin.users.edit');
     Route::put('/admin/users/edit/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
     Route::delete('/admin/users/delete/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
-    Route::get('/admin/users/table', [AdminController::class, 'userTable'])->name('admin.users.table');
 });
 
 

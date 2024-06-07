@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\User;
@@ -15,60 +16,81 @@ use Exception;
 
 class AdminController extends Controller
 {
-    private $columnCommands = ['waktu_order' => "created_at", 'nomor_id' => 'id', 'status' => 'status', 'kuantitas' => 'quantity', 'harga' => 'price', 'nama_produk' => 'name'];
+    private $columnCommands = [
+        'waktu_order' => 'created_at',
+        'status' => 'status',
+        'nomor_id' => 'id',
+    ];
 
     public function dashboard(Request $request)
     {
         $product = Product::all();
         $user = User::all();
-        $sortRequest = $request->sort;
-        $sortDirection = $request->direction;
-        $chartType = $request->chart_type ?? 'status';
 
-        if ($sortRequest == null || !in_array($sortRequest, array_keys($this->columnCommands))) {
-            // Default sorting
-            $recentOrders = Order::with(['items' => function ($query) {
-                $query->orderBy($this->columnCommands['waktu_order'], 'desc');
-            }])->paginate(6);
-        } else {
-            try {
-                if ($sortRequest == 'kuantitas') {
-                    $recentOrders = Order::with(['items'])
-                        ->select('orders.*', \DB::raw('SUM(order_items.quantity) as total_quantity'))
-                        ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-                        ->groupBy('orders.id')
-                        ->orderBy('total_quantity', $sortDirection)
-                        ->paginate(6);
-                } else if ($sortRequest == 'status') {
-                    $recentOrders = Order::with(['items'])
-                        ->orderBy($this->columnCommands[$sortRequest], $sortDirection)
-                        ->paginate(6);
-                } else {
-                    $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
-                        $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
-                    }])->paginate(6);
-                }
-            } catch (Exception $e) {
-                $recentOrders = Order::with(['items' => function ($query) use ($sortRequest, $sortDirection) {
-                    $query->orderBy($this->columnCommands[$sortRequest], $sortDirection);
-                }])->paginate(6);
-            }
-        }
+        $sortRequest = $request->get('sort', 'waktu_order');
+        $sortDirection = $request->get('direction', 'desc');
+        $chartType = $request->get('chart_type', 'status');
+
+        $recentOrders = $this->getSortedOrders($sortRequest, $sortDirection);
 
         $productCount = Product::count();
         $userCount = User::count();
         $orderCount = Order::count();
         $netSales = Order::where('status', 'selesai')->sum('total_price');
 
-        // Charting
+        list($months, $chartData) = $this->generateChartData($chartType);
+        $chart = $this->createChart($chartType, $months, $chartData);
+
+        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount', 'netSales', 'chart', 'months', 'chartData'));
+    }
+    public function getRecentOrders(Request $request)
+    {
+        $sortRequest = $request->get('sort', 'waktu_order');
+        $sortDirection = $request->get('direction', 'desc');
+        $search = $request->get('search', '');
+
+        $recentOrders = Order::with(['items'])
+            ->where(function ($query) use ($search) {
+                if ($search) {
+                    $query->where('id', 'like', "%{$search}%")
+                        ->orWhere('status', 'like', "%{$search}%");
+                }
+            })
+            ->orderBy($this->columnCommands[$sortRequest] ?? 'created_at', $sortDirection)
+            ->paginate(6);
+
+        $view = view('admin.partials.order_table', compact('recentOrders'))->render();
+
+        return response()->json(['html' => $view]);
+    }
+
+    private function getSortedOrders($sortRequest, $sortDirection)
+    {
+        if (!in_array($sortRequest, array_keys($this->columnCommands))) {
+            $sortRequest = 'waktu_order';
+        }
+
+        if ($sortRequest === 'kuantitas') {
+            return Order::with(['items'])
+                ->select('orders.*', DB::raw('SUM(order_items.quantity) as total_quantity'))
+                ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+                ->groupBy('orders.id')
+                ->orderBy('total_quantity', $sortDirection)
+                ->paginate(6);
+        } else {
+            return Order::with(['items'])
+                ->orderBy($this->columnCommands[$sortRequest], $sortDirection)
+                ->paginate(6);
+        }
+    }
+
+    private function generateChartData($chartType)
+    {
         $months = [];
         $chartData = [];
-
-        // Loop through the last 12 months
         for ($i = 0; $i < 12; $i++) {
             $month = Carbon::now()->subMonths($i)->format('Y-m');
             $months[] = $month;
-
             if ($chartType == 'status') {
                 $statuses = ['pending', 'diproses', 'dalam perjalanan', 'selesai', 'canceled'];
                 foreach ($statuses as $status) {
@@ -86,15 +108,13 @@ class AdminController extends Controller
                     ->sum('items_sum_quantity');
             }
         }
+        return [array_reverse($months), array_map('array_reverse', $chartData)];
+    }
 
-        // Reverse arrays for correct chronological order
-        $months = array_reverse($months);
-        foreach ($chartData as $key => $data) {
-            $chartData[$key] = array_reverse($data);
-        }
-
+    private function createChart($chartType, $months, $chartData)
+    {
         if ($chartType == 'status') {
-            $chart = (new LarapexChart)->barChart()
+            return (new LarapexChart)->barChart()
                 ->setTitle('Kuantitas Penjualan')
                 ->setSubtitle('Berdasarkan status pesanan')
                 ->setXAxis($months)
@@ -105,7 +125,7 @@ class AdminController extends Controller
                     return ['name' => ucfirst($key), 'data' => $data];
                 }, array_keys($chartData), $chartData));
         } else if ($chartType == 'sales') {
-            $chart = (new LarapexChart)->lineChart()
+            return (new LarapexChart)->lineChart()
                 ->setTitle('Produk Terjual')
                 ->setSubtitle('Berdasarkan Produk Terjual')
                 ->setXAxis($months)
@@ -119,8 +139,14 @@ class AdminController extends Controller
                     ]
                 ]);
         }
+    }
 
-        return view('admin.dashboard', compact('product', 'user', 'recentOrders', 'productCount', 'userCount', 'orderCount', 'netSales', 'chart', 'months', 'chartData'));
+    public function getChartData(Request $request)
+    {
+        $chartType = $request->get('chart_type', 'status');
+        list($months, $chartData) = $this->generateChartData($chartType);
+
+        return response()->json(['months' => $months, 'chartData' => $chartData]);
     }
 
     // Orders
@@ -146,6 +172,12 @@ class AdminController extends Controller
         return view('admin.products.index', compact('products'));
     }
 
+    public function products_v2()
+    {
+        $products = Product::paginate(5);
+        $productVariants = ProductVariant::all();
+        return view('admin.products.products', compact('products', 'productVariants'));
+    }
     public function productTable(Request $request)
     {
         $query = Product::query();
@@ -167,18 +199,17 @@ class AdminController extends Controller
         $products = $query->paginate(5);
         $productVariants = ProductVariant::all();
 
-        $tableView = view('admin.products.partials.product_table', compact('products', 'productVariants'))->render();
-        $paginationView = view('admin.products.partials.pagination', compact('products'))->render();
+        if ($request->ajax()) {
+            $tableView = view('admin.products.partials.product_table', compact('products', 'productVariants'))->render();
+            $paginationView = view('admin.products.partials.pagination', compact('products'))->render();
 
-        return response()->json(['table' => $tableView, 'pagination' => $paginationView]);
-    }
+            return response()->json(['table' => $tableView, 'pagination' => $paginationView]);
+        }
 
-    public function products_v2()
-    {
-        $products = Product::paginate(5);
-        $productVariants = ProductVariant::all();
         return view('admin.products.products', compact('products', 'productVariants'));
     }
+
+
 
     public function storeProduct(Request $request)
     {
@@ -440,11 +471,15 @@ class AdminController extends Controller
 
         $users = $query->paginate(10);
 
-        $tableView = view('admin.users.partials.user_table', compact('users'))->render();
-        $mobileView = view('admin.users.partials.mobile_user_table', compact('users'))->render();
-        $paginationView = view('admin.users.partials.pagination', compact('users'))->render();
+        if ($request->ajax()) {
+            $tableView = view('admin.users.partials.user_table', compact('users'))->render();
+            $mobileView = view('admin.users.partials.mobile_user_table', compact('users'))->render();
+            $paginationView = view('admin.users.partials.pagination', compact('users'))->render();
 
-        return response()->json(['table' => $tableView, 'mobile' => $mobileView, 'pagination' => $paginationView]);
+            return response()->json(['table' => $tableView, 'mobile' => $mobileView, 'pagination' => $paginationView]);
+        }
+
+        return view('admin.users.index', compact('users'));
     }
 
     public function createUser()

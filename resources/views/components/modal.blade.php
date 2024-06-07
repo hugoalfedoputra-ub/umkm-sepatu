@@ -46,7 +46,7 @@
    </div>
 
    <div x-show="show"
-      class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all  mx-auto w-[80%]"
+      class="mt-24 lg:mt-56 mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all  mx-auto w-[80%] md:w-[60%] lg:w-[30%]"
       x-transition:enter="ease-out duration-300"
       x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200"

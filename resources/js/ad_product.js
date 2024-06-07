@@ -3,7 +3,7 @@ $(document).ready(function () {
     function loadProductData(
         url = "/admin/products/table",
         search = "",
-        sortBy = "name",
+        sortBy = "id",
         sortOrder = "asc"
     ) {
         $.ajax({
@@ -17,27 +17,19 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data); // Tambahkan log ini untuk debugging
                 $("#productTableContainer").html(data.table);
-                $("#paginationLinks").html(data.pagination);
+                $("#productPaginationLinks").html(data.pagination);
+                $("html, body").animate({ scrollTop: 0 }, "medium");
             },
             error: function (error) {
-                alert("Gagal memuat data produk");
                 console.log(error);
             },
         });
     }
 
     // Call loadProductData on page load
-    loadProductData();
-
-    // Handle pagination click
-    $(document).on("click", "#paginationLinks a", function (e) {
-        e.preventDefault();
-        let url = $(this).attr("href");
-        let search = $("#productSearchInput").val() || "";
-        let sortBy = $("#productSortBy").val() || "name";
-        let sortOrder = $("#productSortOrder").val() || "asc";
-        loadProductData(url, search, sortBy, sortOrder);
-    });
+    if (window.location.pathname === "/admin/products/v2") {
+        loadProductData();
+    }
 
     // Handle search and sort
     $("#productSearchBtn").on("click", function () {

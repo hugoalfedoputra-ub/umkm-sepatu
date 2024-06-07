@@ -1,3 +1,3 @@
-<div id="paginationLinks" class="flex justify-center">
-   {{ $users->links() }}
+<div id="userPaginationLinks" class="flex justify-center">
+   {{ $users->appends(request()->query())->links() }}
 </div>

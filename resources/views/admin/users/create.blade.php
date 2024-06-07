@@ -53,23 +53,21 @@
 </x-modal>
 
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.editUserBtn').forEach(button => {
-         button.addEventListener('click', function() {
-            document.getElementById('userModalTitle').innerText = 'Edit User';
-            document.getElementById('nameField').style.display = 'none';
-            document.getElementById('emailField').style.display = 'none';
-            document.getElementById('passwordField').style.display = 'none';
-            document.getElementById('passwordConfirmationField').style.display = 'none';
-         });
+   document.querySelectorAll('.editUserBtn').forEach(button => {
+      button.addEventListener('click', function() {
+         document.getElementById('userModalTitle').innerText = 'Edit User';
+         document.getElementById('nameField').style.display = 'none';
+         document.getElementById('emailField').style.display = 'none';
+         document.getElementById('passwordField').style.display = 'none';
+         document.getElementById('passwordConfirmationField').style.display = 'none';
       });
+   });
 
-      document.getElementById('addUserBtn').addEventListener('click', function() {
-         document.getElementById('userModalTitle').innerText = 'Tambah Pengguna';
-         document.getElementById('nameField').style.display = 'block';
-         document.getElementById('emailField').style.display = 'block';
-         document.getElementById('passwordField').style.display = 'block';
-         document.getElementById('passwordConfirmationField').style.display = 'block';
-      });
+   document.getElementById('addUserBtn').addEventListener('click', function() {
+      document.getElementById('userModalTitle').innerText = 'Tambah Pengguna';
+      document.getElementById('nameField').style.display = 'block';
+      document.getElementById('emailField').style.display = 'block';
+      document.getElementById('passwordField').style.display = 'block';
+      document.getElementById('passwordConfirmationField').style.display = 'block';
    });
 </script>

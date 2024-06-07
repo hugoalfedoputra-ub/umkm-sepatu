@@ -3,7 +3,7 @@ $(document).ready(function () {
     function loadUserData(
         url = "/admin/users/table",
         search = "",
-        sortBy = "name",
+        sortBy = "id",
         sortOrder = "asc"
     ) {
         $.ajax({
@@ -15,30 +15,21 @@ $(document).ready(function () {
                 sort_order: sortOrder,
             },
             success: function (data) {
-                console.log(data); // Tambahkan log ini untuk debugging
                 $("#userTableBody").html(data.table);
                 $("#mobileUserTable").html(data.mobile);
-                $("#paginationLinks").html(data.pagination);
+                $("#userPaginationLinks").html(data.pagination);
+                $("html, body").animate({ scrollTop: 0 }, "fast");
             },
             error: function (error) {
-                alert("Gagal memuat data pengguna");
                 console.log(error);
             },
         });
     }
 
     // Call loadUserData on page load
-    loadUserData();
-
-    // Handle pagination click
-    $(document).on("click", "#paginationLinks a", function (e) {
-        e.preventDefault();
-        let url = $(this).attr("href");
-        let search = $("#userSearchInput").val() || "";
-        let sortBy = $("#userSortBy").val() || "name";
-        let sortOrder = $("#userSortOrder").val() || "asc";
-        loadUserData(url, search, sortBy, sortOrder);
-    });
+    if (window.location.pathname === "/admin/users") {
+        loadUserData();
+    }
 
     // Handle search and sort
     $("#userSearchBtn").on("click", function () {
@@ -86,6 +77,12 @@ $(document).ready(function () {
     $(document).on("click", ".editUserBtn", function () {
         let id = $(this).data("id");
         $.get(`/admin/users/edit/${id}`, function (data) {
+            document.getElementById("userModalTitle").innerText = "Edit User";
+            document.getElementById("nameField").style.display = "none";
+            document.getElementById("emailField").style.display = "none";
+            document.getElementById("passwordField").style.display = "none";
+            document.getElementById("passwordConfirmationField").style.display =
+                "none";
             $("#userModalTitle").text("Edit Pengguna");
             $("#userId").val(data.id);
             $("#name").val(data.name);
@@ -93,7 +90,6 @@ $(document).ready(function () {
             $("#userrole").val(data.userrole);
             $("#password").val("");
             $("#password_confirmation").val("");
-            $("#userModal").removeClass("hidden");
         });
     });
 

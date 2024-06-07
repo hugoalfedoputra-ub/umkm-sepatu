@@ -3,9 +3,9 @@
       Update Pesanan
    </x-slot>
 
-   <section class="flex" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000" data-aos-delay="500">
+   <section class="flex" data-aos="fade-in" data-aos-easing="linear" data-aos-duration="500" data-aos-delay="300">
 
-      <div class="flex-1 p-4 text-white">
+      <div class="flex-1 p-4 text-black">
 
          <div class="container mx-auto py-8">
             <h2 class="text-2xl font-bold mb-4">Detail Pesanan</h2>
@@ -57,7 +57,7 @@
             <p class="text-2xl mt-4">Produk pesanan :</p>
             <div class="grid grid-cols-2 gap-4 mt-4">
                @foreach ($orders->items as $order)
-                  <div class="flex flex-row justify-between bg-gray-800 p-4 rounded-lg shadow-md relative">
+                  <div class="flex flex-row justify-between bg-beige p-4 rounded-lg shadow-md relative">
                      <div class="">
                         <table>
                            <tr>

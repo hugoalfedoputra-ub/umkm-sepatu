@@ -1,7 +1,7 @@
 @foreach ($recentOrders as $order)
    <div class="w-full md:w-1/2 px-2 mb-4">
       <div class="bg-beige p-4 rounded-lg shadow-md relative">
-         <table class="w-full text-black" style="border-collapse: collapse; border: none; font-size: 0.9rem;">
+         <table class="w-full text-black">
             <tr class="mb-2">
                <td class="w-44 font-semibold">Order ID</td>
                <td>: {{ $order->id }}</td>
@@ -16,21 +16,11 @@
                   <span
                      style="color:
                      @switch($order->status)
-                         @case('pending')
-                             yellow;
-                             @break
-                         @case('diproses')
-                             brown;
-                             @break
-                         @case('dalam perjalanan')
-                             blue;
-                             @break
-                         @case('selesai')
-                             green;
-                             @break
-                         @case('canceled')
-                             red;
-                             @break
+                        @case('pending') yellow; @break
+                        @case('diproses') brown; @break
+                        @case('dalam perjalanan') blue; @break
+                        @case('selesai') green; @break
+                        @case('canceled') red; @break
                      @endswitch
                   ">{{ $order->status }}</span>
                </td>
@@ -55,3 +45,6 @@
       </div>
    </div>
 @endforeach
+<div id="recent-orders-pagination" class="flex justify-center mx-auto">
+   {{ $recentOrders->appends(request()->except('page'))->links() }}
+</div>
